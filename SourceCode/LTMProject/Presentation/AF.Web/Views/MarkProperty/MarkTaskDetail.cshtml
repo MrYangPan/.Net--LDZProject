@@ -1,0 +1,155 @@
+﻿@using AF.Domain.Domain.Books
+@using AF.Web.Extensions
+@model AF.Web.Models.MarkProperty.MarkTaskDetailModel
+@{
+    ViewBag.Title = "MarkTaskDetail";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("MarkTaskList")">属性标定</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">任务详情</a>
+        </li>
+    </ul>
+</div>
+
+<div class="table-scrollable">
+    <table class="table table-striped table-bordered table-hover dataTable no-footer">
+        <thead>
+            <tr role="row">
+                <th rowspan="1" colspan="1" style="width: 14px;"></th>
+                <th rowspan="1" colspan="1" style="width: 704px;" class="text-center">
+                    章节
+                </th>
+                @*<th rowspan="1" colspan="1" style="width: 100px;" class="text-center">
+                    题数
+                </th>*@
+                <th rowspan="1" colspan="1" style="width: 100px;" class="text-center">
+                    已标定题数
+                </th>
+                <th rowspan="1" colspan="1" style="width: 200px;" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @ChildBuilder(Model.RelateChapters, 0)
+        </tbody>
+    </table>
+</div>
+
+
+@helper ChildBuilder(IList<BookChapter> models, int deep)
+{
+    var nexetdeep = deep + 1;
+    var width = deep*30 + "px;";
+    foreach (var item in models)
+    {
+        <tr role="row" @if (deep == 0)
+                       {
+                           <text>
+                               class="odd"
+                           </text>
+                       }
+                       else
+                       {
+                           <text>
+                               class="even hidden" data-parentid="@item.ParentId"
+                           </text>
+                       }>
+            @if (deep != 0)
+            {
+                <td></td>
+            }
+            <td>
+                <span style="margin-left: @width">
+                    @if (item.BookChapterChild.Count != 0)
+                    {
+                        <span class="row-details row-details-close" data-id="@item.Id" data-parentid="@item.ParentId"></span>
+                    }
+                </span>
+                @if (deep != 0)
+                {
+                    @item.Name
+                }
+
+            </td>
+            @if (deep == 0)
+            {
+                <td>
+                    @item.Name
+                </td>
+            }
+
+            @*<td class="text-center">
+                @(item.BookWorkTaskItem?.TaskBookTiMus.Count())
+            </td>*@
+            <td class="text-center">
+                @if (Model.TaskRelatedChapter.Contains(item) && item.BookChapterChild.Count == 0)
+                {
+                    @item.BookWorkTaskItem.TaskBookTiMus.Count(p => p.Timu.Difficult > 0 && p.Timu.ParentId==null)
+                }
+            </td>
+            <td class="text-center">
+                @if (Model.TaskRelatedChapter.Contains(item) && item.BookChapterChild.Count == 0)
+                {
+                    <a class="btn default btn-xs purple" href="@Url.Action("MarkTaskProperty", new {taskitemId = item.TaskItemId, taskId = Model.TaskId})"><i class="fa fa-edit"></i>标定</a>
+                    <a class="btn default btn-xs green-stripe" href="@Url.Action("MarkPreview", new {taskitemId = item.TaskItemId, taskId = Model.TaskId})" target="_blank">预览</a>
+                }
+            </td>
+        </tr>
+        @ChildBuilder(item.BookChapterChild.OrderBy(p=>p.Id).ToList(), nexetdeep)
+    }
+}
+
+@section scripts{
+    <script>
+        //树形菜单
+        var tree = function () {
+
+            function toggle(el, ishiden) {
+                var parentid = el.attr('data-id');
+                var trels = $('tr[data-parentid=' + parentid + ']');
+
+                var hotels = $('.row-details[data-parentid=' + parentid + ']');
+                hotels.each(function () {
+                    toggle($(this), ishiden);
+                });
+
+                if (ishiden) {
+                    el.attr('class', 'row-details row-details-close');
+                    trels.addClass('hidden');
+                } else {
+                    el.attr('class', 'row-details row-details-open');
+                    trels.removeClass('hidden');
+                    trels.show();
+                }
+            }
+
+
+            function init() {
+                $('.row-details').click(function () {
+                    var classname = $(this).attr('class');
+                    if (classname != 'row-details row-details-close') {
+                        toggle($(this), true);
+                    } else {
+                        toggle($(this), false);
+                    }
+                });
+            }
+
+            init();
+        }();
+    </script>
+}

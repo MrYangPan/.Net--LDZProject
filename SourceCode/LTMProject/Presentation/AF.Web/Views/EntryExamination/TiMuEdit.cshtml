@@ -1,0 +1,79 @@
+﻿@using AF.Web.Models.TestDebug
+@model AF.Web.Models.EntryExamination.TiMuModel
+@{
+    Layout = null;
+}
+@helper EditBuilder(string contentId, string content, string titleId, string title, EditType editType)
+{
+    <div class="Topic-editor-box article_right_xuanxiang">
+        <div class="Topic-editor-title">
+            <a class="jiacu" href="javascript:;" onclick="myEditor.bold('@contentId');" title="加粗" tabindex="-1"><dfn></dfn></a>
+            <a class="xieti" href="javascript:;" onclick="myEditor.italic('@contentId');" title="斜体" tabindex="-1"><dfn></dfn></a>
+            <a class="xiahuaxian" href="javascript:;" onclick="myEditor.underline('@contentId');" title="下划线" tabindex="-1"><dfn></dfn></a>
+            @*@if (Model.SubjectType == SubjectType.Chinese || Model.SubjectType == SubjectType.Biology || Model.SubjectType == SubjectType.Geography || Model.SubjectType == SubjectType.History || Model.SubjectType == SubjectType.Moral)
+                {*@
+            <a class="sub" href="javascript:;" title="下标" tabindex="-1" style="width: 21px;" onclick="myEditor.sub('@contentId', this);"><dfn></dfn></a>
+            <a class="sup" href="javascript:;" title="上标" tabindex="-1" style="width: 21px;" onclick="myEditor.sup('@contentId', this);"><dfn></dfn></a>
+            <a class="ziti" href="javascript:;" title="字体" tabindex="-1" style="width: 21px;" onclick="myEditor.fontFamily('@contentId', this);"><dfn></dfn></a>
+            <a class="zihao" href="javascript:;" title="文字大小" tabindex="-1" style="width: 23px;" onclick="myEditor.fontSize('@contentId', this);"><dfn></dfn></a>
+            <a class="yanse" href="javascript:;" title="字体颜色" tabindex="-1" style="width: 23px;" onclick="myEditor.fontColor('@contentId', this);"><dfn></dfn></a>
+            <a class="textstyle" href="javascript:;" title="文本样式" tabindex="-1" style="width: 23px;" onclick="myEditor.textStyle('@contentId', this);"><dfn></dfn></a>
+            @*<a class="brace" href="javascript:;" title="大括号" tabindex="-1" style="width: 23px;" onclick="myEditor.brace('@contentId');"><dfn></dfn></a>*@
+            <a class="clearHtml" href="javascript:;" onclick="myEditor.clearHtml('@contentId');" title="清除Html样式" tabindex="-1"><dfn></dfn></a>
+            @*}
+
+                @if (Model.SubjectType == SubjectType.English)
+                {*@
+            <a tabIndex="-1" title="选中音标，加标签" class="yinbiao" onclick="myEditor.yinbiao('@contentId');" href="javascript:;"><dfn></dfn></a>
+            <a tabIndex="-1" title="序号" onclick="myEditor.choiceNumber('@contentId');" href="javascript:;"><dfn></dfn></a>
+            @*}*@
+
+            @if (editType != EditType.Choise)
+            {
+                <a class="jvzuo" href="javascript:;" onclick="myEditor.justifyleft('@contentId');" title="居左" tabindex="-1"><dfn></dfn></a>
+                <a class="jvzhong" href="javascript:;" onclick="myEditor.justifycenter('@contentId');" title="居中" tabindex="-1"><dfn></dfn></a>
+                <a class="jvyou" href="javascript:;" onclick="myEditor.justifyright('@contentId');" title="居右" tabindex="-1"><dfn></dfn></a>
+            }
+
+            <a class="tupian" href="javascript:;" onclick="myEditor.image('@contentId');" title="图片" tabindex="-1"><dfn></dfn></a>
+            <a class="fuhao" href="javascript:;" onclick="myEditor.symbol('@contentId');" title="符号" tabindex="-1"><dfn></dfn></a>
+
+            @if (editType == EditType.QMain)
+            {
+                <a tabIndex="-1" title="多果空答案" class="kongdanan" onclick="myEditor.multipleResult('@contentId');" href="javascript:;"><dfn></dfn></a>
+                <a tabIndex="-1" title="连线" class="shushi" onclick="myEditor.online('@contentId');" href="javascript:;"><dfn></dfn></a>
+                @*if (Model.SubjectType == SubjectType.Math)
+                    {*@
+                <a tabIndex="-1" title="数学竖式" class="shushi" onclick="myEditor.shushi('@contentId');" href="javascript:;"><dfn></dfn></a>
+                @*}*@
+            }
+            <a class="gongshi" href="javascript:;" onclick="myEditor.febox('@contentId');" title="公式编辑器" tabindex="-1"><dfn></dfn></a>
+        </div>
+        <textarea class="Topic-editor-section" id="@contentId" name="@contentId" onpropertychange="this.style.posHeight=this.scrollHeight;" oninput="this.style.height=this.scrollHeight;" onfocus="myEditor.focus('@contentId');">@content</textarea>
+    </div>
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/CSS/AFEditer/AFEditer.css" rel="stylesheet" />
+    <script src="~/Content/Scripts/AFEditer/AFEditor.js"></script>
+
+    <script type="text/javascript">
+        //var tmObj = { TMID: "LY_201_UAE_0068" };
+        var tmObj = { TMID: '@Model.Tmid' };
+        var myEditor = new AFEditor(tmObj);
+    </script>
+</head>
+<body>
+    <div style="width: 600px; margin: 0px auto; margin-top: 50px;">
+        @EditBuilder("editBox", "", null, "标题", EditType.QMain)
+    </div>
+    <div id="_editorFactory_" class="windows-select" style="display: none;"></div>
+    <iframe id="ifm1" src="/TestDebug/UploadImage?tmid=@Model.Tmid" style="opacity:0;filter:alpha(opacity=0);position:absolute;left:60px;top:13px;background-color:#fff;display:none;" marginwidth="0" marginheight="0" width="46" height="18" scrolling="no" frameborder="0"></iframe>
+</body>
+</html>

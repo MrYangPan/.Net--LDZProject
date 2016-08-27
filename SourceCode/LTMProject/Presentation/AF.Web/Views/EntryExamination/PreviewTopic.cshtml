@@ -1,0 +1,283 @@
+﻿@using AF.Services.TiMus.TiMuCompose
+@using AF.Web.Extensions
+@model AF.Web.Models.EntryExamination.EntryTiMuModel
+@{
+    ViewBag.Title = "预览";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/bundles/css/testSheet")
+
+
+<script src="~/Content/Scripts/TiMu/TestSheet.js"></script>
+<script src="~/Content/Scripts/TiMu/TiMu.js"></script>
+
+<script>
+    $(function () {
+        TiMu.init();
+        Sheet.init();
+    });
+</script>
+
+
+
+<style type="text/css">
+    .userData {
+        behavior: url(#default#userdata);
+    }
+
+    #PhotoSheetWrapper {
+        height: 486px;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        width: 0px;
+        display: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+    }
+
+    #PhotoSheetWrapper h2 {
+        line-height: 36px;
+        height: 36px;
+        font-size: 1em;
+        padding: 0 15px;
+        margin: 0;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+        color: Gray;
+    }
+
+    #PhotoSheetWrapper h2 a {
+        float: right;
+        font-size: 18px;
+        font-weight: normal;
+        text-decoration: none;
+        color: gray;
+    }
+
+    #PhotoSheetWrapper h2 a:hover {
+        color: #ff6900;
+    }
+</style>
+
+<style type="text/css" media="print">
+    .h1_Analytic, .h2_Analytic, .h3_Analytic, .h4_Analytic, .toolbox-E, #btn1, #userScore, .old-G-operate, .old-G-tool, .tool-ttc {
+        display: none;
+    }
+
+    .wrapper {
+        width: 760px;
+        padding-top: 0px;
+    }
+
+    body {
+        background-color: #fff;
+        font-size: 16px;
+    }
+
+    .e_n_header {
+        border-bottom: none;
+    }
+
+    .li_option_titie input {
+        display: none;
+    }
+
+    .FEBox.FEBoxTextArea {
+        display: block;
+        margin-right: 0;
+        margin-left: 0;
+        min-height: 60px;
+        _height: 60px;
+        overflow-x: visible;
+        overflow-y: auto;
+        word-wrap: break-word;
+        word-break: break-all;
+        border: #bbb solid 1px;
+    }
+
+    .otherinput {
+        border: #fff solid 1px;
+        border-bottom-color: #036d8f;
+    }
+
+    .T-or-F label, .TorF-answer, .topiclist li .label dfn {
+        background: url(~/Content/Images/Model/CorrectorWrong.png) 0 0 no-repeat;
+    }
+
+    .T-or-F {
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        color: #222;
+        font-style: normal;
+        padding: 0 5px;
+    }
+
+    .T-or-F dfn {
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        width: 18px;
+        height: 16px;
+        margin: 0;
+        padding: 0 2px;
+        vertical-align: -4px;
+        *vertical-align: middle;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .T-or-F input {
+        float: left;
+        margin-left: -30px;
+        _margin-bottom: -20px;
+    }
+
+    .T-or-F label {
+        display: block;
+        width: 18px;
+        height: 16px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .T-or-F .true {
+        background-position: 0 -70px;
+    }
+
+    .T-or-F .false {
+        background-position: 0 -90px;
+    }
+
+    .T-or-F .hot .true {
+        background-position: 0 -110px;
+    }
+
+    .T-or-F .hot .false {
+        background-position: 0 -130px;
+    }
+</style>
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("Index")">录入试题</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("TaskDetail", new {taskId = Model.BookWorkTask.Id})">任务详情</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">预览</a>
+        </li>
+    </ul>
+
+    <ul class="page-breadcrumb" style="margin-left: 150px;">
+        <li>
+            <i class="fa fa-tree"></i>
+        </li>
+        @for (int i = 1; i <= Model.BookChapterList.Count; i++)
+        {
+            <li>
+                <span>@Model.BookChapterList[i - 1].Name</span>
+                @if (i != Model.BookChapterList.Count)
+                {
+                    <i class="fa fa-arrows-h"></i>
+                }
+            </li>
+        }
+    </ul>
+
+</div>
+
+@TimuModelBuilder(Model.TiMulIsList, 1)
+
+
+@helper TimuModelBuilder(IList<TiMuModel> models, int i)
+{
+foreach (var timuModel in models)
+{
+    var childTimus = timuModel.ChildTimuList.OrderBy(d=>d.Order).ToList();
+        <div class="portlet light bg-inverse">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-pin font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold uppercase">第 @i 题</span>
+                </div>
+                <div class="pull-right margin-top-20">
+
+                    <label> 录入员:</label>
+                    <label> @Model.BookWorkTask.EntryCustomer.Username</label>
+
+
+                    <label style="margin-left: 80px;"> 讲解老师:</label>
+                    <label> @timuModel.ExplainTeacher</label>
+
+
+                    <label style="margin-left: 80px;"> 题型:</label>
+                    <label> @timuModel.TiMuTypeName</label>
+                </div>
+            </div>
+
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="col-md-3 control-label">题干：</label>
+                            <div class="col-md-7">
+                                <p class="form-control-static">
+                                    @Html.Raw(timuModel.Trunk)
+                                </p>
+                            </div>
+                        </div>
+                        @if (childTimus.Any())
+                        {
+                            for (int j = 0; j < childTimus.Count(); j++)
+                            {
+                                var childTimu = childTimus[j];
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label class="col-md-3 control-label"></label>
+                                    <div class="col-md-7">
+                                        <p class="form-control-static">
+                                            @Html.Raw(childTimu.Trunk)
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">解析：</label>
+                            <div class="col-md-7">
+                                <p class="form-control-static">
+                                    @Html.Raw(timuModel.Analysis)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group last">
+                            <label class="col-md-3 control-label">解答：</label>
+                            <div class="col-md-7">
+                                <p class="form-control-static">
+                                    @Html.Raw(timuModel.Answer)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FORM-->
+            </div>
+        </div>
+    i++;
+}
+}

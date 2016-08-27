@@ -1,0 +1,185 @@
+﻿@using AF.Web.Extensions
+@model AF.Web.Models.MarkProperty.MarkPropertyModel
+@{
+    ViewBag.Title = "MarkTaskProperty";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<link href="~/Content/CSS/AFEditer/AFEditer.css" rel="stylesheet" />
+<link href="~/Content/CSS/Model/EntryExaminationTopic.css" rel="stylesheet" />
+<link href="~/Content/Metronic/global/plugins/select2/select2.css" rel="stylesheet" />
+<link href="~/Content/Metronic/global/css/plugins.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/CSS/bootstrap/star-rating.min.css" rel="stylesheet" />
+<link href="~/Content/CSS/Examination/Examination-new.css" rel="stylesheet" />
+<style>
+    .lititle {
+        height: 37px;
+        line-height: 35px;
+        padding-left: 25px;
+    }
+
+    .lichildtitle {
+        height: 37px;
+        line-height: 35px;
+        padding-left: 45px;
+    }
+
+    .liicon {
+        position: relative;
+        top: -37px;
+        background: #1cbad9 !important;
+        color: white;
+    }
+</style>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("MarkTaskList")">属性标定</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("MarkTaskDetail", new {taskId = Model.TaskId})">任务详情</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">标定界面</a>
+        </li>
+    </ul>
+
+    <ul class="page-breadcrumb" style="margin-left: 150px;">
+        <li>
+            <i class="fa fa-tree"></i>
+        </li>
+        @for (int i = 1; i <= Model.RelateAllChapters.Count; i++)
+        {
+            <li>
+                <span>@Model.RelateAllChapters[i - 1].Name</span>
+                @if (i != Model.RelateAllChapters.Count)
+                {
+                    <i class="fa fa-arrows-h"></i>
+                }
+            </li>
+        }
+    </ul>
+
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <ul class="ver-inline-menu tabbable text-center">
+            @for (int i = 1; i <= Model.BookTimus.Count; i++)
+            {
+                var booktimu = Model.BookTimus[i - 1];
+                var childTms = booktimu.Timu.TiMuChild.OrderBy(d => d.BookTiMu.Order).ToList();
+                <li @if (booktimu.Id == Model.Tmid) { <text> class="active" </text>    }>
+                    <a style="height: 37px; line-height: 35px;" class="lititle text-left" href="@Url.Action("MarkTaskProperty", new {taskitemId = Model.TaskItemId, taskId = Model.TaskId, tmid = booktimu.Id})">第 @i 题  (@(booktimu.PageNumber)-@(booktimu.LargeNumber)-@(booktimu.SmallNumber))</a>
+                </li>
+                for (int j = 0; j < childTms.Count; j++)
+                {
+                    var childTimu = childTms[j];
+                    <li @if (childTimu.Id == Model.Tmid) { <text> class="active" </text>  }>
+                        <a style="height: 37px; line-height: 35px;" class="lichildtitle text-left" href="@Url.Action("MarkTaskProperty", new {taskitemId = Model.TaskItemId, taskId = Model.TaskId, tmid = childTimu.Id})">第 @i 小题  (@(childTimu.BookTiMu.PageNumber)-@(childTimu.BookTiMu.LargeNumber)-@(childTimu.BookTiMu.SmallNumber))</a>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="col-md-5">
+        <div class="portlet light bg-inverse">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-disc font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold">题目信息</span>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <!-- BEGIN FORM-->
+                <div class="form-horizontal">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">大题号: </label>
+                            <label class="col-lg-2" style="line-height: 35px;">@Model.BookTiMu.LargeNumber</label>
+                            <label class="col-md-2 control-label">小题号: </label>
+                            <label class="col-lg-2" style="line-height: 35px;">@Model.BookTiMu.SmallNumber</label>
+                            <label class="col-md-2 control-label">页码: </label>
+                            <label class="col-lg-2" style="line-height: 35px;">@Model.BookTiMu.PageNumber</label>
+                        </div>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">题型：</label>
+                            <div class="col-md-10">
+                                <p class="form-control-static">
+                                    @Model.TiMuModel.TiMuTypeName
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">题干：</label>
+                            <div class="col-md-10">
+                                <p class="form-control-static">
+                                    @Html.Raw(Model.TiMuModel.Trunk)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">解析：</label>
+                            <div class="col-md-10">
+                                <p class="form-control-static">
+                                    @Html.Raw(Model.TiMuModel.Analysis)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">解答：</label>
+                            <div class="col-md-10">
+                                <p class="form-control-static">
+                                    @Html.Raw(Model.TiMuModel.Answer)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="portlet light bg-inverse">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-rocket font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold">题目属性信息</span>
+                </div>
+            </div>
+
+            <div class="portlet-body content" id="markcontent" style="">
+                @if (true)
+                {
+                    Html.RenderAction("TopicMark", "EntryExamination", new { tmid = Model.Tmid });
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="~/Content/Scripts/AFEditer/AFEditor.js"></script>
+    <script src="~/Content/Scripts/TiMu/EntryPageEditor.js"></script>
+    <script src="~/Content/Metronic/global/plugins/select2/select2.min.js"></script>
+    <script src="~/Content/Scripts/bootstrap/bootstrap-typeahead.js"></script>
+    <script src="~/Content/Scripts/bootstrap/star-rating.min.js"></script>
+}

@@ -1,0 +1,268 @@
+﻿@using AF.Domain.Domain.Books;
+@model AF.Web.Models.TaskAllocation.ChapterParamModel
+@{
+    ViewBag.Title = "Chapter";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("Index")">任务列表</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("BookList")">教辅列表</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">分配任务</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="row">
+    <div class="col-md-12 margin-top-10">
+        @using (Html.BeginForm("Chapter", "TaskAllocation", new {bookId = Model.BookId}, FormMethod.Post, new {@class = "form-horizontal"}))
+        {
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d => d.EntryCustomerId)">录入:</label>
+                            <div class="col-md-8">
+                                @Html.HiddenFor(t => t.EntryCustomerId, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.EntryCustomerId, "", new {@class = "help-block"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d => d.CheckCustomerId)">审核:</label>
+                            <div class="col-md-8">
+                                @Html.HiddenFor(t => t.CheckCustomerId, new {@class = "form-control"})
+                                @Html.ValidationMessageFor(m => m.CheckCustomerId, "", new {@class = "help-block"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        @Html.HiddenFor(t => t.BookChapterIds)
+                        @Html.HiddenFor(t => t.BookId)
+                        <input type="submit" class="btn default blue" value="分配">
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="portlet">
+    <div class="portlet-title" style="height: 20px;">
+    </div>
+</div>
+
+<div class="table-scrollable">
+    <table class="table table-striped table-bordered table-hover dataTable no-footer">
+        <thead>
+            <tr role="row">
+                <th rowspan="1" colspan="1" style="width: 14px;"></th>
+                <th rowspan="1" colspan="1" style="width: 704px;" class="text-center">
+                    目录
+                </th>
+                <th rowspan="1" colspan="1" style="width: 200px;" class="text-center">
+                    状态
+                </th>
+                <th rowspan="1" colspan="1" style="width: 200px;" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @ChildBuilder(Model.BookChapterList, 0)
+        </tbody>
+    </table>
+</div>
+
+
+@helper ChildBuilder(IList<BookChapter> models, int deep)
+{
+    var nexetdeep = deep + 1;
+    var width = deep*30 + "px;";
+    foreach (var item in models)
+    {
+        <tr role="row" @if (deep == 0)
+                       {
+                           <text>
+                               class="odd"
+                           </text>
+                       }
+                       else
+                       {
+                           <text>
+                               class="even hidden" data-parentid="@item.ParentId"
+                           </text>
+                       }>
+            @if (deep != 0)
+            {
+                <td></td>
+            }
+            <td>
+                <span style="margin-left: @width">
+                    @if (item.BookChapterChild.Count != 0)
+                    {
+                        <span class="row-details row-details-close" data-id="@item.Id" data-parentid="@item.ParentId"></span>
+                    }
+                </span>
+                @if (deep != 0)
+                {
+                    @item.Name
+                }
+            </td>
+            @if (deep == 0)
+            {
+                <td>
+                    @item.Name
+                </td>
+            }
+            <td class="text-center">
+                @if (item.BookChapterChild.Count == 0)
+                {
+                     if (item.BookWorkTaskItem != null)
+                     {
+                         <span class="label label-sm label-success">已分配</span>
+                     }
+                     else
+                     {
+                         <span class="label label-sm label-warning">未分配</span>
+                     }
+                }
+            </td>
+            <td class="text-center">
+                @if (item.BookChapterChild.Count == 0)
+                {
+                    <input type="checkbox" @(item.BookWorkTaskItem != null ? "disabled" : "") value="@item.Id" />
+                }
+            </td>
+        </tr>
+        @ChildBuilder(item.BookChapterChild.ToList(), nexetdeep)
+    }
+}
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <link href="~/Content/Metronic/global/plugins/select2/select2.css" rel="stylesheet"/>
+    <link href="~/Content/Metronic/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <script src="~/Content/Metronic/global/plugins/select2/select2.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(function() {
+            chapter.init();
+        });
+
+        //树形菜单
+        var chapter = function() {
+
+            function toggle(el, ishiden) {
+                var parentid = el.attr('data-id');
+                var trels = $('tr[data-parentid=' + parentid + ']');
+
+                var hotels = $('.row-details[data-parentid=' + parentid + ']');
+                hotels.each(function() {
+                    toggle($(this), ishiden);
+                });
+
+                if (ishiden) {
+                    el.attr('class', 'row-details row-details-close');
+                    trels.addClass('hidden');
+                } else {
+                    el.attr('class', 'row-details row-details-open');
+                    trels.removeClass('hidden');
+                    trels.show();
+                }
+            }
+
+            var checkboxBind = function() {
+                $(".table :checkbox").click(function() {
+                    var id = $(this).val();
+                    //$(".table :checkbox[parentId=" + id + "]").click();
+
+                    var idArr = [];
+                    $(".table :checkbox:checked").each(function() {
+                        idArr.push($(this).val());
+                    });
+                    $("form #BookChapterIds").val(idArr.join(","));
+                });
+            }
+
+            var selectBind = function() {
+                $("#EntryCustomerId,#CheckCustomerId").select2({
+                    placeholder: "请选择",
+                    formatInputTooShort: "",
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: "/TaskAllocation/GetCustomer",
+                        dataType: 'json',
+                        data: function(term, page) {
+                            return {
+                                keyword: term
+                            };
+                        },
+                        results: function(data, page) {
+                            return {
+                                results: data
+                            };
+                        }
+                    },
+                    formatResult: function(item) {
+                        return "<option value='" + item.id + "'>" + item.text + "</option>";
+                    }
+                });
+            }
+
+            var formSubmit = function() {
+                $(".form-horizontal").submit(function() {
+                    if ($("#BookChapterIds").val() == "") {
+                        bootbox.alert({
+                            title: "提示",
+                            message:"请选择勾选目录进行分配"
+                        });
+                        return false;
+                    }
+                    return true;
+                });
+            }
+
+            function init() {
+                selectBind();
+                checkboxBind();
+                formSubmit();
+                $('.row-details').click(function() {
+                    var classname = $(this).attr('class');
+                    if (classname != 'row-details row-details-close') {
+                        toggle($(this), true);
+                    } else {
+                        toggle($(this), false);
+                    }
+                });
+            }
+
+            return {
+                init: init
+            };
+        }();
+
+
+    </script>
+}
+

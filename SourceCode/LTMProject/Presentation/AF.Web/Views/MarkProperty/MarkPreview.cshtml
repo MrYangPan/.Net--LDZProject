@@ -1,0 +1,227 @@
+﻿@using AF.Web.Extensions
+@model AF.Web.Models.MarkProperty.MarkPreviewModel
+@{
+    ViewBag.Title = "预览";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+
+<link href="~/Content/CSS/Examination/Examination-new.css" rel="stylesheet" />
+<link href="~/Content/CSS/AFEditer/AFEditer.css" rel="stylesheet" />
+<link href="~/Content/CSS/Model/EntryExaminationTopic.css" rel="stylesheet" />
+<script src="~/Content/Scripts/AFEditer/AFEditor.js"></script>
+<script src="~/Content/Scripts/TiMu/EntryPageEditor.js"></script>
+
+<script src="https://player.polyv.net/script/polyvplayer.min.js"></script>
+
+<script>
+
+    $(function() {
+        
+        //难度等级
+        $(".diffstar").each(function() {
+            var diff = $(this).attr("data-diff");
+            $(this).rating('update', diff);
+        });
+    });
+
+</script>
+
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("MarkTaskList")">属性标定</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("MarkTaskDetail", new {taskId = Model.Task.Id})">任务详情</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">预览</a>
+        </li>
+    </ul>
+
+    <ul class="page-breadcrumb" style="margin-left: 150px;">
+        <li>
+            <i class="fa fa-tree"></i>
+        </li>
+        @for (int i = 1; i <= Model.RelateAllChapters.Count; i++)
+        {
+            <li>
+                <span>@Model.RelateAllChapters[i - 1].Name</span>
+                @if (i != Model.RelateAllChapters.Count)
+                {
+                    <i class="fa fa-arrows-h"></i>
+                }
+            </li>
+        }
+    </ul>
+
+</div>
+
+
+@for (int i = 1; i <= Model.TiMuModels.Count; i++)
+{
+    var item = Model.TiMuModels[i - 1];
+    var childTimus = item.ChildTimuList.OrderBy(d => d.Order).ToList();
+    <div class="portlet light bg-inverse">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-pin font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">第 @i 题</span>
+            </div>
+            <div class="col-md-6 col-lg-offset-4 margin-top-20 ">
+
+                <label> 录入员:</label>
+                <label> @Model.Task.EntryCustomer.Username</label>
+
+
+                <label style="margin-left: 80px;"> 讲解老师:</label>
+                <label> @item.ExplainTeacher</label>
+
+
+                <label style="margin-left: 80px;"> 题型:</label>
+                <label> @item.TiMuTypeName</label>
+            </div>
+
+            @if (!string.IsNullOrEmpty(item.VideoCode))
+            {
+                <div class="actions">
+                    <input type="button" data-videoid="@(item.VideoCode)" class="btn default btn-sm blue openModel" value="微课" />
+                </div>
+            }
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <div class="form-horizontal">
+                <div class="form-body">
+
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">主知识点：</label>
+                        <div class="col-md-4">
+                            <p class="form-control-static">
+                                @item.MainKnowledgeId
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">相关知识点：</label>
+                        <div class="col-md-4">
+                            <p class="form-control-static">
+                                @item.MinorKnowledgeId
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">难度等级：</label>
+                        <div class="col-md-4">
+                            <input class="rating rating-loading diffstar" data-show-clear="false" data-size="lg" data-min="0" data-max="5" data-step="1" data-diff="@item.Difficult" data-readonly="true">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="col-md-3 control-label">题干：</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">
+                                @Html.Raw(item.Trunk)
+                            </p>
+                        </div>
+                    </div>
+
+                    @if (childTimus.Any())
+                    {
+                        for (int j = 0; j < childTimus.Count(); j++)
+                        {
+                            var childTimu = childTimus[j];
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-7">
+                                    <p class="form-control-static">
+                                        @Html.Raw(childTimu.Trunk)
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">解析：</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">
+                                @Html.Raw(item.Analysis)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group last">
+                        <label class="col-md-3 control-label">解答：</label>
+                        <div class="col-md-7">
+                            <p class="form-control-static">
+                                @Html.Raw(item.Answer)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END FORM-->
+        </div>
+    </div>
+
+}
+
+<div class="modal fade" id="playModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 738px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">视频播放</h4>
+            </div>
+            <div class="modal-body">
+                <div id="playVideo"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <link href="~/Content/Metronic/global/plugins/select2/select2.css" rel="stylesheet"/>
+    <link href="~/Content/Metronic/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <script src="~/Content/Metronic/global/plugins/select2/select2.min.js"></script>
+
+    <script src="~/Content/Scripts/bootstrap/bootstrap-typeahead.js"></script>
+    <link href="~/Content/CSS/bootstrap/star-rating.min.css" rel="stylesheet"/>
+    <script src="~/Content/Scripts/bootstrap/star-rating.min.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".openModel").click(function () {
+                var vid = $(this).attr("data-videoid");
+                var player = polyvObject('#playVideo').videoPlayer({
+                    'width': '708',
+                    'height': '490',
+                    'vid': vid
+                });
+                $('#playModal').modal({ backdrop: 'static' });
+                //$('#playModal').on('hide.bs.modal', function() {
+                //    player.j2s_stopVideo();
+                //});
+            });
+        });
+    </script>
+}

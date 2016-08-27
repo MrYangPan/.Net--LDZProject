@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* CSS Document */
+.FEBox .Reserve{padding:0 1px;}
+.FEBox.NoBorder .Reserve{padding:0;}
+.FEBox>.Reserve.InputLayer{padding:0 1px;}
+.FEBox .Reserve.SqrtDiv{padding:0 1px;}
+.FEBox .SqrtTable .SqrtRoot .Reserve.SqrtRootDiv{padding:0 1px;}
+.FEBox .Fraction .Reserve.FractDiv{padding:0 1px;}
+.FEBox .LoopBox .Reserve.LoopBodyDiv,.FEBox .AvgBox .Reserve.AvgBodyDiv,.FEBox .VectorBox .Reserve.VectorBodyDiv,.FEBox .ArcBox .Reserve.ArcBodyDiv{padding:0 1px;}
+.FEBox .LimitBox .Reserve.LimitBodyDiv{padding:0 1px;}
+.FEBox .Equa .EquaBody .Reserve.EquaBDiv{padding:0 1px;}
+.FEBox .Matrix .MatrixBody .Reserve.MatrixBDiv{padding:0 1px;}
+.FEBox .Bracket .BracketBody .Reserve.BracketBDiv{padding:0 1px;}
+.FEBox .Chemistry .Reserve.FractDiv{padding:0 1px;}
+.FEBox .SignBox .SignBody .SignBodyDiv{padding:0 1px;}
+.FEBox .SignBox .SignLT .Reserve.SignLTDiv,.FEBox .SignBox .SignRT .Reserve.SignRTDiv,.FEBox .SignBox .SignLB .Reserve.SignLBDiv,.FEBox .SignBox .SignRB .Reserve.SignRBDiv,.FEBox .SignBox .SignMT .Reserve.SignMTDiv{padding:0 1px;}
+.FEBox .L2 .Reserve.InputLayer,.FEBox .L2 .Reserve.SqrtDiv{padding:0 1px;}
+.FEBox .L2 .Fraction .Reserve.FractDiv{padding:0 1px;}
+.FEBox .L2 .LimitBox .Reserve.LimitBodyDiv{padding:0 1px;}
+.FEBox .L2 .Equa .EquaBody .Reserve.EquaBDiv{padding:0 1px;}
+.FEBox .L2 .Matrix .MatrixBody .Reserve.MatrixBDiv{padding:0 1px;}
+.FEBox .L2 .SignBox .SignBody .SignBodyDiv{padding:0 1px;}
+.FEBox .L2 .SignBox .SignLT .Reserve.SignLTDiv,.FEBox .L2 .SignBox .SignRT .Reserve.SignRTDiv,.FEBox .L2 .SignBox .SignLB .Reserve.SignLBDiv,.FEBox .L2 .SignBox .SignRB .Reserve.SignRBDiv,.FEBox .L2 .SignBox .SignMT .Reserve.SignMTDiv{padding:0 1px;}
+.FEBox .Reserve.VaryDiv{padding:0 1px;}

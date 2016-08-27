@@ -1,0 +1,318 @@
+﻿@model AF.Web.Models.Knowledge.KnowledgeModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">知识点管理</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 margin-top-10">
+        @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "form-horizontal" }))
+        {
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">学段:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.DegreeId, Model.DegreeItemList, new {@class = "form-control"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">学科:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.SubjectId, Model.SubjectItemList, new {@class = "form-control"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="col-md-8">
+                                <a data-toggle="modal" href="#nodeModal" class="btn default blue">添加父级节点</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-title" style="min-height: 20px;">
+            </div>
+            <div class="portlet-body">
+                <div id="ajaxTree" class="tree-demo"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="nodeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">添加节点</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">节点名称:</label>
+                            <div class="col-md-7">
+                                <input class="form-control" name="knowledgeName" id="knowledgeName" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn red" id="modalclick">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/Metronic/global/plugins/jstree/dist/jstree.min.js"></script>
+    <script>
+        $(function() {
+            tree.init();
+        });
+
+        var tree = function() {
+
+            var ajaxTreeSample = function(sid) {
+
+                var add = function(data) {
+                    var inst = $.jstree.reference(data.reference);
+                    var obj = inst.get_node(data.reference);
+                    inst.create_node(obj, {}, "last", function(new_node) {
+                        new_node.text = "";
+                        inst.edit(new_node);
+                    });
+                }
+
+                var edit = function(data) {
+                    var inst = $.jstree.reference(data.reference);
+                    var obj = inst.get_node(data.reference);
+                    inst.edit(obj);
+                }
+
+                var del = function(data) {
+                    var inst = jQuery.jstree.reference(data.reference);
+                    var obj = inst.get_node(data.reference);
+
+                    bootbox.confirm({
+                        message: "确认删除?",
+                        title: "提示",
+                        callback: function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: '@Url.Action("DeleteKnowledge")',
+                                    data: { id: obj.id },
+                                    type: "post",
+                                    dateType: "json",
+                                    success: function (data) {
+                                        if (data.state) {
+                                            inst.delete_node(obj);
+                                        } else {
+                                            alert("删除失败");
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+
+                var rename = function(obj, val) {
+                    var node = val.node;
+                    if (val.text === "") {
+                        $('#ajaxTree').jstree(true).delete_node(node);
+                        return;
+                    }
+                    if (val.old === val.text) {
+                        return;
+                    }
+
+                    if (node.id.indexOf("j") > -1) {
+                        var subjectId = $("select[name=SubjectId]").val();
+                        var parent = node.parent;
+                        $.ajax({
+                            url: '@Url.Action("AddKnowledge")',
+                            data: { subjectId: subjectId, parentId: parent, name: val.text },
+                            type: "post",
+                            dateType: "text",
+                            success: function(data) {
+                                if (data.state) {
+                                    $('#ajaxTree').jstree(true).set_id(node, data.data);
+                                } else {
+                                    $('#ajaxTree').jstree(true).delete_node(node);
+                                    alert("保存失败");
+                                }
+                            }
+                        });
+                    } else {
+                        $.ajax({
+                            url: '@Url.Action("UpdateKnowledge")',
+                            data: { id: node.id, name: val.text },
+                            type: "post",
+                            dateType: "text",
+                            success: function(data) {
+                                if (!data.state) {
+                                    $('#ajaxTree').jstree(true).delete_node(node);
+                                    alert("保存失败");
+                                }
+                            }
+                        });
+                    }
+                }
+
+                var init = function(sid) {
+                    $("#ajaxTree").remove();
+                    $(".portlet-body").append("<div id='ajaxTree' class='tree-demo'></div>");
+                    $("#ajaxTree").jstree({
+                        "core": {
+                            "themes": {
+                                "responsive": false
+                            },
+                            "check_callback": true,
+                            'data': {
+                                'url': function(node) {
+                                    return '@Url.Action("GetTreeData")';
+                                },
+                                'data': function(node) {
+                                    return { 'subjectId': sid };
+                                }
+                            }
+                        },
+                        "types": {
+                            "default": {
+                                "icon": "fa fa-folder icon-state-warning icon-lg"
+                            },
+                            "file": {
+                                "icon": "fa fa-file icon-state-warning icon-lg"
+                            }
+                        },
+                        "plugins": ["contextmenu", "dnd", "types"],
+                        "contextmenu": {
+                            items: {
+                                "add": {
+                                    "label": "添加",
+                                    "action": add
+                                },
+                                "edit": {
+                                    "label": "修改",
+                                    "action": edit
+                                },
+                                "del": {
+                                    "label": "删除",
+                                    "action": del
+                                }
+                            }
+                        }
+                    }).on("rename_node.jstree", rename);
+                }
+
+                init(sid);
+            }
+
+            var addKnowledge = function() {
+                $("#modalclick").click(function() {
+                    var subjectId = $("select[name=SubjectId]").val();
+                    var name = $("#knowledgeName").val();
+                    if (subjectId === "") {
+                        bootbox.alert({
+                            message: '请选择学科',
+                            title: "提示"
+                        });
+                        return;
+                    }
+                    if (name === "") {
+                        bootbox.alert({
+                            message: '节点名称不能为空',
+                            title: "提示"
+                        });
+                        return;
+                    }
+                    $.ajax({
+                        url: '@Url.Action("AddKnowledge")',
+                        data: { subjectId: subjectId, name: name },
+                        type: "post",
+                        dateType: "text",
+                        success: function(data) {
+                            if (data.state) {
+                                ajaxTreeSample(subjectId);
+
+                                $("#knowledgeName").val("");
+                                $("#nodeModal").modal("hide");
+                            } else {
+                                alert("保存失败");
+                            }
+                        }
+                    });
+                });
+            }
+
+            var degreeChange = function() {
+                $("select[name=DegreeId]").change(function() {
+                    var select = $(this);
+                    var val = $(this).val();
+                    $.ajax({
+                        url: "/Manage/GetSubject",
+                        data: { degreeId: val },
+                        type: "get",
+                        dateType: "json",
+                        success: function(data) {
+                            var next = $("select[name=SubjectId]");
+                            next.empty().append("<option value=''>请选择</option>");
+                            for (var i = 0; i < data.length; i++) {
+                                next.append("<option value='" + data[i].Id + "'>" + data[i].Name + "</option>");
+                            }
+                            $("#ajaxTree").remove();
+                        }
+                    });
+                });
+            };
+
+            var subjectChange = function() {
+                $("select[name=SubjectId]").change(function() {
+                    var select = $(this);
+                    var val = $(this).val();
+                    if (val === "") {
+                        $("#ajaxTree").remove();
+                        return;
+                    }
+                    ajaxTreeSample(val);
+                });
+            }
+
+            return {
+                init: function() {
+                    subjectChange();
+                    degreeChange();
+                    addKnowledge();
+                }
+            };
+        }();
+    </script>
+}

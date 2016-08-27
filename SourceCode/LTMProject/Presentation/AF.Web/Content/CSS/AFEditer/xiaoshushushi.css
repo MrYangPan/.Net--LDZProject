@@ -1,0 +1,33 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+body{/*behavior:url(/js/csshover3.htc);*/ margin:0; padding:0;}
+.shushi-caozuo{position:absolute; left:40px; top:20px; width:240px; height:32px; padding:6px 0 0 16px; border:#ddd solid 1px; background-color:#fff;}
+.shushi-caozuo ul{ list-style-type:none; margin:0; padding:0;}
+.shushi-caozuo li{float:left; margin:0; padding:0; font-size:12px;}
+.shushi-caozuo li input{ width:20px; text-align:center;}
+.shushi-caozuo a{ float:left; width:22px; height:26px; overflow:hidden; margin-right:6px; background:url(../../Images/AFEditer/shushi-icon.png) 0 0 no-repeat;}
+.shushi-caozuo .SS-moshiyi{  background-position:0 0;}
+.shushi-caozuo .SS-moshier{  background-position:-30px 0;}
+.shushi-caozuo .SS-danyuange{background-position:-60px 0;}
+.shushi-caozuo .SS-daankuang{background-position:-90px 0;}
+.shushi-caozuo .SS-lianghang{background-position:-120px 0;}
+.shushi-caozuo .SS-chexiao{background-position:-150px 0;}
+.shushi-caozuo .SS-moshiyi:hover{  background-position:0 -30px;}
+.shushi-caozuo .SS-moshier:hover{  background-position:-30px -30px;}
+.shushi-caozuo .SS-danyuange:hover{background-position:-60px -30px;}
+.shushi-caozuo .SS-daankuang:hover{background-position:-90px -30px;}
+.shushi-caozuo .SS-lianghang:hover{background-position:-120px -30px;}
+.shushi-caozuo .SS-chexiao:hover{background-position:-150px -30px;}
+.ShuShi{}
+.ShuShi td{height:32px; padding:0 2px 0 0; white-space:nowrap; text-align:right; font-size:0; border:none;}
+.ShuShi td div{display:inline-block; *display:inline; *zoom:1; visibility:hidden; width:14px; height:20px; margin-left:2px; border:#999 dotted 1px; line-height:20px; text-align:center; font-style:normal; overflow:hidden; font-size:16px; font-family:"Times New Roman", Times, serif; background-image:none;}
+.ShuShi .no-empty{visibility:visible; border:#fff dotted 1px;}
+.ShuShi .daankuang{visibility:visible; border:#036d8f solid 1px;}
+.ShuShi .line td{ border-top:#888 solid 1px;}
+.ShuShi td.ShuShi-chufa{ padding-right:7px; border-top:none; background:url(../../Images/AFEditer/shushi-chufa.png) top right no-repeat;}
+.ShuShi td.ShuShi-left{border-top:none;}
+.ShuShi .delete {display:none;}
+.bianji td div{ visibility:visible;}
+.bianji .no-empty{border:#999 dotted 1px;}
+.bianji .daankuang{visibility:visible; border:#cc708c solid 1px;}

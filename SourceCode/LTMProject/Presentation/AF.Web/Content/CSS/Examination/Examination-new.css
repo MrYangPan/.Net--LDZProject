@@ -1,0 +1,1774 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.select-input .select-dd a, .answerphoto-box .delete-img {
+    background: url(/Content/Images/Examination/select-input.png) 0 0 no-repeat;
+}
+
+.answerphoto-box p a {
+    background: url(/Content/Images/Examination/micro/wb_btn3.png) 0 0 no-repeat;
+}
+
+.T-or-F label, .TorF-answer, .topiclist li .label dfn {
+    background: url(/Content/Images/Examination/CorrectorWrong.png) 0 0 no-repeat;
+}
+
+.toolbox-E li a {
+    background: url(/Content/Images/Examination/word-icon.png) 0 2px no-repeat;
+}
+/*题目类型 选择题 填空题 计算题等*/
+.topic-type {
+    font: normal bold 16px "微软雅黑";
+    width: 100%;
+    margin: 0 auto 10px auto;
+    padding-top: 15px;
+    text-indent: 25px;
+}
+/*mathplay下载样式*/
+.down-mathpaly {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-bottom: #fff solid 1px;
+    background-color: #10acc5;
+    height: 50px;
+    line-height: 54px;
+    overflow: hidden;
+}
+
+    .down-mathpaly .down-box {
+        width: 980px;
+        margin: 0 auto;
+        padding: 0;
+        color: #fff6e4;
+        font-style: italic;
+        font-family: "黑体";
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        line-height: 54px;
+        _padding-top: 13px;
+        white-space: nowrap;
+    }
+
+    .down-mathpaly a {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        font-weight: b;
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "微软雅黑";
+        font-style: normal;
+        text-decoration: none;
+    }
+
+        .down-mathpaly a.latterdown {
+            background-color: #c8e1e7;
+            border: #77a0ab solid 1px;
+            padding: 0 20px;
+            color: #758795;
+            margin: 0 10px 0 30px;
+        }
+
+        .down-mathpaly a.nowdown {
+            background-color: #ff7400;
+            border: #c85b00 solid 1px;
+            padding: 0 20px;
+            color: #ffffff;
+            margin: 0 0 0 0;
+        }
+/*mathplay下载样式结束*/
+.mathmlImg, .topiclist li .list_Option img.mathmlImg {
+    vertical-align: middle;
+    margin: 0 2px;
+    position: relative;
+    top: -2px;
+}
+
+.Examination, .e_n_Examination {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.topictitle, .topicbody, .topiclist, .examination_attribute, .mark_zhongkao {
+    width: auto;
+    margin: 0;
+    padding: 7px 0;
+    list-style-type: none;
+    margin: 0 0 0 25px;
+}
+
+    .Serialnumber, .topiclist li .li_option_titie {
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        font: normal normal 14px "Times New Roman", Times, serif;
+    }
+
+.Serialnumber {
+    margin-right: 0px;
+    color: #333;
+    word-wrap: break-word;
+    margin-left: -25px;
+}
+
+.topictitle-none {
+    margin-bottom: -10px;
+}
+
+    .topictitle-none .topiclist {
+        margin-top: -32px;
+        *margin-top: -34px;
+        _margin-top: -32px;
+    }
+
+    .topictitle-none .topictitle .topiclist, .topictitle-none .topicbody .topiclist {
+        margin-top: -30px;
+        *margin-top: -33px;
+        _margin-top: -30px;
+    }
+
+.h1 {
+    padding: 0px;
+    clear: both;
+}
+
+.h2 {
+    padding-left: 25px;
+}
+
+.h3 {
+    padding-left: 50px;
+}
+
+.h4 {
+    padding-left: 75px;
+}
+
+.h5 {
+    padding-left: 100px;
+}
+
+.h6 {
+    padding-left: 125px;
+}
+
+.marks {
+    padding-left: 20px;
+}
+
+    .marks table {
+        width: 100%;
+        line-height: 18px;
+    }
+
+    .marks .zhongkao {
+        font-size: 14px;
+        font-family: Verdana, Geneva, sans-serif;
+        color: #666;
+    }
+
+    .marks .nandu {
+        white-space: nowrap;
+        text-align: right;
+        vertical-align: top;
+        padding-left: 10px;
+    }
+
+        .marks .nandu em {
+            margin: 0 20px 0 0;
+            font-style: normal;
+        }
+
+        .marks .nandu p {
+            margin: 0 0 0 0;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+        }
+
+        .marks .nandu dfn {
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            width: 16px;
+            height: 16px;
+            overflow: hidden;
+            margin: 0 0 0 3px;
+            vertical-align: -3px;
+            *vertical-align: 0;
+            background: url(/Content/Images/Examination/ico_littlestar.gif) 0 0 no-repeat;
+        }
+
+        .marks .nandu b {
+            font-weight: normal;
+        }
+/*--选择题排列 2013.10.17修改 --*/
+.topiclist li {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    padding: 5px 0;
+    vertical-align: top;
+}
+
+    .topiclist li .list_Option {
+        min-height: 20px;
+        _height: 20px;
+        margin-right: 10px;
+        margin-left: 40px;
+    }
+
+        .topiclist li .list_Option img {
+            vertical-align: top;
+            max-width: 99%;
+        }
+
+    .topiclist li .li_option_titie {
+        width: 55px;
+        color: #333;
+        *display: inline;
+        *zoom: 1;
+        margin-left: -40px;
+    }
+
+    .topiclist li .input {
+        margin: 3px 0 0 0;
+        position: relative;
+    }
+
+    .topiclist li .label {
+        font-family: "Times New Roman", Times, serif;
+        margin-right: 0;
+        position: relative;
+        font-size: 14px;
+        font-weight: bold;
+        color: #0f54a8;
+    }
+
+        .topiclist li .label dfn {
+            position: absolute;
+            left: -25px;
+            top: -4px;
+            top: -3px\9;
+            *top: -1px;
+            display: none;
+            width: 23px;
+            height: 24px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+            .topiclist li .label dfn.wrong {
+                display: block;
+                background-position: 0 0;
+            }
+
+            .topiclist li .label dfn.Corrector {
+                display: block;
+                background-position: 0 -41px;
+            }
+
+.topiclist_1 li {
+    width: 98%;
+}
+
+.topiclist_2 li {
+    width: 48%;
+}
+
+.topiclist_3 li {
+    width: 32%;
+}
+
+.topiclist_4 li {
+    width: 23%;
+}
+
+.topictitle .topiclist, .topicbody .topiclist {
+    margin-left: 0;
+}
+
+.topictitle, .topicbody {
+    clear: both;
+    font-size: 14px;
+}
+/*--题目基本信息--*/
+.examination_attribute {
+    padding: 0;
+}
+
+    .examination_attribute table {
+        display: block;
+        width: 100%;
+        margin: 7px 0;
+        border: #ddd solid 3px;
+        border-bottom-width: 2px;
+        border-right-width: 2px;
+    }
+
+    .examination_attribute td {
+        font: normal normal 14px/2 Verdana, Geneva, sans-serif;
+        color: #555;
+        border: #ddd solid 1px;
+        border-left: none;
+        border-top: none;
+        padding: 0 6px;
+    }
+
+        .examination_attribute td.right_text {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .examination_attribute td p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .examination_attribute td span {
+            margin-right: 6px;
+        }
+/*--判断题样式--*/
+.T-or-F {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    color: #222;
+    font-style: normal;
+    padding: 0 5px;
+}
+
+    .T-or-F dfn {
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        width: 18px;
+        height: 16px;
+        margin: 0;
+        padding: 0 2px;
+        vertical-align: -4px;
+        *vertical-align: middle;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .T-or-F input {
+        float: left;
+        margin-left: -30px;
+        _margin-bottom: -20px;
+    }
+
+    .T-or-F label {
+        display: block;
+        width: 18px;
+        height: 16px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .T-or-F .true {
+        background-position: 0 -70px;
+    }
+
+    .T-or-F .false {
+        background-position: 0 -90px;
+    }
+
+    .T-or-F .hot .true {
+        background-position: 0 -110px;
+    }
+
+    .T-or-F .hot .false {
+        background-position: 0 -130px;
+    }
+
+.or-F {
+    color: #be0000;
+}
+
+    .or-F .true {
+        display: none;
+    }
+
+    .or-F .false {
+        display: none;
+    }
+
+    .or-F dfn {
+        border-bottom: red solid 1px;
+    }
+
+    .or-F label, .or-T label {
+        cursor: default;
+    }
+
+    .or-F .hot .true {
+        display: block;
+    }
+
+    .or-F .hot .false {
+        display: block;
+    }
+
+.TorF-answer {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+}
+
+.TorF-answer-T {
+    background-position: 0 -110px;
+}
+
+.TorF-answer-F {
+    background-position: 0 -130px;
+}
+/*--连线题样式--*/
+.matching {
+    margin: 0;
+    z-index: 0;
+}
+
+    .matching .matching-left {
+        float: left;
+        width: 49%;
+        margin: 0;
+        padding: 0;
+        line-height: 24px;
+        list-style-type: none;
+    }
+
+    .matching .matching-right {
+        width: 49%;
+        margin: 0 0 0 49%;
+        *margin-left: 0;
+        padding: 0;
+        line-height: 24px;
+        list-style-type: none;
+    }
+
+        .matching .matching-left > li, .matching .matching-right > li {
+            display: block;
+            padding: 3px 0;
+        }
+
+    .matching .inline {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        word-break: break-all;
+        word-wrap: break-word;
+        padding: 0 10px;
+        background-color: #ffe7b8;
+        background-color: #eee;
+        border-radius: 0.4em;
+        color: #555;
+        font-family: "宋体" "Times New Roman", Times, serif;
+    }
+
+    .matching .select {
+        background-color: #ffb02a;
+        color: #000;
+    }
+/*--语文大括号的样式--*/
+.topiclist li .Braces_chinese {
+    vertical-align: middle;
+    table-layout:;
+}
+
+    .topiclist li .Braces_chinese .reservation {
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        min-width: 12px;
+        _width: 12px;
+        min-height: 16px;
+        _height: 16px;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+.Braces_chinese, .Braces_right, .Braces_left {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.Braces_chinese {
+    font: normal normal 14px/1.5 Verdana, Geneva, sans-serif;
+}
+
+    .Braces_chinese .Braces_td {
+        width: 17px;
+        position: relative;
+    }
+
+        .Braces_chinese .Braces_td br {
+            display: none;
+        }
+
+    .Braces_chinese .Braces_Box {
+        margin: 0;
+        padding: 0;
+        width: 10px;
+        overflow: hidden;
+        background: url(/Content/Images/Examination/Symbol_chinese.png) -11px top repeat-y;
+        vertical-align: middle;
+    }
+
+    .Braces_chinese .Braces_Top {
+        margin: 0;
+        padding: 0;
+        height: 5px;
+        overflow: hidden;
+        background: url(/Content/Images/Examination/Symbol_chinese.png) 5px top no-repeat;
+    }
+
+    .Braces_chinese .Braces_Middle {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: url(/Content/Images/Examination/Symbol_chinese.png) -5px center no-repeat;
+    }
+
+    .Braces_chinese .Braces_Bottom {
+        margin: 0;
+        padding: 0;
+        height: 5px;
+        overflow: hidden;
+        background: url(/Content/Images/Examination/Symbol_chinese.png) 5px -8px no-repeat;
+    }
+/*--大填空小填空--*/
+.longinput {
+    border: #fff dashed 1px;
+    border-bottom-color: #666;
+}
+
+.biginput {
+    width: 98%;
+    margin: 7px 0;
+    display: block;
+}
+
+.otherinput {
+    border: #fff solid 1px;
+    border-bottom-color: #036d8f;
+}
+/*--加点字，下划线、音标--*/
+.dian {
+    text-indent: 0;
+    background: url(/Content/Images/Examination/dian.png) no-repeat center bottom;
+    padding-bottom: 8px;
+    line-height: 2.8em;
+    *background-image: url(/Content/Images/Examination/dian1.png);
+    *padding-bottom: 0px;
+    _padding-bottom: 2px;
+    *display: inline;
+    *zoom: 1;
+}
+
+.sanjiao {
+    text-indent: 0;
+    background: url(/Content/Images/Examination/sanjiao.png) no-repeat center bottom;
+    padding-bottom: 8px;
+    line-height: 2.8em;
+    *background-image: url(/Content/Images/Examination/sanjiao1.png);
+    *padding-bottom: 0px;
+    _padding-bottom: 2px;
+    *display: inline;
+    *zoom: 1;
+}
+
+.double {
+    border-bottom: 3px double #000000;
+    *padding-top: 5px;
+    _padding-top: 0px;
+    *vertical-align: middle;
+    line-height: 1.8em;
+}
+
+.border {
+    border: 1px solid #000000;
+    padding: 3px;
+    line-height: 2.8em;
+    *line-height: 1.2em;
+    *vertical-align: middle;
+    *display: inline;
+    *zoom: 1;
+}
+
+.Examination bdo {
+    font-family: "lucida sans unicode",arial,sans-serif;
+}
+/* 串号登录框 */
+.wrong-number-box {
+    position: absolute;
+    width: 424px;
+    z-index: 999999;
+    left: 200px;
+    top: 200px;
+}
+
+.wrong-number-border {
+    position: relative;
+    width: 400px;
+    margin: 0 auto;
+    border: #979797 solid 2px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #888;
+}
+
+.wrong-number {
+    position: relative;
+    height: 240px;
+    border: #fff solid 1px;
+    background-color: #f1f1f1;
+    border-radius: 9px;
+}
+
+    .wrong-number .wrong-number-close {
+        float: right;
+        font-size: 16px;
+        margin: 5px 10px 0 0;
+        color: #999;
+    }
+
+        .wrong-number .wrong-number-close:hover {
+            color: #f60;
+        }
+
+    .wrong-number h4 {
+        width: 360px;
+        height: 35px;
+        margin: 0 auto;
+        font-size: 20px;
+        color: #0357ac;
+        line-height: 30px;
+        clear: both;
+        border-bottom: #ccc solid 1px;
+        text-indent: 20px;
+    }
+
+        .wrong-number h4 strong {
+            color: #f00;
+            font-size: 14px;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+
+    .wrong-number .table-box {
+        width: 360px;
+        margin: 0 auto;
+        border-top: #fff solid 1px;
+        padding-top: 10px;
+    }
+
+    .wrong-number table {
+        width: 360px;
+    }
+
+        .wrong-number table td {
+            padding: 5px 0;
+        }
+
+        .wrong-number table .first {
+            width: 50px;
+            padding-left: 20px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .wrong-number table .second {
+            width: 190px;
+        }
+
+            .wrong-number table .second .input-text {
+                width: 170px;
+                height: 24px;
+                line-height: 24px;
+                border: #c3c3c3 solid 1px;
+                text-align: left;
+                color: #444;
+                text-indent: 5px;
+            }
+
+                .wrong-number table .second .input-text:hover {
+                    color: #000;
+                    font-weight: bold;
+                    border: #888 solid 1px;
+                }
+
+            .wrong-number table .second .input-checkbox {
+                margin: 0 6px 0 0;
+            }
+
+            .wrong-number table .second label {
+                color: #666;
+                line-height: 24px;
+            }
+
+            .wrong-number table .second a {
+                position: relative;
+                display: block;
+                width: 100px;
+                height: 28px;
+                background-color: #0074cc;
+                color: #fff;
+                line-height: 28px;
+                text-align: center;
+                font-weight: bold;
+                border-radius: 4px;
+            }
+
+        .wrong-number table .third a {
+            color: #2275a9;
+        }
+
+            .wrong-number table .third a:hover {
+                color: #f60;
+                text-decoration: underline;
+            }
+/* 选择答案类型 纯文本 摄像头拍照 上传图片 */
+.select-input {
+    margin: 5px 0 0 0;
+    padding: 1px;
+    background-color: #ededed;
+    border: #a6b6bf solid 1px;
+    border-bottom: none;
+}
+
+    .select-input .select-dl {
+        display: block;
+        margin: 0;
+        padding: 0 5px 0 0;
+    }
+
+    .select-input .select-dd {
+        float: left;
+        margin: 0 -1px 0 0;
+        padding: 0;
+    }
+
+        .select-input .select-dd a {
+            float: left;
+            height: 30px;
+            margin: 0;
+            padding: 0 15px 0 36px;
+            background-color: #fff;
+            border: #a6b6bf solid 1px;
+            line-height: 30px;
+            font-family: "微软雅黑";
+            color: #10568b;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+            .select-input .select-dd a:hover {
+                color: #f60;
+                text-decoration: underline;
+            }
+
+        .select-input .select-dd .chunwenben {
+            background-position: 15px -38px;
+        }
+
+        .select-input .select-dd .shexiangtou {
+            background-position: 15px -68px;
+        }
+
+        .select-input .select-dd .shangchuan {
+            background-position: 15px -98px;
+        }
+
+    .select-input dd.hot a {
+        border: #286fa6 solid 1px;
+        background-color: #56a1da;
+        color: #fff;
+        position: relative;
+    }
+
+        .select-input dd.hot a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+    .select-input dd.hot .chunwenben {
+        background-position: 15px -128px;
+    }
+
+    .select-input dd.hot .shexiangtou {
+        background-position: 15px -158px;
+    }
+
+    .select-input dd.hot .shangchuan {
+        background-position: 15px -188px;
+    }
+
+    .select-input .select-dt {
+        float: right;
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        line-height: 32px;
+        color: #626484;
+    }
+
+.FE_space {
+    margin-bottom: 126px;
+}
+/* 主观题拍照样式 */
+.answerphoto-box {
+    padding: 6px 0 0 0;
+}
+
+    .answerphoto-box p {
+        height: 20px;
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+        line-height: 26px;
+        display: none;
+    }
+
+        .answerphoto-box p a {
+            display: inline-block;
+            *display: inline;
+            zom: 1;
+            height: 20px;
+            margin-right: 15px;
+            padding: 0 0 0 16px;
+            font-size: 12px;
+            line-height: 20px;
+            text-decoration: none;
+            color: #666;
+        }
+
+            .answerphoto-box p a:hover {
+                color: #f60;
+            }
+
+        .answerphoto-box p .shouqi {
+            background-position: 0 -37px;
+            *background-position: 0 -39px;
+        }
+
+        .answerphoto-box p .yuantu {
+            background-position: 0 -57px;
+            *background-position: 0 -59px;
+        }
+
+        .answerphoto-box p .xiangyouzhuan {
+            background-position: 0 -77px;
+            *background-position: 0 -79px;
+        }
+
+        .answerphoto-box p .xiangzuozhuan {
+            background-position: 0 -97px;
+            *background-position: 0 -99px;
+        }
+
+    .answerphoto-box .imgbox-div {
+        position: relative;
+    }
+
+    .answerphoto-box img {
+        display: block;
+        margin: 0;
+        padding: 0;
+        border: #c1c1c1 solid 1px;
+        padding: 6px;
+    }
+
+    .answerphoto-box canvas {
+        margin: 0;
+        padding: 0;
+        border: #c1c1c1 solid 1px;
+        padding: 6px;
+    }
+
+    .answerphoto-box .imgbox-div .delete-img {
+        display: none;
+    }
+
+    .answerphoto-box .imgbox-div:hover .delete-img {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        display: block;
+        width: 15px;
+        height: 15px;
+        overflow: hidden;
+        border: #fff solid 6px;
+    }
+
+        .answerphoto-box .imgbox-div:hover .delete-img:hover {
+            background-position: 0 -16px;
+        }
+/* 导出试卷 */
+.toolbox-E {
+    height: 40px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px 0 0 0;
+    clear: both;
+}
+
+    .toolbox-E li {
+        float: right;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+        .toolbox-E li a {
+            display: block;
+            *display: inline;
+            *zoom: 1;
+            margin: 0 0 0 20px;
+            padding: 0 0 0 24px;
+            height: 20px;
+            white-space: nowrap;
+            font-size: 14px;
+            text-decoration: none;
+            color: #333;
+            line-height: 22px;
+        }
+
+            .toolbox-E li a:hover {
+                color: #f60;
+                text-decoration: underline;
+            }
+
+        .toolbox-E li .daochu-word {
+            background-position: 0 2px;
+        }
+
+        .toolbox-E li .print-text {
+            background-position: 0 -18px;
+        }
+/* 小学竖式 */
+.ShuShi {
+    margin-left: 20px;
+}
+
+    .ShuShi td {
+        height: 32px;
+        padding: 0 2px 0 0;
+        white-space: nowrap;
+        text-align: right;
+        font-size: 0;
+        border: none;
+    }
+
+        .ShuShi td div {
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            visibility: visible;
+            width: 14px;
+            height: 20px;
+            margin-left: 2px;
+            border: #999 dotted 0px;
+            line-height: 20px;
+            text-align: center;
+            font-style: normal;
+            overflow: hidden;
+            font-size: 16px;
+            font-family: "Times New Roman", Times, serif;
+            background-image: none;
+        }
+
+    .ShuShi .no-empty {
+        visibility: visible;
+        border: #fff dotted 1px;
+    }
+
+    .ShuShi .daankuang {
+        visibility: visible;
+        border: #036d8f solid 1px;
+    }
+
+    .ShuShi .line td {
+        border-top: #888 solid 1px;
+    }
+
+    .ShuShi td.ShuShi-chufa {
+        padding-right: 7px;
+        border-top: none;
+        background: url(/Content/Images/Examination/shushi-chufa.png) top right no-repeat;
+    }
+
+    .ShuShi td.ShuShi-left {
+        border-top: none;
+    }
+
+    .ShuShi .delete {
+        display: none;
+    }
+
+    .ShuShi .decimalPoint {
+        border: none;
+        width: 4px;
+        margin: 1px -3px 0 -1px;
+        position: relative;
+        z-index: 1;
+        visibility: visible;
+    }
+
+/* -----------------------------------------------------播放器皮肤------------------------------------------------------ */
+/* --------浏览器通用-------- */
+.text-box b, .round-box, .time b, .round-box .round-left, .round-box .round-right {
+    background: url(/Content/Images/Examination/E-listening-player-skin.png) no-repeat;
+    _background: url(/Content/Images/Examination/E-listening-player-skin.gif) no-repeat;
+}
+
+.AudioPlayer-box {
+    position: relative;
+    height: 54px;
+}
+
+.AudioPlayer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    min-width: 186px;
+    width: auto;
+    height: 54px;
+    margin-bottom: 15px;
+}
+
+.text-box {
+    float: left;
+    margin-top: 9px;
+    min-width: 186px;
+    width: auto;
+    height: 38px;
+}
+
+    .text-box b {
+        float: left;
+        width: 18px;
+        height: 38px;
+    }
+
+        .text-box b.t-b-left {
+            background-position: 0 -125px;
+        }
+
+        .text-box b.t-b-body {
+            min-width: 100px;
+            width: auto;
+            padding-right: 50px;
+            line-height: 37px;
+            font-size: 13px;
+            font-family: 'Microsoft YaHei';
+            font-weight: normal;
+            font-style: normal;
+            color: #8d8d8d;
+            background-position: 0 -164px;
+            background-repeat: repeat-x;
+        }
+
+.Play .text-box b.t-b-body, .Playing .text-box b.t-b-body {
+    color: #468c08;
+}
+
+.text-box b.t-b-body em {
+    font-style: normal;
+}
+
+.text-box b.t-b-body span, .text-box b.t-b-body label {
+    display: none;
+}
+
+.text-box b.t-b-right {
+    background-position: -18px -125px;
+}
+
+.round-box {
+    float: left;
+    position: relative;
+    margin-left: -54px;
+    z-index: 0;
+    width: 54px;
+    height: 54px;
+    background-position: 0 -70px;
+}
+
+.time {
+    margin: 10px;
+    width: 34px;
+    height: 34px;
+}
+
+    .time b {
+        display: block;
+        width: 34px;
+        height: 34px;
+    }
+
+.Play .time b, .Pause .time b, .Playing-T .time b {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+}
+/* 公用 */
+.Stop .time b {
+    background-position: 0 -35px;
+}
+/* 学生 */
+.Playing .time b {
+    background: none;
+    font: normal normal 15px/38px 'Arial';
+    text-align: center;
+    color: #468c08;
+    _font: normal normal 15px/34px 'Arial';
+}
+/* 老师 */
+.Pause .time b {
+    background-position: -70px 0;
+}
+
+.Playing-T .time b {
+    background-position: -35px 0;
+}
+
+.round-box .round-left-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 4px;
+    width: 23px;
+    height: 46px;
+    overflow: hidden;
+}
+
+.round-box .round-right-box {
+    position: absolute;
+    top: 0px;
+    left: 23px;
+    margin: 4px;
+    width: 23px;
+    height: 46px;
+    overflow: hidden;
+}
+
+.round-box .round-left, .round-box .round-right {
+    width: 23px;
+    height: 46px;
+    background-position: 0 -203px;
+    -webkit-transform-origin: 100% 50%;
+    -ms-transform-origin: 100% 50%;
+    -o-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+}
+
+.round-box .round-right {
+    left: 23px;
+    background-position: -23px -203px;
+    -webkit-transform-origin: 0 50%;
+    -ms-transform-origin: 0 50%;
+    -o-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+}
+/* ie9以下浏览器 */
+.round-box-ie9 {
+    float: left;
+    margin-left: -54px;
+    _overflow: hidden;
+    width: 54px;
+    height: 54px;
+    background: url(/Content/Images/Examination/E-listening-player-skin-ie9.png) no-repeat;
+    _background: url(/Content/Images/Examination/E-listening-player-skin-ie9.gif) no-repeat;
+}
+
+    .round-box-ie9 .round-left, .round-box-ie9 .round-right {
+        display: none;
+    }
+
+/* 老师进度 */
+.Pause, .Playing-T, .Pause .text-box, .Playing-T .text-box, .Pause .text-box b.t-b-body, .Playing-T .text-box b.t-b-body {
+    width: auto;
+}
+
+    .Pause .text-box b.t-b-body em, .Playing-T .text-box b.t-b-body em {
+        display: none;
+    }
+
+    .Pause .text-box b.t-b-body label, .Playing-T .text-box b.t-b-body label {
+        float: left;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        line-height: 38px;
+        font-size: 10px;
+        font-family: Tahoma, Geneva, sans-serif;
+        color: #555;
+    }
+    /*加拖动后删除以下部分*/
+    .Pause .text-box b.t-b-body span, .Playing-T .text-box b.t-b-body span {
+        float: left;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        margin: 10px 5px 0 5px;
+        overflow: hidden;
+        vertical-align: middle;
+        width: 103px;
+        height: 18px;
+        background-color: #d7d7d7;
+        -webkit-border-radius: 9px;
+        -ms-border-radius: 9px;
+        -o-border-radius: 9px;
+        border-radius: 9px;
+    }
+
+        .Pause .text-box b.t-b-body span font, .Playing-T .text-box b.t-b-body span font {
+            font: normal normal 13px/18px 'Arial';
+            color: #fff;
+        }
+
+        .Pause .text-box b.t-b-body span dfn, .Playing-T .text-box b.t-b-body span dfn {
+            display: block;
+            width: 0%;
+            height: 18px;
+            background-color: #f59c00;
+            -webkit-border-radius: 9px 0 0 9px;
+            -ms-border-radius: 9px 0 0 9px;
+            -o-border-radius: 9px 0 0 9px;
+            border-radius: 9px 0 0 9px;
+        }
+/*新加拖动部分改动样式
+.Pause .text-box b.t-b-body span,.Playing-T .text-box b.t-b-body span{
+	position:relative;
+	float:left; display:inline-block; *display:inline; *zoom:1; margin:15px 5px 0 11px; vertical-align:middle;
+	width:103px; height:8px;
+	background-color:#d7d7d7;
+	-webkit-border-radius:9px;
+	-ms-border-radius:9px;
+	-o-border-radius:9px;
+	border-radius:9px;
+	cursor:pointer;
+	
+}
+.Pause .text-box b.t-b-body span font,.Playing-T .text-box b.t-b-body span font{
+	font:normal normal 13px/18px 'Arial'; color:#fff;
+}
+.Pause .text-box b.t-b-body span dfn,.Playing-T .text-box b.t-b-body span dfn{
+	display:block;
+	width:0%; height:8px;
+	background-color:#f59c00;
+	-webkit-border-radius:9px 0 0 9px;
+	-ms-border-radius:9px 0 0 9px;
+	-o-border-radius:9px 0 0 9px;
+	border-radius:9px 0 0 9px;
+	cursor:pointer;
+}
+.Pause .text-box b.t-b-body span,.Playing-T .text-box b.t-b-body span i{
+	position:absolute; left:0; top:0; z-index:9;
+	width:12px; height:12px;
+	margin:-3px 0 0 -6px;
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#aaa));
+	background:-moz-linear-gradient(top, #eee,#aaa);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#eee,endColorstr=#aaa,grandientType=1);
+	border:1px solid #999;
+	-webkit-border-radius:6px;
+	-ms-border-radius:6px;
+	-o-border-radius:6px;
+	border-radius:6px;
+	cursor:pointer;
+    -webkit-box-shadow:0 0 5px rgba(255 255 255 0.5) inset,1px 1px 2px #fff inset; 
+	-moz-box-shadow:0 0 5px rgba(255 255 255 0.5) inset,1px 1px 2px #fff inset;          
+    box-shadow:0 0 5px rgba(255 255 255 0.5) inset,1px 1px 2px #fff inset;
+}*/
+
+/* 卷库头部浮动按钮 */
+.btn_box {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000000;
+    height: 60px;
+    background-color: #3E91B9;
+    text-align: center;
+    border-bottom: 2px solid #dfdfdf;
+}
+
+    .btn_box button {
+        display: inline-block;
+        margin: 15px 20px 0 20px;
+        width: 100px;
+        height: 30px;
+        background-color: #D6EEF8;
+        color: #333;
+        font-size: 16px;
+        font-family: 'Microsoft YaHei';
+        border: none;
+        border-radius: 5px;
+    }
+
+    .btn_box .quote {
+        background-color: #FC3;
+    }
+
+    .btn_box button:hover {
+        background-color: #fff;
+    }
+
+.btn_header {
+    padding-top: 60px;
+}
+
+/* 卷库头部浮动按钮 */
+/*.btn_box{
+	position:fixed; width:100%; top:0; left:0;
+	height:60px;
+	background-color:#63afed; text-align:center; border-bottom:2px solid #dfdfdf;
+}
+.btn_box button{
+	display:inline-block; margin:15px 20px 0 20px; width:100px; height:30px;
+	background-color:#fff; color:#63afed; font-size:16px; font-family:'Microsoft YaHei'; border:none; border-radius:5px;
+}
+.btn_box .quote{
+	background-color:#FC3; color:#fff;
+}
+.btn_box button:hover{
+	background-color:#efefef; color:#555;
+}
+.btn_header{
+	padding-top:50px;
+}*/
+
+/* 弹出窗口 */
+.popup_box {
+    display: none;
+    position: absolute; /* top:50%; left:50%;*/
+    z-index: 1000002;
+    width: 410px; /* margin:-200px 0 0 -205px;*/
+    background-color: #fff;
+    border-top: 5px solid #39b2eb;
+    padding: 1px;
+    font-family: Microsoft YaHei;
+}
+
+    .popup_box a {
+        float: right;
+        display: block;
+        margin-right: 10px;
+        height: 36px;
+        line-height: 36px;
+        color: #ccc;
+        font-size: 30px;
+        text-decoration: none;
+    }
+
+        .popup_box a:hover {
+            color: #c64432;
+        }
+
+    .popup_box p {
+        padding: 50px 30px;
+        line-height: 36px;
+        font-size: 16px;
+        color: #777;
+        text-align: center;
+    }
+
+        .popup_box p b {
+            font-size: 26px;
+            margin: 0 6px;
+            height: 36px;
+            line-height: 36px;
+            color: #ff6900;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .popup_box p em {
+            color: #9C0;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+.btn_pbox {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+    .btn_pbox button {
+        margin: 0 10px;
+        padding: 0 25px;
+        height: 35px;
+        *padding: 0 12px;
+        background-color: #f4d14a;
+        color: #7c3e01;
+        border: 1px solid #b1770b;
+        font-size: 16px;
+        font-family: Microsoft YaHei;
+    }
+/*-----------------------weike--------------------------------*/
+.windows-weike {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    width: 430px;
+    min-height: 250px;
+    _height: 250px;
+    padding: 1px;
+    border: #97c9f6 solid 3px;
+    background-color: #fff;
+    box-shadow: 1px 1px 6px rgba(0,0,0,0.75);
+}
+
+    .windows-weike h4 {
+        height: 30px;
+        margin: 0;
+        padding-left: 10px;
+        border-bottom: #fff solid 1px;
+        font-size: 12px;
+        color: #fff;
+        line-height: 30px;
+        font-weight: normal;
+        background: url(/Content/Images/Examination/weike-close.png) repeat-x 0 0;
+        cursor: move;
+    }
+
+    .windows-weike a {
+        float: right;
+        _display: inline;
+        width: 30px;
+        height: 30px;
+        overflow: hidden;
+        margin: 0;
+        background: url(/Content/Images/Examination/weike-close.png) no-repeat 0 -30px;
+        outline: none;
+    }
+/*-------------------------------------------------------*/
+/*-----------------------select-subject--------------------------------*/
+.select-subject {
+    display: none;
+    position: absolute;
+    z-index: 101;
+    width: 430px;
+    min-height: 250px;
+    _height: 250px;
+    background-color: #fff;
+    font-family: "微软雅黑";
+}
+
+    .select-subject h4 {
+        height: 46px;
+        margin: 0;
+        padding-left: 20px;
+        font-size: 16px;
+        color: #282831;
+        line-height: 46px;
+        background-color: #ffcc33;
+    }
+
+        .select-subject h4 a {
+            float: right;
+            _display: inline;
+            width: 20px;
+            height: 20px;
+            overflow: hidden;
+            margin: 13px 14px 0 0;
+            background: url(/Content/Images/Examination/select-close.png) no-repeat 0 0;
+        }
+
+            .select-subject h4 a:hover {
+                background-position: 0 -30px;
+            }
+
+    .select-subject .panfen {
+        margin: 0;
+        padding-left: 100px;
+        padding-top: 30px;
+        text-align: left;
+        line-height: 30px;
+        color: #666;
+        font-size: 14px;
+    }
+
+        .select-subject .panfen b {
+            float: left;
+            margin-left: -28px;
+        }
+
+        .select-subject .panfen em {
+            font-style: normal;
+            margin: 0 4px;
+            color: #f60;
+            font-weight: bold;
+        }
+
+        .select-subject .panfen a {
+            display: block;
+            clear: both;
+            text-decoration: none;
+            color: #666;
+        }
+
+            .select-subject .panfen a:hover {
+                color: #f60;
+                text-decoration: underline;
+            }
+
+    .select-subject .button, .pResultBor .button {
+        padding-top: 16px;
+        height: 64px;
+    }
+
+        .select-subject .button a, .pResultBor .button a {
+            margin-left: 140px;
+            float: left;
+            height: 38px;
+            padding: 0 30px;
+            border-radius: 2px;
+            line-height: 40px;
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+            background-color: #ff6600;
+        }
+
+    .select-subject .panfen label {
+        display: block;
+        color: #888;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+
+        .select-subject .panfen label:hover {
+            color: #f60;
+        }
+
+    .select-subject .panfen input {
+        float: left;
+        margin: 9px 4px 0 0;
+        margin: 5px 4px 0 -4px\9;
+        *margin: 5px 4px 0 -4px;
+    }
+/*-------------------------------------------------------*/
+/*-----------------------得分，评语弹窗口--------------------------------*/
+.pResultBor {
+    float: left;
+    font-size: 12px;
+    width: 492px;
+    border: 4px solid #bbdeff;
+    display: none;
+    background-color: #fff;
+    z-index: 101;
+}
+
+.pResult {
+    float: left;
+    width: 478px;
+    padding: 6px 6px 15px 6px;
+    border: 1px solid #c8cdd0;
+    background-color: #fff;
+}
+
+.waiting {
+    float: left;
+    margin-left: 9px;
+    width: 460px;
+    height: 120px;
+    margin-top: 20px;
+    background: #F3FCFF url(/Content/Images/Examination/TestSheet/ajax-loader.gif) no-repeat center center;
+    border-top: 1px dashed #afafaf;
+    border-bottom: 1px dashed #afafaf;
+}
+
+a.pRclose {
+    float: right;
+    width: 30px;
+    height: 30px;
+    background: url(/Content/Images/Examination/numall.png) no-repeat 0 0;
+}
+
+.score {
+    margin: 0;
+    padding: 25px 0 0 20px;
+    height: 70px;
+    list-style-type: none;
+    text-align: center;
+}
+
+    .score li {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        width: 45px;
+        height: 61px;
+        background: url(/Content/Images/Examination/numall.png) no-repeat;
+        margin: 0;
+        padding: 0;
+        vertical-align: top;
+    }
+
+        .score li.s1 {
+            background-position: 0 -30px;
+        }
+
+        .score li.s2 {
+            background-position: -45px -30px;
+        }
+
+        .score li.s3 {
+            background-position: -90px -30px;
+        }
+
+        .score li.s4 {
+            background-position: -135px -30px;
+        }
+
+        .score li.s5 {
+            background-position: -180px -30px;
+        }
+
+        .score li.s6 {
+            background-position: -225px -30px;
+        }
+
+        .score li.s7 {
+            background-position: -270px -30px;
+        }
+
+        .score li.s8 {
+            background-position: -315px -30px;
+        }
+
+        .score li.s9 {
+            background-position: -360px -30px;
+        }
+
+        .score li.s0 {
+            background-position: -405px -30px;
+        }
+
+        .score li.cuoti {
+            width: auto;
+            padding-left: 10px;
+            font-size: 14px;
+            line-height: 90px;
+            color: #666;
+            font-family: "微软雅黑";
+            background-image: none;
+        }
+
+            .score li.cuoti strong {
+                margin: 0 4px;
+                color: #f60;
+            }
+
+.remark {
+    float: left;
+    width: 478px;
+    height: 88px;
+    margin-top: 10px;
+}
+
+.sc_st {
+    float: left;
+    margin-top: 15px;
+    padding-left: 100px;
+    width: 280px;
+    color: #537ed7;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+    .sc_st li {
+        float: left;
+        line-height: 23px;
+    }
+
+    .sc_st b {
+        color: #ff0000;
+        font-size: 18px;
+        margin-right: 50px;
+    }
+
+.dacheng {
+    width: 85px;
+    height: 13px;
+    padding-top: 4px;
+    background: url(/Content/Images/Examination/TestSheet/numall.png) no-repeat -151px 4px;
+}
+
+    .dacheng div {
+        float: left;
+        margin-right: 4px;
+        width: 13px;
+        height: 13px;
+        background: url(/Content/Images/Examination/TestSheet/numall.png) no-repeat;
+    }
+
+        .dacheng div.fullstar {
+            background-position: -151px -13px;
+        }
+
+        .dacheng div.halfstar {
+            background-position: -164px -13px;
+        }
+
+.divpet {
+    float: left;
+    width: 438px;
+    margin: 15px 0 0 19px;
+    border: 1px solid #bbdeff;
+    padding: 15px 0 8px;
+    background-color: #f6faff;
+}
+
+    .divpet span {
+        float: left;
+        width: 438px;
+        color: #0090ff;
+        text-align: center;
+    }
+
+    .divpet a {
+        float: left;
+        width: 100px;
+        height: 30px;
+        margin: 10px 0 0 140px;
+        padding-left: 21px;
+        line-height: 30px;
+        color: #fff;
+        font-weight: bold;
+        background: url(/Content/Images/Examination/TestSheet/numall.png) no-repeat -30px 0;
+        text-decoration: none;
+    }
+
+.pResultBor .button {
+    height: 50px;
+    text-align: center;
+    clear: both;
+}
+
+    .pResultBor .button a {
+        float: none;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        margin: 0 20px;
+        font-family: "微软雅黑";
+    }
+
+
+    .li_option_titie .radio {
+        padding-top: 0px;
+    }

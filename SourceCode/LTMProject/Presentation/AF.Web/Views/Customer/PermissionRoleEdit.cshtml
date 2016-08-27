@@ -1,0 +1,94 @@
+﻿@using System.Web.Mvc.Html
+@using AF.Domain.Domain.Customers
+@model AF.Web.Models.Customer.CustomerRolePermissionModel
+@{
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+    ViewBag.Title = "PermissionRoleEdit";
+}
+<script src="~/Content/Metronic/global/plugins/jcrop/js/jquery.min.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $('#@Html.IdFor(m=>m.CustomerRoleId)').change(function () {
+            window.location = "/Customer/PermissionRoleEdit?CustomerRoleId=" + $(this).children('option:selected').val();
+        });
+    });
+</script>
+
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("ListCustomer")">用户管理</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">编辑权限</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light bg-inverse">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-diamond font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold uppercase">编辑权限</span>
+                    <span class="caption-helper">权限信息</span>
+                </div>
+            </div>
+
+            <div class="portlet-body form">
+                @using (Html.BeginForm("PermissionRoleUpdate", "Customer", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">角色:</label>
+                            <div class="col-md-3">
+                                @Html.DropDownListFor(c => c.CustomerRoleId, Model.AvailableRoles, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">操作权限:</label>
+                            <div class="col-md-9">
+                                <div class="checkbox-list">
+                                    @foreach (var perItem in Model.PermissionRecords)
+                                    {
+                                        <label for="@perItem.Id">
+                                            @if (Model.RolePermissionRecords.Contains(perItem))
+                                            {
+                                                <input type="checkbox" name="SelectPermission" checked="checked" id="@perItem.Id" value="@perItem.Id">
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="SelectPermission" id="@perItem.Id" value="@perItem.Id">
+                                            }
+                                            @perItem.Name
+                                        </label>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="submit" class="btn green"><i class="fa fa-check"></i> 确认</button>
+                                    <a class="btn default" href="@Url.Action("ListCustomer", "Customer")">取消</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             }
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+</div>

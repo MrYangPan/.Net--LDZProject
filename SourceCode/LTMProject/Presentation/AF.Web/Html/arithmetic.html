@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=7;IE=8;IE=9;IE=10" />
+    <title>算术竖式</title>
+    <link href="/Content/css/AFEditer/xiaoshushushi.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="/Content/Scripts/Jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="/Content/Scripts/AFEditer/arithmetic.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            arithmetic.Init('Arithmetic', 'score');
+
+            $("a.SS-moshiyi").bind("click", function () {
+                arithmetic.ModelOne();
+            });
+
+            $("a.SS-moshier").bind("click", function () {
+                arithmetic.ModelTwo();
+            });
+
+            $("a.SS-danyuange").bind("click", function () {
+                arithmetic.LeftCell();
+            });
+
+            $("a.SS-daankuang").bind("click", function () {
+                arithmetic.AnswerCell();
+            });
+
+            $("a.SS-lianghang").bind("click", function () {
+                arithmetic.IncreaseRows();
+            });
+
+            $("a.SS-chexiao").bind("click", function () {
+                arithmetic.UnDo();
+            });
+
+            $('#score').keyup(function () {
+                arithmetic.RejectNaN(this);
+            });
+
+            //arithmetic.Parser();
+        }
+
+        //获取url中的参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg); //匹配目标参数
+            if (r != null) return unescape(r[2]);
+            return null; //返回参数值
+        }
+
+        function check() {
+            var tmid = getUrlParam('tmid');
+            if (tmid == '') {
+                alert("TMID参数错误！");
+                return;
+            }
+            var isAnswer = true;
+            var returnJson = arithmetic.Store();
+            if (returnJson == {}) {
+                alert("没有竖式！");
+                return;
+            }
+            var score = $("#score").val();
+            if (returnJson.indexOf('daankuang') == -1) {
+                isAnswer = false;
+            } else {
+                if ($.isNumeric($("#score").val()) == false) {
+                    alert("请正确填写该竖式的分值！");
+                    return;
+                }
+                var reg = /daankuang/g;
+                var kLen = returnJson.match(reg).length;
+                var svgScore = (parseFloat(score) / kLen);
+                if (svgScore.toString().length > 5) {
+                    alert("答案空的平均分值不相等。\r\n分数值(" + score + ")/空的数量(" + kLen + ") 除不尽！");
+                    return;
+                }
+            }
+
+            var kongGuid = $("#trackId").val();
+
+            var reg = new RegExp('\\[k [\\s\\S]*?type="(.*?)"[\\s\\S]*?score="([0-9.]+)"\\]([\\s\\S]*?)\\[/k\\]', 'img');
+            var reg1 = new RegExp('\\[shushi\\]([\\s\\S]*?)\\[/shushi\\]');
+            var group = reg1.exec(kongGuid);
+            var guid = '';
+            if (group && group.length >= 1) {
+                guid = group[1];
+            } else {
+                group = reg.exec(kongGuid);
+                if (group && group.length >= 4) {
+                    guid = group[3];
+                }
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/EntryExamination/UpdateTrack?tmid=" + tmid + "&trackId=" + guid,
+                async: false,
+                data: { "trackContent": returnJson },
+                success: function (msg) {
+                    var kList = '';
+                    if (isAnswer) {
+                        kList = '[k type="shushi" score="' + score + '"]' + msg + '[/k]';
+                    } else {
+                        kList = '[shushi]' + msg + '[/shushi]';
+                    }
+
+                    if (navigator.userAgent.indexOf("Chrome") > 0) {
+                        window.opener.AFEditor.tool.setOpenConent(kList);
+                    }
+                    else {
+                        window.returnValue = kList;
+                    }
+                    window.close();
+                }
+            });
+        }
+
+        function parseStore() {
+            var kongGuid = $("#trackId").val();
+            var reg = new RegExp('\\[k [\\s\\S]*?type="(.*?)"[\\s\\S]*?score="([0-9.]+)"\\]([\\s\\S]*?)\\[/k\\]', 'img');
+            var reg1 = new RegExp('\\[shushi\\]([\\s\\S]*?)\\[/shushi\\]');
+            var group = reg1.exec(kongGuid);
+            var guid = '';
+            if (group && group.length >= 1) {
+                guid = group[1];
+            } else {
+                group = reg.exec(kongGuid);
+                if (group == null || group.length < 4) {
+                    alert(kongGuid + "格式不正确！");
+                    return;
+                }
+                guid = group[3];
+            }
+
+            $.get("/EntryExamination/GetTrack?trackId=" + guid + "&r=" + Math.random(), function (d) {
+                arithmetic.Parser(d);
+            });
+
+        }
+    </script>
+</head>
+
+<body>
+    <div style="margin:10px;">
+        <span>竖式代码:</span><input type="text" style="width:300px;" id="trackId" /><input type="button" value="解析" onclick="parseStore();" />
+    </div>
+    <div class="shushi-caozuo" style="top:40px;">
+        <ul>
+            <li><a class="SS-moshiyi" href="javascript:;"></a></li>
+            <li><a class="SS-moshier" href="javascript:;"></a></li>
+            <li><a class="SS-danyuange" href="javascript:;"></a></li>
+            <li><a class="SS-daankuang" href="javascript:;"></a></li>
+            <li><a class="SS-lianghang" href="javascript:;"></a></li>
+            <li><a class="SS-chexiao" href="javascript:;"></a></li>
+            <li>分数<input id="score" type="text" /></li>
+        </ul>
+    </div>
+
+    <div id="Arithmetic" style="padding-top:80px;padding-left:40px;"></div>
+    <input type="button" value="确定" onclick="check();" />
+</body>
+</html>

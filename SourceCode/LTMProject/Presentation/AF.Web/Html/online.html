@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8;IE=9;" />
+    <title>连线题编辑</title>
+    <style type="text/css">
+        v\:line {
+            behavior: url(#default#VML);
+        }
+
+        v\:stroke {
+            behavior: url(#default#VML);
+        }
+        /*--连线题样式--*/
+        .matching {
+            margin: 0;
+        }
+
+            .matching .matching-left, .matching .matching-right {
+                float: left;
+                width: 49.6%;
+                margin: 0;
+                padding: 0;
+                line-height: 30px;
+                list-style-type: none;
+            }
+
+                .matching .matching-left > li, .matching .matching-right > li {
+                    display: block;
+                }
+
+            .matching .inline {
+                display: inline-block;
+                *display: inline;
+                *zoom: 1;
+            }
+    </style>
+    <script src="/Content/Scripts/Jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var left = [];
+        var right = [];
+
+        function matchLeftClick(o) {
+            $(o).parent().parent().find(".inline").each(function() {
+                $(this).css("color", "");
+            });
+            $(o).css("color", "blue");
+        }
+
+        function matchRightClick(o) {
+            var lft = null;
+            $(o).parent().parent().parent().find(".matching-left .inline").each(function() {
+                if (this.style.color == "blue") {
+                    lft = this;
+                }
+            });
+            if (lft == null) return;
+            if (lft.parentNode.parentNode.parentNode != o.parentNode.parentNode.parentNode) return;
+
+            lft.setAttribute("to", $($(o).parent()).index());
+
+            var lftX = lft.offsetLeft + lft.offsetWidth;
+            var lftY = lft.offsetTop + lft.offsetHeight / 2;
+            var rhtX = o.offsetLeft;
+            var rhtY = o.offsetTop + o.offsetHeight / 2;
+            DrawLine(lftX, lftY, rhtX, rhtY, lft, true);
+        }
+
+        function DrawLine(x1, y1, x2, y2, ele, isRight) { //画线
+
+            if ($.browser.msie) {
+                var str = "<v:line class='vline'  from='" + x1 + "," + Math.ceil(y1) + "'";
+                str += " to='" + (x2) + "," + (y2)
+                    + "' right=" + isRight + "  style=\"position:absolute;top:0px;left:0px\">" +
+                    "<v:stroke endarrow='classic' color='blue'/></v:line>";
+                $(ele).find(".vline").remove();
+                $(ele).append(str);
+            } else {
+                var cvsObj = document.createElement("canvas");
+                var cvs = cvsObj.getContext("2d");
+                cvsObj.style.position = "absolute";
+                cvsObj.style.top = "0px";
+                cvsObj.style.left = "0px";
+                cvsObj.style.zIndex = "-99";
+                cvsObj.width = 600;
+                cvsObj.height = 600;
+                cvsObj.right = isRight;
+                cvs.strokeStyle = "blue";
+                cvs.lineWidth = 1;
+                cvs.beginPath();
+                cvs.moveTo(x1, y1);
+                cvs.lineTo(x2, y2);
+                cvs.closePath();
+                cvs.stroke();
+                $(ele).find("canvas").remove();
+                ele.appendChild(cvsObj);
+            }
+        }
+
+
+        function AddItem() {
+            var item = $.trim($("#item").val());
+            var lr = $("input[name='group']:checked").val();
+            if (item == '') {
+                alert('请输入添加的内容！');
+                return;
+            }
+            if (lr == 'left') {
+                if ($.inArray(item, left) > -1) {
+                    alert("左项已包含该内容！");
+                    return;
+                }
+                left.push(item);
+                $("#matchLeft").append('<li><div class="inline" onclick="matchLeftClick(this);">' + item + '</div></li>');
+            } else {
+                if ($.inArray(item, right) > -1) {
+                    alert("右项已包含该内容！");
+                    return;
+                }
+                right.push(item);
+                $("#matchRight").append('<li><div class="inline" onclick="matchRightClick(this);">' + item + '</div></li>');
+            }
+        }
+
+        function ok() {
+            if ($.isNumeric($.trim($("#score").val())) == false) {
+                alert("请正确输入题目分值！");
+                return;
+            }
+            var result = new Object();
+            result.left = left;
+            result.right = right;
+            var answer = [];
+            $("#matchLeft li div").each(function(i) {
+                var rIndex = -1;
+
+                var rIndex = this.getAttribute('to');
+
+                //rIndex = $.inArray(ritem, right);
+                if (rIndex != null && rIndex > -1) {
+                    answer.push(i + '|' + rIndex);
+                }
+            });
+            /*if(answer.length != left.length){
+            alert("请连线确定正确答案！");
+            return;
+        }*/
+            if (answer.length == 0) {
+                alert("请连线确定正确答案！");
+                return;
+            }
+            result.answer = answer;
+
+            //result.score = $.trim($("#score").val());
+            //alert(JSON.stringify(result));
+
+            var kList = '[k type="online-input" score="' + $.trim($("#score").val()) + '"]' + JSON.stringify(result) + '[/k]';
+
+            if (navigator.userAgent.indexOf("Chrome") > 0) {
+                window.opener.AFEditor.tool.setOpenConent(kList);
+            }
+            else {
+                window.returnValue = kList;
+            }
+            window.close();
+        }
+    </script>
+</head>
+<body>
+    <div>
+        内容：<input type="text" style="width: 200px" id="item" />
+        <input type="radio" name="group" value="left" id="rdoLeft" checked="checked" /><label for="rdoLeft">左项</label>
+        <input type="radio" name="group" value="right" id="rdoRight" /><label for="rdoRight">右项</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        分值：<input type="text" style="width:20px" id="score" />
+        <input type="button" value="添加" onclick="AddItem();" />
+    </div>
+    <div>
+        <div class="matching">
+            <ul class="matching-left" id="matchLeft"></ul>
+            <ul class="matching-right" id="matchRight"></ul>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div>
+        <input type="button" value="确定" onclick="ok();" />
+    </div>
+</body>
+</html>

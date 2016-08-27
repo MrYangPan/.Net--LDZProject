@@ -1,0 +1,156 @@
+﻿@using System.Data
+@using AF.Core.Extensions
+@using AF.Domain.Domain.BookWork
+@using AF.Domain.Domain.TiMus
+@using AF.Web.Models.EntryExamination
+@model AF.Web.Models.EntryExamination.EntryExaminationModel
+@{
+    Layout = null;
+}
+@*@Scripts.Render("~/bundles/jquery")
+    <link href="/Content/Metronic/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/Metronic/global/css/components.css" rel="stylesheet" type="text/css" />*@
+<link href="~/Content/CSS/AFEditer/AFEditer.css" rel="stylesheet" />
+<link href="~/Content/CSS/Model/EntryExaminationTopic.css" rel="stylesheet" />
+<script src="~/Content/Scripts/AFEditer/AFEditor.js"></script>
+<script src="~/Content/Scripts/TiMu/EntryPageEditor.js"></script>
+
+<script>
+    var myEditor = "";
+    $(function() {
+        window.onload = function() {
+            var tmobj = @Html.Raw(Model.Timu.Obj2Json());
+            pageedit.init(tmobj, null);
+            myEditor = pageedit.myEditor();
+        };
+    });
+</script>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row margin-top-10">
+            <div class="col-lg-1"><label class="pull-left">题型:</label></div>
+            <div class="col-lg-11" id="TMType">
+                @for (int j = 0; j < Model.TmTypeList.Count; j++)
+                {
+                    <label class="radio-inline" style="padding-left: 0px; margin-left: 0px;">
+                        <input type="radio" class="kClassifyCheck" value="@Model.TmTypeList[j].Id" id="type_@j" name="tmType" />
+                        @Model.TmTypeList[j].Name
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="row margin-top-10" id="inputChoice">
+            <div class="col-lg-1">
+                <label class="pull-left">类别:</label>
+            </div>
+            <div class="col-lg-11">
+                <label class="radio-inline" style="padding-left: 0px; margin-left: 00px;">
+                    <input type="radio" name="choiceType" id="rdoRdo" value="0">
+                    单选类
+                </label>
+                <label class="radio-inline" style="padding-left: 0px;">
+                    <input type="radio" name="choiceType" id="rdoCK" value="1">
+                    多选类
+                </label>
+                <label class="radio-inline" style="padding-left: 0px;">
+                    <input type="radio" name="choiceType" id="rdoTF" value="2">
+                    判断类
+                </label>
+                <label class="radio-inline" style="padding-left: 0px;">
+                    <input type="radio" name="choiceType" id="rdoText" value="3">
+                    填空类
+                </label>
+            </div>
+        </div>
+        <div class="row margin-top-10 validateNumber">
+            <div class="col-lg-1">
+                <label class="pull-left" style="margin-top: 5px;">页码:</label>
+            </div>
+            <div class="col-lg-11">
+                <label style="margin-left: 10px;">大题号:</label>
+                <input type="text" class="form-control input-inline largeNumber input-small" id="largeNumber" style="margin-left: 10px;">
+                <label style="margin-left: 20px;">小题号:</label>
+                <input type="text" class="form-control input-inline smallNumber input-small" id="smallNumber" style="margin-left: 10px;">
+                <label style="margin-left: 20px;">页码:</label>
+                <input type="text" class="form-control input-inline pageNumber input-small" id="pageNumber" style="margin-left: 10px;" placeholder="请输入数字" title="只能输入数字!">
+            </div>
+        </div>
+        <div class="row row margin-top-10">
+            <div class="col-lg-12 article" id="TiGan">
+                <div class="title">
+                    <dfn class="tigan"></dfn>题干
+                </div>
+                <div class="Topic-editor-box article_right_xuanxiang" data-edit="0"></div>
+            </div>
+        </div>
+        <div class="row  margin-top-10">
+            <div class="col-lg-12" id="chioce" style="display: none;">
+                <div class="row" id="chAdd">
+                    <div style="margin-top: 10px;">
+                        <a href="javascript:;" id="addChoice">添加一选项</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" id="removeChoice">删除一选项</a>
+                    </div>
+                </div>
+                <div class="row" id="choiceList"></div>
+                @*<div class="row">
+                        <div class="article Choice" id="paili">
+                            <h4 class="title"><dfn class="pailie"></dfn>排列</h4>
+                            <ul class="articlelist">
+                                <li><input type="radio" name="plfs" id="rdo_order0" value="0"><label for="rdo_order0">四行一列</label></li>
+                                <li><input type="radio" name="plfs" id="rdo_order1" value="1"><label for="rdo_order1">两行两列</label></li>
+                                <li><input type="radio" name="plfs" id="rdo_order3" value="2"><label for="rdo_order3">一行三列</label></li>
+                                <li><input type="radio" name="plfs" id="rdo_order2" value="3"><label for="rdo_order2">一行四列</label></li>
+                            </ul>
+                        </div>
+                    </div>*@
+                <div class="row margin-top-10">
+                    <div class="article col-lg-12" id="fenZhi">
+                        <h4 class="title"><dfn class="fenzhi"></dfn>分值</h4>
+                        <ul class="articlelist">
+                            <li class="fenzhiLi">正确答案<input class="answer" type="text" disabled="disabled" id="choiceAnswer" style="padding-left: 5px; margin-left: 5px;" value=""></li>
+                            <li class="fenzhiLi">
+                                <span id="Input_1_Words">本题分值</span><input type="text" id="select_score" style="border: none; border-bottom: 1px solid #666; width: 30px; margin-left: 3px;padding-left: 10px;" value="1">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row  margin-top-10">
+            <div class="col-lg-12 article">
+                <div class="title">
+                    <dfn class="fenxi"></dfn>分析
+                </div>
+                <div id="divAnalyse">
+                    <div class="Topic-editor-box article_right_xuanxiang" data-edit="1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-lg-12 article">
+                <div class="title">
+                    <dfn class="jieda"></dfn>解答
+                </div>
+                <div id="divExplain">
+                    <div class="Topic-editor-box article_right_xuanxiang" data-edit="2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-top-10">
+            <div class="col-lg-12 article">
+                <div class="title">
+                    <dfn class="dianpin"></dfn>点评
+                </div>
+                <div id="divComment">
+                    <div class="Topic-editor-box article_right_xuanxiang" data-edit="3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="_editorFactory_" class="col-lg-12 windows-select" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <input type="button" id="topicSave" class="btn default blue" data-parentTmid="" value="保存" data-src="@Url.Action("EntryTopic", new { revert = false, isEdit = true, taskId = Model.BookWorkTaskItem.TaskId, taskItemId = Model.BookWorkTaskItem.Id,cycles=Model.Cycles,order=Model.Order})">
+</div>
+<iframe id="ifm1" src='@Url.Action("UploadImage", "EntryExamination" , new { tmid=Model.Timu.Id,subjcode=Model.Timu.Subject.SystemCode})' style="opacity:0;filter:alpha(opacity=0);position:absolute;left:60px;top:13px;background-color:#fff;display:none;" marginwidth="0" marginheight="0" width="46" height="18" scrolling="no" frameborder="0"></iframe>

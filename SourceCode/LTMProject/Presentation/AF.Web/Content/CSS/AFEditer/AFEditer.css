@@ -1,0 +1,41 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/* 题目编辑器样式 */
+.Topic-editor-box{margin:0 0 5px 0; padding:0; border:#ccc solid 1px; height:auto;}
+.Topic-editor-title{height:24px; margin:0; padding:4px 0 0 5px; background-color:#f0f0ee; border:none; border-bottom:#ccc solid 1px; list-style-type:none;}
+.Topic-editor-title a{float:left; width:17px; height:16px; overflow:hidden; margin:0 0 0 4px; padding:1px; border:#f0f0ee solid 1px;}
+.Topic-editor-title a:hover{border:#5690d2 solid 1px;}
+.Topic-editor-title dfn{display:block; width:17px; height:16px; overflow:hidden; margin:0; padding:0; background:url(/content/images/afediter/default.png) 0 0 no-repeat;}
+.Topic-editor-title .jiacu dfn{ background-position:1px -416px;}
+.Topic-editor-title .xieti dfn{background-position:1px -432px;}
+.Topic-editor-title .xiahuaxian dfn{background-position:1px -448px;}
+.Topic-editor-title .sub dfn{ background-position:0px -272px;}
+.Topic-editor-title .sup dfn{ background-position:0px -288px;}
+.Topic-editor-title .ziti dfn{ background-position:0px -352px;}
+.Topic-editor-title .zihao dfn{ background-position:0px -368px;}
+.Topic-editor-title .yanse dfn{ background-position:0px -400px;}
+.Topic-editor-title .textstyle dfn{ background-position:0px -384px;}
+.Topic-editor-title .clearHtml dfn{ background-position:0px -1008px;}
+.Topic-editor-title .tupian dfn{background-position:0 -495px;}
+.Topic-editor-title .jvzuo dfn{background-position:0 -144px;}
+.Topic-editor-title .jvzhong dfn{background-position:0 -160px;}
+.Topic-editor-title .jvyou dfn{background-position:0 -176px;}
+.Topic-editor-title .fuhao dfn{background-position:0 -1290px;}
+.Topic-editor-title .kongdanan dfn{background-position:0 -1270px;}
+.Topic-editor-title .gongshi dfn{background-position:0 -1250px;}
+.Topic-editor-title .yinbiao dfn{background-position:0 -1330px;}
+.Topic-editor-section{ display:block; width:100%; min-height:100px; _height:40px; margin:0; padding:0; background-color:#fff; border:none;font-size:16px;line-height:1.5em;}
+.windows-select{position:absolute; background-color:#f1f1f1; width:154px; border:#a0a0a0 solid 1px;z-index:99991;}
+.windows-select dl{ list-style-type:none; margin:0; padding:5px 0;}
+.windows-select dd{ margin:0; padding:0; font-size:14px;}
+.windows-select dd a{text-decoration:none; color:#000;}
+.windows-select dd a:hover{ color:#f60;}
+.windows-select .font-size dd{ padding:0 0 0 25px;}
+.windows-select .font-family dd{ padding:0 0 0 25px; height:26px; line-height:26px;}
+.windows-select .font-textstyle dd{ padding:0 0 0 25px;min-height:36px;_height:36px;}
+.windows-select .font-color{ height:100px; padding:5px 0 5px 5px;}
+.windows-select .font-color dd{ float:left; width:18px; padding:3px;}
+.windows-select .font-color dd a{display:block; width:18px; height:18px; overflow:hidden;}
+.windows-select .font-color dt{ float:left; width:144px; height:30px; margin:0; padding:0; line-height:30px; text-align:center; font-size:12px;}
+.windows-select .font-color dt a{ text-decoration:none; color:#000;}

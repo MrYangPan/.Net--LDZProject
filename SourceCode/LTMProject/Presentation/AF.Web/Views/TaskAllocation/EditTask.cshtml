@@ -1,0 +1,159 @@
+﻿@model AF.Web.Models.TaskAllocation.EditTaskModel
+@{
+    ViewBag.Title = "EditTask";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <i class="fa fa-user"></i>
+            <a href="@Url.Action("Index")">任务管理列表</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">编辑任务</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="row">
+    <div class="col-md-12">
+
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light bg-inverse">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-equalizer font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold uppercase">任务编辑</span>
+                    <span class="caption-helper">任务信息</span>
+                </div>
+            </div>
+
+            <div class="portlet-body form">
+
+                <!-- BEGIN FORM-->
+                @using (Html.BeginForm("EditTask", "TaskAllocation", null, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">录入:</label>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(t => t.TaskId)
+                                @Html.HiddenFor(t => t.CheckCustomerName)
+                                @Html.HiddenFor(t => t.EntryCustomerName)
+                                @Html.HiddenFor(t => t.EntryCustomerId, new { @class = "form-control", dataText = Model.EntryCustomerName })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">审核:</label>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(t => t.CheckCustomerId, new { @class = "form-control", dataText = Model.CheckCustomerName })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">状态:</label>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(t => t.TaskStatus, Model.StatusItemList, new { @class = "bs-select form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    var validationSummary = Html.ValidationSummary(false);
+                    if (this.IsPost && !MvcHtmlString.IsNullOrEmpty(validationSummary))
+                    {
+                        <div class="row">
+                            <div class="alert alert-danger col-md-offset-3 col-md-4 margin-top-10">
+                                <div class="message-error">@validationSummary</div>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button type="submit" class="btn green"><i class="fa fa-check"></i> 确认</button>
+                                <a class="btn default" href="@Url.Action("Index")">取消</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- END FORM-->
+
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <link href="~/Content/Metronic/global/plugins/select2/select2.css" rel="stylesheet"/>
+    <link href="~/Content/Metronic/global/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <script src="~/Content/Metronic/global/plugins/select2/select2.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(function() {
+            editTask.init();
+        });
+
+        var editTask = function() {
+
+            var selectBind = function() {
+
+                $("#EntryCustomerId,#CheckCustomerId").select2({
+                    placeholder: "请选择",
+                    formatInputTooShort: "",
+                    minimumInputLength: 1,
+                    ajax: {
+                        url: "/TaskAllocation/GetCustomer",
+                        dataType: 'json',
+                        data: function(term, page) {
+                            return {
+                                keyword: term
+                            };
+                        },
+                        results: function(data, page) {
+                            return {
+                                results: data
+                            };
+                        }
+                    },
+                    formatResult: function(item) {
+                        return "<option value='" + item.id + "'>" + item.text + "</option>";
+                    },
+                    initSelection: function(ele, callback) {
+                        var value = ele.val();
+                        var text = ele.attr("dataText");
+                        return callback({ id: value, text: text });
+                    }
+                });
+
+                $("#EntryCustomerId,#CheckCustomerId").on("change", function(e) {
+                    //下拉text
+                    var txt = e.added.text;
+                    var eleId = $(this).attr("id");
+                    if (eleId === "EntryCustomerId") {
+                        $("#EntryCustomerName").val(txt);
+                    }
+                    else if (eleId === "CheckCustomerId") {
+                        $("#CheckCustomerName").val(txt);
+                    }
+                });
+            }
+
+            return {
+                init: function() {
+                    selectBind();
+                }
+            };
+        }();
+    </script>
+
+}

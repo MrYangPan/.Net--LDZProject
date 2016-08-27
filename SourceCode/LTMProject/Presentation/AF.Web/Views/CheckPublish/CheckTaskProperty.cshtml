@@ -1,0 +1,310 @@
+﻿@using AF.Domain.Domain.Books
+@using AF.Web.Extensions
+@model AF.Web.Models.CheckPublish.CheckTaskPropertyModel
+@{
+    ViewBag.Title = "CheckTaskProperty";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<link href="~/Content/Metronic/global/plugins/select2/select2.css" rel="stylesheet" />
+<link href="~/Content/Metronic/global/css/plugins.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/CSS/AFEditer/AFEditer.css" rel="stylesheet" />
+<link href="~/Content/CSS/Model/EntryExaminationTopic.css" rel="stylesheet" />
+<link href="~/Content/CSS/bootstrap/star-rating.min.css" rel="stylesheet" />
+<link href="~/Content/CSS/Examination/Examination-new.css" rel="stylesheet"/>
+
+<script src="https://player.polyv.net/script/polyvplayer.min.js"></script>
+
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("CheckTaskList")">审核发布</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("CheckTaskDetail", new {taskId = Model.TaskId})">任务详情</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">审核界面</a>
+        </li>
+    </ul>
+
+
+    <ul class="page-breadcrumb" style="margin-left: 150px;">
+        <li>
+            <i class="fa fa-tree"></i>
+        </li>
+        @for (int i = 1; i <= Model.RelateAllChapters.Count; i++)
+        {
+            <li>
+                <span>@Model.RelateAllChapters[i - 1].Name</span>
+                @if (i != Model.RelateAllChapters.Count)
+                {
+                    <i class="fa fa-arrows-h"></i>
+                }
+            </li>
+        }
+    </ul>
+</div>
+
+<div class="modal fade" id="playModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 738px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">视频播放</h4>
+            </div>
+            <div class="modal-body">
+                <div id="playVideo"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@for (int i = 1; i <= Model.TiMuModels.Count; i++)
+{
+    var timuModel = Model.TiMuModels[i - 1].TiMuModel;
+    var bookTimuModel = Model.TiMuModels[i - 1];
+    <div class="portlet light bg-inverse">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="icon-pin font-red-sunglo"></i>
+                <span class="caption-subject font-red-sunglo bold uppercase">第 @i 题</span>
+            </div>
+            <div class="col-md-6 col-lg-offset-4 margin-top-20 ">
+                
+                <label > 录入员:</label>
+                <label > @Model.Task.EntryCustomer.Username</label>
+                
+
+                <label  style="margin-left: 80px;"> 讲解老师:</label>
+                <label > @timuModel.ExplainTeacher</label>
+                
+
+                <label  style="margin-left: 80px;"> 题型:</label>
+                <label > @timuModel.TiMuTypeName</label>
+            </div>
+            @if (!string.IsNullOrEmpty(timuModel.VideoCode))
+            {
+                <div class="actions">
+                    <input type="button" data-videoid="@(timuModel.VideoCode)" class="btn default btn-sm blue openModel" value="微课" />
+                </div>
+            }
+        </div>
+        <div class="portlet-body form">
+            <!-- BEGIN FORM-->
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="form-body col-md-9">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-lg-4 control-label">大题号: </label>
+                                <label class="col-lg-1" style="line-height: 35px;">@bookTimuModel.LargeNumber</label>
+                                <label class="col-lg-1 control-label">小题号: </label>
+                                <label class="col-lg-1" style="line-height: 35px;">@bookTimuModel.SmallNumber</label>
+                                <label class="col-lg-1 control-label">页码: </label>
+                                <label class="col-lg-1" style="line-height: 35px;">@bookTimuModel.PageNumber</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">主知识点：</label>
+                            <div class="col-md-4">
+                                <p class="form-control-static">
+                                    @timuModel.MainKnowledgeId
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">相关知识点：</label>
+                            <div class="col-md-4">
+                                <p class="form-control-static">
+                                    @timuModel.MinorKnowledgeId
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">难度等级：</label>
+                            <div class="col-md-4">
+                                <input class="rating rating-loading diffstar" data-show-clear="false" data-size="lg" data-min="0" data-max="5" data-step="1" data-diff="@timuModel.Difficult" data-readonly="true">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">题干：</label>
+                            <div class="col-md-7">
+                                <p class="form-control-static">
+                                    @Html.Raw(timuModel.Trunk)
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">解析：</label>
+                            <div class="col-md-7">
+                                <p class="form-control-static">
+                                    @Html.Raw(timuModel.Analysis)
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group last">
+                            <label class="col-md-4 control-label">解答：</label>
+                            <div class="col-md-7">
+                                <p class="form-control-static">
+                                    @Html.Raw(timuModel.Answer)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="control-label margin-top-10 margin-bottom-10" >错误提示：</label>
+                        <textarea class="form-control" style="height: 100%; width: 100%;" rows="11" data-infotmid="@timuModel.Tmid">@timuModel.ErrorMessage</textarea>
+                    </div>
+                </div>
+
+             
+
+                <div class="form-actions" style="padding-top: 20px;">
+                    @if (timuModel.Status == BookTiMu.TimuStatus.Valid)
+                    {
+                        <input type="button" class="btn default btn-sm blue signwrong   pull-right" data-tmid="@timuModel.Tmid" data-status="0" data-taskid="@Model.TaskId" value="标记错误"/>
+                    }
+                    else
+                    {
+                        <input type="button" class="btn default btn-sm red signwrong   pull-right" data-tmid="@timuModel.Tmid" data-status="1" data-taskid="@Model.TaskId" value="取消标记"/>
+                    }
+                </div>
+
+            </div>
+            <!-- END FORM-->
+        </div>
+    </div>
+}
+
+@section scripts{
+
+    <script src="~/Content/Metronic/global/plugins/select2/select2.min.js"></script>
+    <script src="~/Content/Scripts/bootstrap/bootstrap-typeahead.js"></script>
+    <script src="~/Content/Scripts/bootstrap/star-rating.min.js"></script>
+    <script src="~/Content/Scripts/AFEditer/AFEditor.js"></script>
+    <script src="~/Content/Scripts/TiMu/EntryPageEditor.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".openModel").click(function() {
+                var vid = $(this).attr("data-videoid");
+                var player = polyvObject('#playVideo').videoPlayer({
+                    'width': '708',
+                    'height': '490',
+                    'vid': vid
+                });
+                $('#playModal').modal({ backdrop: 'static' });
+                //$('#playModal').on('hide.bs.modal', function() {
+                //    player.j2s_stopVideo();
+                //});
+            });
+
+            $(".signwrong").click(function() {
+                var tmid = $(this).attr("data-tmid");
+                var status = $(this).attr("data-status");
+                var taskid = $(this).attr("data-taskid");
+                var errorinfo = $("[data-infotmid=" + tmid + "]").val().trim();
+
+                if (status > 0) { //取消错误标记
+                    bootbox.confirm({
+                        message: "确认取消标记错误吗？",
+                        title: "提示",
+                        callback: function(result) {
+                            if (result) {
+                                errorinfo = "";
+                                signwrong(tmid, status, taskid, errorinfo);
+                            }
+                        }
+                    });
+                } else { //标记错误，错误信息并不能为空
+                    if (errorinfo == null || errorinfo === "") {
+                        bootbox.confirm({
+                            message: "请输入错误详情！",
+                            title: "提示",
+                            callback: function(result) {
+                                return;
+                            }
+                        });
+                    } else {
+                        bootbox.confirm({
+                            message: "确认标记本题有错误吗？",
+                            title: "提示",
+                            callback: function(result) {
+                                if (result) {
+                                    signwrong(tmid, status, taskid, errorinfo);
+                                }
+                            }
+                        });
+                    }
+                }
+
+                @*$.ajax({
+                    url: "@Url.Action("SignWrong")",
+                    data: { tmid: tmid, status: status, taskId: taskid },
+                    success: function(data) {
+                        if (data.IsWrong) {
+                            $("[data-tmid=" + tmid + "]").removeClass("blue");
+                            $("[data-tmid=" + tmid + "]").addClass("red");
+                            $("[data-tmid=" + tmid + "]").attr("data-status", "1");
+                            $("[data-tmid=" + tmid + "]").val("取消标记");
+                        } else {
+                            $("[data-tmid=" + tmid + "]").removeClass("red");
+                            $("[data-tmid=" + tmid + "]").addClass("blue");
+                            $("[data-tmid=" + tmid + "]").attr("data-status", "0");
+                            $("[data-tmid=" + tmid + "]").val("标记错误");
+                        }
+                    }
+                });*@
+            });
+        });
+
+        function signwrong(tmid, status, taskid, errorinfo) {
+            $.ajax({
+                url: "@Url.Action("SignWrong")",
+                data: { tmid: tmid, status: status, taskId: taskid, errorInfo: errorinfo },
+                success: function(data) {
+                    if (data.IsWrong) {
+                        $("[data-tmid=" + tmid + "]").removeClass("blue");
+                        $("[data-tmid=" + tmid + "]").addClass("red");
+                        $("[data-tmid=" + tmid + "]").attr("data-status", "1");
+                        $("[data-tmid=" + tmid + "]").val("取消标记");
+                    } else {
+                        $("[data-tmid=" + tmid + "]").removeClass("red");
+                        $("[data-tmid=" + tmid + "]").addClass("blue");
+                        $("[data-tmid=" + tmid + "]").attr("data-status", "0");
+                        $("[data-tmid=" + tmid + "]").val("标记错误");
+                    }
+                }
+            });
+        };
+
+
+        //难度等级
+        $(".diffstar").each(function() {
+            var diff = $(this).attr("data-diff");
+            $(this).rating('update', diff);
+        });
+
+    </script>
+
+}

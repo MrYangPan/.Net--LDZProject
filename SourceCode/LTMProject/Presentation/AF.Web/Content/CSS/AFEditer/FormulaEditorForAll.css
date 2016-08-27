@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+.FEBox .Reserve{min-width:1px;_width:1px;}
+.FEBox.NoBorder .Reserve{_min-width:0px; _width:0px;}
+.FEBox>.Reserve.InputLayer{min-width:1px; _width:1px;}
+.FEBox .Reserve.SqrtDiv{min-width:8px; _width:8px;}
+.FEBox .SqrtTable .SqrtRoot .Reserve.SqrtRootDiv{min-width:5px; _width:5px;}
+.FEBox .Fraction .Reserve.FractDiv{min-width:8px; _width:8px;}
+.FEBox .LoopBox .Reserve.LoopBodyDiv,.FEBox .AvgBox .Reserve.AvgBodyDiv,.FEBox .VectorBox .Reserve.VectorBodyDiv,.FEBox .ArcBox .Reserve.ArcBodyDiv{min-width:8px; _width:8px;}
+.FEBox .LimitBox .Reserve.LimitBodyDiv{min-width:16px; _width:16px;}
+.FEBox .Equa .EquaBody .Reserve.EquaBDiv{min-width:16px; _width:16px;}
+.FEBox .Matrix .MatrixBody .Reserve.MatrixBDiv{min-width:8px; _width:8px;}
+.FEBox .Bracket .BracketBody .Reserve.BracketBDiv{min-width:8px; _width:8px;}
+.FEBox .Chemistry .Reserve.FractDiv{min-width:20px; _width:20px;}
+.FEBox .SignBox .SignBody .SignBodyDiv{min-width:8px; _width:8px;}
+.FEBox .SignBox .SignLT .Reserve.SignLTDiv,.FEBox .SignBox .SignRT .Reserve.SignRTDiv,.FEBox .SignBox .SignLB .Reserve.SignLBDiv,.FEBox .SignBox .SignRB .Reserve.SignRBDiv,.FEBox .SignBox .SignMT .Reserve.SignMTDiv{min-width:5px; _width:5px;}
+.FEBox .L2 .Reserve.InputLayer,.FEBox .L2 .Reserve.SqrtDiv{min-width:5px; _width:5px;}
+.FEBox .L2 .Fraction .Reserve.FractDiv{min-width:5px; _width:5px;}
+.FEBox .L2 .LimitBox .Reserve.LimitBodyDiv{ min-width:16px; _width:16px;}
+.FEBox .L2 .Equa .EquaBody .Reserve.EquaBDiv{min-width:10px; _width:10px;}
+.FEBox .L2 .Matrix .MatrixBody .Reserve.MatrixBDiv{min-width:5px; _width:5px;}
+.FEBox .L2 .SignBox .SignBody .SignBodyDiv{min-width:4px; _width:4px;}
+.FEBox .L2 .SignBox .SignLT .Reserve.SignLTDiv,.FEBox .L2 .SignBox .SignRT .Reserve.SignRTDiv,.FEBox .L2 .SignBox .SignLB .Reserve.SignLBDiv,.FEBox .L2 .SignBox .SignRB .Reserve.SignRBDiv,.FEBox .L2 .SignBox .SignMT .Reserve.SignMTDiv{min-width:4px; _width:4px;}
+.FEBox .Reserve.VaryDiv{min-width:8px; _width:8px;}
+.FEBox .Fraction.Chemistry01 .Reserve.FractDiv{min-width:20px; _width:20px;}

@@ -1,0 +1,99 @@
+﻿@model AF.Web.Models.Book.BookCommonModel
+@{
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12 margin-top-10">
+        <form action="#" class="form-horizontal">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.Isbn)">ISBN:</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(t => t.Isbn, new { @class = "form-control", placeholder = "ISBN" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.Name)">书名:</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(t => t.Name, new { @class = "form-control", placeholder = "书名" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.SubjectId)">学科:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.SubjectId, Model.SubjectItemList, new { @class = "bs-select form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.DegreeId)">学段:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.DegreeId, Model.DegreeItemList, new { @class = "bs-select form-control" })
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.GradeId)">年级:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.GradeId, Model.GradeItemList, new { @class = "bs-select form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.TermId)">学期:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.TermId, Model.TermItemList, new { @class = "bs-select form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.Year)">年份:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.Year, Model.YearItemList, new { @class = "bs-select form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="@Html.IdFor(d=>d.PublisherId)">出版社:</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(t => t.PublisherId, Model.PublishItemList, new { @class = "bs-select form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="@Html.IdFor(d=>d.Begin)">创建时间:</label>
+                            <div class="col-md-6">
+                                <div class="input-group date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+                                    @Html.TextBoxFor(t => t.Begin, new { @class = "form-control" })
+                                    <span class="input-group-addon" for="@Html.IdFor(d=>d.End)">至</span>
+                                    @Html.TextBoxFor(t => t.End, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" class="btn default blue" value="查询">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

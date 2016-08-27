@@ -1,0 +1,43 @@
+﻿@model AF.Web.Models.Common.RemindInfoModel
+@{
+    Layout = null;
+}
+@if (Model.Tasks != null)
+{
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <i class="icon-bell"></i>
+        <span class="badge badge-default">@Model.Tasks.Count</span>
+    </a>
+    <ul class="dropdown-menu">
+        @if (Model.Tasks.Count > 0)
+        {
+            <li>
+                <p>
+                    你有 @Model.Tasks.Count 条任务被撤回
+                </p>
+            </li>
+
+            <li>
+                <ul class="dropdown-menu-list scroller" style="height: 250px;">
+                    @foreach (var item in Model.Tasks)
+                    {
+                        <li>
+                            <a href="@Url.Action("TaskDetail","EntryExamination", new {TaskId = item.Id, revert = true})">
+                                <span class="label label-sm label-icon label-danger">
+                                    <i class="fa fa-bolt"></i>
+                                </span>
+                                @item.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+           </li>
+
+            <li class="external">
+                <a href="@Url.Action("Revocation", "EntryExamination")">
+                    查看所有撤回任务<i class="m-icon-swapright"></i>
+                </a>
+            </li>
+        }
+    </ul>
+}

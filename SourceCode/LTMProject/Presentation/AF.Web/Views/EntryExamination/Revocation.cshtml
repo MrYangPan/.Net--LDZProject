@@ -1,0 +1,107 @@
+﻿@using AF.Domain.Domain.BookWork
+@using AF.Web.Extensions
+@model AF.Web.Models.EntryExamination.EntryExaminationModel
+@{
+    ViewBag.Title = "Revocation";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("Index")">任务列表</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">撤回的任务</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-title" style="min-height: 20px;">
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">任务编号</th>
+                            <th class="text-center">ISBN</th>
+                            <th class="text-center">书名</th>
+                            <th class="text-center">学科</th>
+                            <th class="text-center">学段</th>
+                            <th class="text-center">年级</th>
+                            <th class="text-center">学期</th>
+                          
+                            <th class="text-center">出版社</th>
+                            <th class="text-center">年份</th>
+                            <th class="text-center">创建时间</th>
+                            <th class="text-center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var bookTask in Model.BookTaskInfoList)
+                        {
+                            <tr>
+                                <td class="text-center"><a href="@Url.Action("TaskDetail", new {TaskId = bookTask.Id, revert = true})">@bookTask.Name</a></td>
+                                <td class="text-center">@bookTask.Book.Isbn</td>
+                                <td class="text-center">@bookTask.Book.Name</td>
+                                <td class="text-center">@(bookTask.Book.Subject?.Name)</td>
+                                <td class="text-center">@(bookTask.Book.Degree?.Name)</td>
+                                <td class="text-center">@(bookTask.Book.Grade?.Name)</td>
+                                <td class="text-center">@(bookTask.Book.Term?.Name)</td>
+                           
+                                <td class="text-center">@(bookTask.Book.Publisher?.Name)</td>
+                                <td class="text-center">@bookTask.Book.Year</td>
+                                <td class="text-center">@bookTask.CreateTime</td>
+                                <td class="text-center">
+                                    <a href="javascript:;" data-href="@Url.Action("SubmitResult",new { taskId = bookTask.Id,status=TaskStatus.Check})" class="btn green btn-xs submitTask"><i class="fa fa-check"></i>提交</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@{
+    //the search parameter is boolean  must add  BooleanParameterName("adv").RenderEmptyParameters(true), this mvc bug
+    var pager = Html.Pager(Model.EntryExaminationListPagingModel).QueryParam("pagenumber").BooleanParameterName("adv").RenderEmptyParameters(true);
+    if (!pager.IsEmpty())
+    {
+        <div class="pager">
+            @pager
+        </div>
+    }
+}
+@section scripts{
+    <link rel="stylesheet" type="text/css" href="~/Content/Metronic/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+    <script src="~/Content/Metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        
+        $(".submitTask").click(function () {
+            var url = $(this).attr("data-href");
+            bootbox.confirm({
+                message: "确定提交任务吗？",
+                title: "提示",
+                callback: function (result) {
+                    if (result)
+                        window.location.href = url;
+                }
+            });
+        });
+
+    </script>
+}
+
+

@@ -1,0 +1,228 @@
+﻿@model List<AF.Web.Models.Manager.SetBookViewModel>
+@{
+    ViewBag.Title = "AddBook";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("Index")">目录管理列表</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">创建目录</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm(null, null, null, FormMethod.Post, new { @class = "form-horizontal form-row-seperated" }))
+        {
+            <div class="form-body">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">书名:</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(t => Model[i].Name, new { @class = "form-control", placeholder = "书名" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">学段:</label>
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(t => Model[i].DegreeId, Model[i].DegreeItemList, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">学科:</label>
+                                    <div class="col-md-9">
+                                        @Html.DropDownListFor(t => Model[i].SubjectId, Model[i].SubjectItemList, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">版本:</label>
+                                    <div class="col-md-9">
+                                        @Html.TextBoxFor(t => Model[i].Version, new { @class = "form-control", placeholder = "版本" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">出版社:</label>
+                                    <div class="col-md-8">
+                                        @Html.DropDownListFor(t => Model[i].PublisherId, Model[i].PublishItemList, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">ISBN:</label>
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(t => Model[i].Isbn, new { @class = "form-control", placeholder = "ISBN" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">年级:</label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(t => Model[i].GradeId, Model[i].GradeItemList, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">学期:</label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(t => Model[i].TermId, Model[i].TermItemList, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">年份:</label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(t => Model[i].Year, Model[i].YearItemList, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                }
+                <div class="row">
+                    <button type="button" id="addRow" class="btn default col-lg-offset-1 margin-right-10">继续添加</button>
+                    <button type="button" id="save" class="btn green">保存</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            setBook.init();
+        });
+        var setBook = function () {
+            var addRow = function () {
+                $("#addRow").click(function () {
+                    var index = $(".form-body .row").size() - 1;
+                    var html = $(".form-body .row:first").html();
+                    html = html.replace(/\[.\]\./g, "[" + index + "].");
+                    var div = $("<div></div>").addClass("row").html(html);
+                    div.find("select[name*=GradeId]").empty().append("<option value=''>请选择</option>");
+                    $(this).parent().parent().before(div).before("<hr />");
+                });
+            };
+
+            var degreeChange = function () {
+                $("select[name*=DegreeId]").live("change", function () {
+                    var select = $(this);
+                    var val = $(this).val();
+                    $.ajax({
+                        url: "/Manage/GetGrade",
+                        data: { degreeId: val },
+                        type: "get",
+                        dateType: "json",
+                        success: function (data) {
+                            var nextSelect = select.parent().parent().parent().parent().parent().find("select[name*=GradeId]");
+                            nextSelect.empty().append("<option value=''>请选择</option>");
+                            for (var i = 0; i < data.length; i++) {
+                                nextSelect.append("<option value='" + data[i].Id + "'>" + data[i].Name + "</option>");
+                            }
+                        }
+                    });
+
+                    $.ajax({
+                        url: "/Manage/GetSubject",
+                        data: { degreeId: val },
+                        type: "get",
+                        dateType: "json",
+                        success: function (data) {
+                            var nextSelect = select.parent().parent().parent().parent().parent().find("select[name*=SubjectId]");
+                            nextSelect.empty().append("<option value=''>请选择</option>");
+                            for (var i = 0; i < data.length; i++) {
+                                nextSelect.append("<option value='" + data[i].Id + "'>" + data[i].Name + "</option>");
+                            }
+                        }
+                    });
+                });
+            };
+
+            var save = function () {
+                $("#save").click(function () {
+
+                    var inputs = $("input[name*=Name]");
+                    var selects = $("select[name*=SubjectId],select[name*=DegreeId]");
+                    for (var i = 0; i < inputs.length; i++) {
+                        if (inputs.eq(i).val() === "") {
+                            bootbox.alert({
+                                message: '书名、学科、学段必填',
+                                title: "提示"
+                            });
+                            return;
+                        }
+                    }
+                    for (var i = 0; i < selects.length; i++) {
+                        if (selects.eq(i).val() === "" || selects.eq(i).val() === "0") {
+                            bootbox.alert({
+                                message: '书名、学科、学段必填',
+                                title: "提示"
+                            });
+                            return;
+                        }
+                    }
+
+                    $.ajax({
+                        url: "/Manage/SetBook",
+                        data: $("form").serialize(),
+                        type: "post",
+                        dateType: "json",
+                        success: function (data) {
+                            if (data.state) {
+                                window.location.href = "/Manage/Index";
+                            } else {
+                                bootbox.alert({
+                                    message: '保存失败',
+                                    title: "提示"
+                                });
+                            }
+                        }
+                    });
+                });
+            };
+
+            return {
+                init: function () {
+                    addRow();
+                    degreeChange();
+                    save();
+                }
+            };
+        }();
+    </script>
+}
+

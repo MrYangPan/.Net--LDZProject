@@ -1,0 +1,43 @@
+﻿@model AF.Web.Models.EntryExamination.ImageResult
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>题目编辑器--上传图片</title>
+    <script type="text/javascript">
+        //try{document.domain="<%=Public.domain %>";}catch(e){}
+        String.prototype.Trim=function(){return this.replace(/^\s*(.*?)\s*$/,"$1");}
+         function UploadPhoto(file){
+            var fileName = file.value.Trim();
+            if (fileName == '') return;
+            var fileType = fileName.substring(fileName.length - 4).toLowerCase();
+            if(fileType != '.bmp' && fileType != '.gif' && fileType != '.jpg' && fileType != '.png'){
+                alert('请上传bmp、gif、jpg、png格式的文件。');
+                return;
+            }
+
+            document.getElementById('form1').submit();
+        }
+        window.onload=function(){
+            var error = '@Model.Error';
+            var path = '@Model.ImagePath';
+            if (error != ''){
+                alert(error);
+            }
+            else if (path != '') {
+                parent.myEditor.setImgWH(path);
+            }
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="tmid" id="tmid" value="@Request["tmid"]" />
+        <input type="file" name="file" id="file" onchange="UploadPhoto(this);" />
+    </form>
+</body>
+</html>

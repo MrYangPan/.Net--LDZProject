@@ -1,0 +1,175 @@
+﻿@using AF.Domain.Domain.Books
+@using AF.Domain.Domain.BookWork
+@using AF.Web.Extensions
+@using WebGrease.Css.Extensions
+@model AF.Web.Models.TaskAllocation.BookTaskModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+
+<!-- BEGIN PAGE HEADER-->
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">任务列表</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+@Html.Partial("BookSearchView", Model)
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet">
+            <div class="portlet-title">
+                <div class="tools">
+                    <a class="btn btn-sm blue" href="@Url.Action("BookList")">创建任务</a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable">
+                    <table class="table table-striped table-bordered table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <th>任务编号</th>
+                                <th>书名</th>
+                                <th>学科</th>
+                                <th>ISBN</th>
+                                <th>任务人</th>
+                                <th>状态</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BookWorkTaskList)
+                            {
+                                <tr>
+                                    <td><a href="@Url.Action("Detail", new {taskId = item.Id})">@item.Name</a></td>
+                                    <td>@item.Book.Name</td>
+                                    <td>@item.Book.Subject.Name</td>
+                                    <td>@item.Book.Isbn</td>
+                                    <td>
+                                        录入：@(item.EntryCustomer?.Username)
+                                        <br />
+                                        审核：@(item.CheckCustomer?.Username)
+                                    </td>
+                                    <td>
+                                        @(
+                                        item.Status == TaskStatus.Check ? "审核" :
+                                        item.Status == TaskStatus.Complete ? "完成" :
+                                        item.Status == TaskStatus.Entry ? "录入" :
+                                        item.Status == TaskStatus.Mark ? "标定" :
+                                        item.Status == TaskStatus.Revert ? "撤回" : ""
+                                        )
+                                    </td>
+                                    <td>@item.CreateTime.FormatDate()</td>
+                                    <td>
+                                        <a href="@Url.Action("EditTask",new { id=item.Id })" class="btn default btn-xs purple">
+                                            <i class="fa fa-edit"></i> 编辑
+                                        </a>
+                                        <a href="javascript:void(0);" data-href="@Url.Action("DeleteBookWorkTask", new {id = @item.Id})" class="btn default btn-xs black deleteRow">
+                                            <i class="fa fa-trash-o"></i> 删除
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    var pager = Html.Pager(Model.PagingFilteringModel).QueryParam("pagenumber").RenderEmptyParameters(true);
+    if (!pager.IsEmpty())
+    {
+        <div class="pager">
+            @pager
+        </div>
+    }
+}
+
+@section scripts{
+    <link rel="stylesheet" type="text/css" href="~/Content/Metronic/global/plugins/bootstrap-datepicker/css/datepicker3.css" />
+    <script src="~/Content/Metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            task.init();
+        });
+
+        var task = function () {
+            var degreeChange = function () {
+                $("select[name=DegreeId]").live("change", function () {
+                    var select = $(this);
+                    var val = $(this).val();
+                    $.ajax({
+                        url: "/Manage/GetGrade",
+                        data: { degreeId: val },
+                        type: "post",
+                        dateType: "json",
+                        success: function (data) {
+                            var nextSelect = $("select[name=GradeId]");
+                            nextSelect.empty().append("<option value=''>请选择</option>");
+                            for (var i = 0; i < data.length; i++) {
+                                nextSelect.append("<option value='" + data[i].Id + "'>" + data[i].Name + "</option>");
+                            }
+                        }
+                    });
+
+                    $.ajax({
+                        url: "/Manage/GetSubject",
+                        data: { degreeId: val },
+                        type: "get",
+                        dateType: "json",
+                        success: function (data) {
+                            var nextSelect = $("select[name=SubjectId]");
+                            nextSelect.empty().append("<option value=''>请选择</option>");
+                            for (var i = 0; i < data.length; i++) {
+                                nextSelect.append("<option value='" + data[i].Id + "'>" + data[i].Name + "</option>");
+                            }
+                        }
+                    });
+                });
+            };
+
+            var deleteBind = function () {
+                $(".deleteRow").click(function () {
+                    var url = $(this).attr("data-href");
+                    bootbox.confirm("确认删除?", function (result) {
+                        if (result) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            }
+
+            return {
+                init: function () {
+                    deleteBind();
+                    degreeChange();
+
+                    $('.date-picker').datepicker({
+                        rtl: Metronic.isRTL(),
+                        orientation: "left",
+                        format: 'yyyy-mm-dd',
+                        autoclose: true
+                    });
+                }
+            };
+        }();
+    </script>
+
+}

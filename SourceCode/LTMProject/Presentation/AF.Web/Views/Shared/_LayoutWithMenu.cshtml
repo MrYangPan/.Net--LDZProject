@@ -1,0 +1,406 @@
+﻿@using System.Collections
+@using AF.Domain.Domain.Customers
+@using AF.Services.Common
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var controllerName = ViewContext.RouteData.Values["controller"].ToString().ToLower();
+    var customer = WorkContext.CurrentCustomer;
+    var pagesidebar = customer.GetAttribute<int>("sidebarclosed");
+
+}
+
+<body class="page-header-fixed page-quick-sidebar-over-content @if (pagesidebar == 1)
+                                                               {
+                                                                   <text>page-sidebar-closed</text>
+                                                               }">
+    <!-- BEGIN HEADER -->
+    <div class="page-header navbar navbar-fixed-top">
+        <!-- BEGIN HEADER INNER -->
+        <div class="page-header-inner">
+            <!-- BEGIN LOGO -->
+            <div class="page-logo">
+                <a href="/">
+                    <img src="/Content/Metronic/admin/layout/img/logo.png" alt="logo" class="logo-default" />
+                </a>
+                <div class="menu-toggler sidebar-toggler hide">
+                    <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
+                </div>
+            </div>
+            <!-- END LOGO -->
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+            </a>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <!-- BEGIN TOP NAVIGATION MENU -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    @if (customer.IsAdmin() || customer.HaveEntryPower())
+                    {
+                        <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                            @Html.Action("RemindInfo", "Common")
+                        </li>
+                    }
+
+                    <!-- BEGIN USER LOGIN DROPDOWN -->
+                    <li class="dropdown dropdown-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <img alt="" class="img-circle" src="/Content/Metronic/admin/layout/img/photo2.jpg"/>
+                            <span class="username username-hide-on-mobile">
+                                @customer.RealName
+                                @if (String.IsNullOrEmpty(customer.RealName))
+                                {
+                                    @customer.Username
+                                }
+                            </span>
+                        </a>
+                    </li>
+                    <!-- END USER LOGIN DROPDOWN -->
+                    <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                    <li class="dropdown dropdown-quick-sidebar-toggler">
+                        <a href="@Url.Action("Logout", "Customer")" class="dropdown-toggle">
+                            <i class="icon-logout"></i>
+                        </a>
+                    </li>
+                    <!-- END QUICK SIDEBAR TOGGLER -->
+                </ul>
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+        </div>
+        <!-- END HEADER INNER -->
+    </div>
+    <!-- END HEADER -->
+    <div class="clearfix">
+    </div>
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container">
+
+        <!-- BEGIN SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+            <div class="page-sidebar navbar-collapse collapse">
+                <!-- BEGIN SIDEBAR MENU -->
+                <ul class="page-sidebar-menu page-sidebar-menu-light page-sidebar-menu-hover-submenu @if (pagesidebar == 1)
+                                                               {
+                                                                   <text>page-sidebar-menu-closed</text>
+                                                               }" data-auto-scroll="true" data-slide-speed="200">
+                    <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                    <li class="sidebar-toggler-wrapper">
+                        <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                        <div class="sidebar-toggler">
+                        </div>
+                        <!-- END SIDEBAR TOGGLER BUTTON -->
+                    </li>
+                    <li class="start @if (controllerName == "home")
+                                     {
+                                         <text>active open</text>
+                                     }" style="margin-top: 30px;">
+                        <a href="/">
+                            <i class="icon-home"></i>
+                            <span class="title">主页</span>
+                            @if (controllerName == "home")
+                            {
+                                <span class="selected"></span>
+                                <span class="arrow open"></span>
+                            }
+                            else
+                            {
+                                <span class="arrow"></span>
+                            }
+                        </a>
+                    </li>
+
+                    @if (customer.HaveCollectionPower())
+                    {
+                        <li class="@if (controllerName == "docuentmgr")
+                               {
+                                   <text>active open</text>
+                               }">
+                            <a href="@Url.Action("Index", "DocuentMgr")">
+                                <i class="icon-layers"></i>
+                                <span class="title">整理资料</span>
+                                @if (controllerName == "docuentmgr")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow"></span>
+                                }
+                            </a>
+                        </li>
+                    }
+
+
+                    @if (customer.HaveEntryPower())
+                    {
+                        <li class="@if (controllerName == "entryexamination")
+                               {
+                                   <text>active open</text>
+                               }">
+                            <a href="@Url.Action("Index", "EntryExamination")">
+                                <i class="icon-notebook"></i>
+                                <span class="title">录入试题</span>
+                                @if (controllerName == "entryexamination")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow"></span>
+                                }
+                            </a>
+                        </li>
+                    }
+
+                    @if (customer.HaveMarkPower())
+                    {
+                        <li class="@if (controllerName == "markproperty")
+                            {
+                                <text>active open</text>
+                            }">
+                            <a href="@Url.Action("MarkTaskList", "MarkProperty")">
+                                <i class="icon-star"></i>
+                                <span class="title">标定属性</span>
+                                @if (controllerName == "markproperty")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow"></span>
+                                }
+                            </a>
+                        </li>
+                    }
+
+                    @if (customer.HaveReviewPower())
+                    {
+                        <li class="@if (controllerName == "checkpublish")
+                         {
+                             <text>active open</text>
+                         }">
+                            <a href="@Url.Action("CheckTaskList", "CheckPublish")">
+                                <i class="icon-diamond"></i>
+                                <span class="title">审核发布</span>
+                                @if (controllerName == "checkpublish")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow "></span>
+                                }
+                            </a>
+                        </li>
+                    }
+
+                    @if (customer.IsAdmin())
+                    {
+
+                        <li class="@if (controllerName == "manage")
+                                   {
+                                       <text>active open</text>
+                                   }">
+                            <a href="@Url.Action("Index", "Manage")">
+                                <i class="icon-folder-alt"></i>
+                                <span class="title">目录管理</span>
+                                @if (controllerName == "manage")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow"></span>
+                                }
+                            </a>
+                        </li>
+
+                        <li class="@if (controllerName == "taskallocation")
+                                   {
+                                       <text>active open</text>
+                                   }">
+                            <a href="@Url.Action("Index", "TaskAllocation")">
+                                <i class="icon-hourglass"></i>
+                                <span class="title">分配任务</span>
+                                @if (controllerName == "taskallocation")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow"></span>
+                                }
+                            </a>
+                        </li>
+
+
+                        <li class="@if (controllerName == "customer")
+                                   {
+                                       <text>active open</text>
+                                   }">
+                            <a href="@Url.Action("ListCustomer", "Customer")">
+                                <i class="icon-users"></i>
+                                <span class="title">用户管理</span>
+                                @if (controllerName == "customer")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow"></span>
+                                }
+                            </a>
+                        </li>
+
+
+                        <li class="@if (controllerName == "knowledge")
+                                   {
+                                       <text>active open</text>
+                                   }">
+                            <a href="@Url.Action("Index", "Knowledge")">
+                                <i class="icon-badge"></i>
+                                <span class="title">知识点管理</span>
+                                @if (controllerName == "knowledge")
+                                {
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                }
+                                else
+                                {
+                                    <span class="arrow"></span>
+                                }
+                            </a>
+                        </li>
+                    }
+
+                    <li class="last">
+                        <a href="javascript:;">
+                            <i class="icon-bar-chart"></i>
+                            <span class="title">工作量统计</span>
+                            <span class="arrow "></span>
+                        </a>
+                    </li>
+
+                </ul>
+                <!-- END SIDEBAR MENU -->
+            </div>
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="page-content-wrapper">
+            <div class="page-content">
+
+                <!-- BEGIN STYLE CUSTOMIZER -->
+                <div class="theme-panel hidden-xs hidden-sm">
+                    <div class="toggler">
+                    </div>
+                    <div class="toggler-close">
+                    </div>
+                    <div class="theme-options">
+                        <div class="theme-option theme-colors clearfix">
+                            <span>
+                                主题颜色
+                            </span>
+                            <ul>
+                                <li class="color-default  tooltips" data-style="default" data-container="body" data-original-title="黑色">
+                                </li>
+                                <li class="color-darkblue current tooltips" data-style="darkblue" data-container="body" data-original-title="暗蓝">
+                                </li>
+                                <li class="color-blue tooltips" data-style="blue" data-container="body" data-original-title="蓝色">
+                                </li>
+                                <li class="color-grey tooltips" data-style="grey" data-container="body" data-original-title="灰色">
+                                </li>
+                                <li class="color-light tooltips" data-style="light" data-container="body" data-original-title="白色">
+                                </li>
+                                <li class="color-light2 tooltips" data-style="light2" data-container="body" data-html="true" data-original-title="白色 2">
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="theme-option">
+                            <span>
+                                页面布局
+                            </span>
+                            <select class="layout-option form-control input-small">
+                                <option value="fluid" selected="selected">全屏</option>
+                                <option value="boxed">居中</option>
+                            </select>
+                        </div>
+                        <div class="theme-option">
+                            <span>
+                                页眉
+                            </span>
+                            <select class="page-header-option form-control input-small">
+                                <option value="fixed" selected="selected">浮动</option>
+                                <option value="default">固定</option>
+                            </select>
+                        </div>
+
+                        <div class="theme-option">
+                            <span>
+                                导航
+                            </span>
+                            <select class="sidebar-style-option form-control input-small">
+                                <option value="default">默认</option>
+                                <option value="light" selected="selected">亮色</option>
+                            </select>
+                        </div>
+                        <div class="theme-option">
+                            <span>
+                                导航位置
+                            </span>
+                            <select class="sidebar-pos-option form-control input-small">
+                                <option value="left" selected="selected">左侧</option>
+                                <option value="right">右侧</option>
+                            </select>
+                        </div>
+                        <div class="theme-option">
+                            <span>
+                                页脚
+                            </span>
+                            <select class="page-footer-option form-control input-small">
+                                <option value="fixed">浮动</option>
+                                <option value="default" selected="selected">固定</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- END STYLE CUSTOMIZER -->
+                @RenderBody()
+            </div>
+
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN FOOTER -->
+    <div class="page-footer">
+        <div class="page-footer-inner">
+            2016 &copy; 录题系统
+        </div>
+        <div class="page-footer-tools">
+            <span class="go-top">
+                <i class="fa fa-angle-up"></i>
+            </span>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+
+</body>
+
+
+@if (IsSectionDefined("scripts"))
+{
+    @section scripts{
+        @RenderSection("scripts")
+    }
+}
+
+

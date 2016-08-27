@@ -1,0 +1,275 @@
+﻿@using System.Web.UI.WebControls
+@using AF.Domain.Domain.Books
+@using AF.Domain.Domain.BookWork
+@model AF.Web.Models.EntryExamination.EntryExaminationModel
+@{
+    ViewBag.Title = "TaskDetail";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+@Scripts.Render("~/bundles/jquery")
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("Index")">录入试题</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        @if (Model.IsRevert)
+        {
+            <li>
+                <a href="@Url.Action("Revocation")">被撤回任务</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="@Url.Action("TaskDetail", new {taskId = Model.TaskId, revert = Model.IsRevert})">任务详情</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@Url.Action("TaskDetail", new {taskId = Model.TaskId, revert = Model.IsRevert})">任务详情</a>
+            </li>
+        }
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="table-scrollable">
+    <table class="table table-striped table-bordered table-hover dataTable no-footer">
+        <thead>
+            <tr role="row">
+                <th rowspan="1" colspan="1" style="width: 14px;"></th>
+                <th rowspan="1" colspan="1" style="width: 704px;" class="text-center">
+                    章节
+                </th>
+                <th rowspan="1" colspan="1" style="width: 200px;" class="text-center">
+                    已录入题数
+                </th>
+                <th rowspan="1" colspan="1" style="width: 350px;" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @ChildBuilder(Model.BookChapterList, 0)
+        </tbody>
+    </table>
+</div>
+
+@helper ChildBuilder(IList<BookChapter> models, int deep)
+{
+var nexetdeep = deep + 1;
+var width = deep * 30 + "px;";
+foreach (var item in models)
+{
+        <tr role="row"
+            @if (deep == 0) { <text>
+            class="odd"
+            </text>             } else { <text>
+            class="even hidden" data-parentid="@item.ParentId"
+            </text>             }>
+            @if (Model.IsRevert)
+            {
+                if (deep != 0)
+                {
+                    <td></td>
+                }
+                <td>
+                    @if (item.BookWorkTaskItem != null && item.BookWorkTaskItem?.Status == 1)
+                    {
+                        <span style="margin-left: @width; color: red">
+                            @if (item.BookChapterChild.Count != 0)
+                            {
+                                <span class="row-details row-details-close" data-id="@item.Id" data-parentid="@item.ParentId"></span>
+                            }
+                            @if (deep != 0)
+                            {
+                                @item.Name
+                            }
+                        </span>
+                    }
+                    else
+                    {
+                        <span style="margin-left: @width;">
+                            @if (item.BookChapterChild.Count != 0)
+                            {
+                                <span class="row-details row-details-close" data-id="@item.Id" data-parentid="@item.ParentId"></span>
+                            }
+                            @if (deep != 0)
+                            {
+                                @item.Name
+                            }
+                        </span>
+                    }
+                </td>
+                if (deep == 0)
+                {
+
+                    <td>
+                        @if (item.BookWorkTaskItem?.Status == 1)
+                        {
+                            <span style="color: red">
+                                @item.Name
+                            </span>
+                        }
+                        else
+                        {
+                            @item.Name
+                        }
+                    </td>
+                }
+                if (item.BookChapterChild.Any())
+                {
+                    <td class="text-center">
+                        <span class="label label-sm label-success"></span>
+                    </td>
+                    <td class="text-center"></td>
+                }
+                else
+                {
+                    <td class="text-center">
+                        @if (Model.AllTaskChapterList.Contains(item) && !item.BookChapterChild.Any())
+                        {
+                            if (item.BookWorkTaskItem != null)
+                            {
+                                @item.BookWorkTaskItem.TaskBookTiMus.Count(d => d.Timu.ParentId == null)
+                            }
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (item.BookWorkTaskItem != null && (Model.AllTaskChapterList.Contains(item) && !item.BookChapterChild.Any() && item.BookWorkTaskItem.TaskBookTiMus.Count>0))
+                        {
+                            <a href="@Url.Action("EntryTopic", new { taskItemId = item.BookWorkTaskItem?.Id, taskId = Model.TaskId, revert = true })" class="btn default btn-xs purple">
+                                <i class="fa fa-edit"></i> 修改
+                            </a>
+                            <a href="@Url.Action("PreviewTopic", new {taskItemId = item.TaskItemId})" class="btn default btn-xs green-stripe" target="_blank" style="min-width: 50px;">
+                                @*<i class="fa fa-openid"></i>*@ 预览
+                            </a>
+                        }
+                        @if (item.UploadFile != null)
+                        {
+                            <a href="@item.UploadFile.RelatePath" class="btn default btn-xs blue">
+                                <i class="fa fa-file-o"></i> 下载
+                            </a>
+                        }
+                    </td>
+                }
+            }
+            else
+            {
+                if (deep != 0)
+                {
+                    <td></td>
+                }
+                <td>
+                    <span style="margin-left: @width;">
+                        @if (item.BookChapterChild.Count != 0)
+                        {
+                            <span class="row-details row-details-close" data-id="@item.Id" data-parentid="@item.ParentId"></span>
+                        }
+                        @if (deep != 0)
+                        {
+                            @item.Name
+                        }
+                    </span>
+                </td>
+                if (deep == 0)
+                {
+                    <td>
+                        @item.Name
+                    </td>
+                }
+                if (item.BookChapterChild.Any())
+                {
+                    <td class="text-center">
+                        <span class="label label-sm label-success"></span>
+                    </td>
+                    <td class="text-center"></td>
+                }
+                else
+                {
+                    <td class="text-center">
+                        @if (Model.AllTaskChapterList.Contains(item) && !item.BookChapterChild.Any())
+                        {
+                            @item.BookWorkTaskItem.TaskBookTiMus.Count
+                        }
+                    </td>
+                    <td class="text-center">
+                        @if (Model.AllTaskChapterList.Contains(item) && !item.BookChapterChild.Any())
+                        {
+                            var count = item.BookWorkTaskItem.TaskBookTiMus.Count;
+                            @*if (count > 0)
+                            {
+                                <a href="#" class="btn default btn-xs blue">
+                                    <i class="fa fa-file-o"></i> 下载
+                                </a>
+                            }*@
+                            <a href="@Url.Action("EntryTopic", new {taskItemId = item.BookWorkTaskItem.Id, taskId = Model.TaskId, revert = false})" class="btn default btn-xs purple">
+                                <i class="fa fa-edit"></i> 录入
+                            </a>
+                            if (count > 0)
+                            {
+                                <a href="@Url.Action("PreviewTopic", new { taskItemId = item.TaskItemId})" class="btn default btn-xs green-stripe" target="_blank" style="min-width: 50px;">
+                                    预览
+                                </a>
+                            }
+                            if (item.UploadFile != null)
+                            {
+                                <a href="@item.UploadFile.RelatePath" class="btn default btn-xs blue">
+                                    <i class="fa fa-file-o"></i> 下载
+                                </a>
+                            }
+                        }
+                    </td>
+                }
+            }
+        </tr>
+        @ChildBuilder(item.BookChapterChild.OrderBy(d => d.Id).ToList(), nexetdeep)
+}
+}
+
+
+@section scripts{
+    <script>
+        //树形菜单
+        var tree = function () {
+
+            function toggle(el, ishiden) {
+                var parentid = el.attr('data-id');
+                var trels = $('tr[data-parentid=' + parentid + ']');
+
+                var hotels = $('.row-details[data-parentid=' + parentid + ']');
+                hotels.each(function () {
+                    toggle($(this), ishiden);
+                });
+
+                if (ishiden) {
+                    el.attr('class', 'row-details row-details-close');
+                    trels.addClass('hidden');
+                } else {
+                    el.attr('class', 'row-details row-details-open');
+                    trels.removeClass('hidden');
+                    trels.show();
+                }
+            }
+
+
+            function init() {
+                $('.row-details').click(function () {
+                    var classname = $(this).attr('class');
+                    if (classname != 'row-details row-details-close') {
+                        toggle($(this), true);
+                    } else {
+                        toggle($(this), false);
+                    }
+                });
+            }
+
+            init();
+        }();
+    </script>
+}

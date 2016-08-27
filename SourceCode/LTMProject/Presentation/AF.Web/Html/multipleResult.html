@@ -1,0 +1,1164 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=7;IE=8;IE=9;IE=10" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title> 多果空答案 </title>
+    <script src="/Content/Scripts/Jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+    <script src="/Content/Scripts/AFEditer/FormulaEditor.js" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="/Content/Scripts/excanvas.js"></script>
+    <![endif]-->
+    <link type="text/css" href="/Content/css/AFEditer/FormulaEditor.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" id="skin" />
+    <style type="text/css">
+        /*空答案弹出框*/
+        .windows-S {
+            font-size: 12px;
+        }
+
+            .windows-S h3 a, .windows-S dt a, .windows-S .right a {
+                background: url(/content/images/afediter/edit-topic-windows.png) 0 0 no-repeat;
+            }
+
+        .windows-S {
+            width: 730px;
+            padding: 0;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .w-S-body {
+            width: 462px;
+        }
+
+            .w-S-body h4 {
+                width: 448px;
+                height: 30px;
+                margin: 0 auto 3px auto;
+                padding-left: 10px;
+                line-height: 30px;
+                border: #ff7e45 dotted 1px;
+                background-color: #fffbeb;
+                font-weight: normal;
+                color: #ff7e45;
+            }
+
+            .w-S-body dl, .w-S-body h5 {
+                display: block;
+                width: 458px;
+                margin: 0 auto 4px auto;
+                background-color: #f3f8ff;
+                border: #cdd5e4 solid 1px;
+            }
+
+                .w-S-body dl dd {
+                    display: block;
+                    border-bottom: #cdd5e4 dotted 1px;
+                    padding: 6px 0;
+                    margin: 0;
+                }
+
+                .w-S-body dl dt {
+                    display: block;
+                    height: 38px;
+                }
+
+            .w-S-body dt label {
+                float: left;
+                padding-left: 10px;
+                width: 66px;
+                line-height: 38px;
+                font-weight: bold;
+            }
+
+            .w-S-body dt select {
+                float: left;
+                margin-top: 10px;
+            }
+
+            .w-S-body dt a {
+                float: left;
+                width: 75px;
+                height: 25px;
+                overflow: hidden;
+                margin: 6px 0 0 0;
+                text-align: center;
+                line-height: 25px;
+            }
+
+            .w-S-body dt .queren {
+                background-position: 0 0;
+                color: #2b53a5;
+                margin-left: 80px;
+            }
+
+            .w-S-body dt .quxiao {
+                background-position: 0 -26px;
+                color: #a52b2b;
+                margin-left: 20px;
+            }
+
+            .w-S-body .w-s-table {
+                width: 100%;
+            }
+
+                .w-S-body .w-s-table .left {
+                    font-weight: bold;
+                    padding-left: 10px;
+                    line-height: 30px;
+                    font-family: "微软雅黑";
+                    white-space: nowrap;
+                }
+
+                .w-S-body .w-s-table .middle {
+                    width: 350px;
+                    padding: 4px 0;
+                }
+
+                    .w-S-body .w-s-table .middle .input-text {
+                        width: 345px;
+                        height: 24px;
+                        line-height: 24px;
+                        background-color: #fff;
+                        border: #aaa solid 1px;
+                    }
+
+            .w-S-body .middle label {
+                float: left;
+                white-space: nowrap;
+                line-height: 24px;
+                margin-right: 13px;
+                *margin-right: 8px;
+                color: #666;
+            }
+
+                .w-S-body .middle label input {
+                    *margin-left: -4px;
+                    *margin-right: 0;
+                    position: relative;
+                    top: 3px;
+                }
+
+            .w-S-body .w-s-table .right {
+                width: 28px;
+                text-align: center;
+            }
+
+            .w-S-body .right a {
+                display: inline-block;
+                *display: inline;
+                zoom: 1;
+                width: 12px;
+                height: 12px;
+                overflow: hidden;
+                background-position: -25px -52px;
+            }
+
+            .w-S-body .right .del {
+                background-position: -38px -52px;
+            }
+
+            .w-S-body h5 {
+                margin-bottom: 3px;
+                height: 30px;
+                line-height: 30px;
+                width: 448px;
+                padding-left: 10px;
+                font-weight: normal;
+                font-size: 12px;
+            }
+
+                .w-S-body h5 input {
+                    width: 300px;
+                    height: 18px;
+                    line-height: 18px;
+                    background-color: #fff;
+                    border: #b5bdca solid 1px;
+                    *margin-top: 4px;
+                }
+
+                .w-S-body h5 .button {
+                    width: 46px;
+                    height: 20px;
+                    margin-left: 10px;
+                }
+
+            .w-S-body h6 {
+                width: 460px;
+                margin: 0 auto;
+                padding: 10px 0 5px 0;
+                color: #666;
+                font-size: 12px;
+            }
+
+            .w-S-body p {
+                width: 460px;
+                margin: 0 auto;
+                clear: both;
+                line-height: 20px;
+                color: #666;
+            }
+
+                .w-S-body p strong {
+                    margin-right: 5px;
+                    color: #ff7e45;
+                }
+
+                .w-S-body p span {
+                    color: #43c901;
+                }
+
+                .w-S-body p em {
+                    color: #f00;
+                }
+
+                .w-S-body p img {
+                    vertical-align: middle;
+                }
+
+        .windows-S .w-s-Febox {
+            position: fixed;
+            right: 8px;
+            top: 10px;
+            width: 262px;
+            height: 340px;
+        }
+
+        .FEeditorbg {
+            padding-top: 3px;
+        }
+
+        .FE_editor.narrow .FEeditorbg dl {
+            height: 47px;
+            border-left: none;
+            overflow: hidden;
+            _width: 248px;
+        }
+
+            .FE_editor.narrow .FEeditorbg dl dt {
+                display: block;
+                clear: both;
+                width: 248px;
+                height: 18px;
+                float: none;
+                padding: 0;
+            }
+
+                .FE_editor.narrow .FEeditorbg dl dt a {
+                    display: none;
+                }
+
+        .FE_editor.narrow .FEeditorBody .FElist {
+            width: 238px;
+            padding-bottom: 5px;
+        }
+
+        .FE_editor .FEeditorbg .zhanweifuLi {
+            display: none;
+        }
+
+        .windows-S .FEBox {
+            min-width: 220px;
+        }
+    </style>
+    <script type="text/javascript">
+        var element = null;
+        window.onload = function () {
+            var textBox = document.getElementById('FEBox');
+
+            //循环页面中所有空调用以下方法，textBox为各个空实例
+            box.Init(textBox, 1000); //1000为各空的基值，两空间的差数为1000
+            textBox.click();
+
+
+            if (typeof KeyCode != 'undefined') {
+                //InitAccessKey();
+            }
+            var css = '/css/FormulaEditorForAll.css';
+            if ($.browser.msie) {
+                if (parseInt(jQuery.browser.version) == 7) {
+                    css = '/css/FormulaEditorForIE7.css';
+                }
+            }
+            document.getElementById("skin").href = css;
+        }
+        function AddAnswer(answer, attr) {
+            answer = answer || "";
+            attr = attr == null ? [] : attr;
+
+            var html = [];
+            html.push("<dd>");
+            html.push("    <table class=\"w-s-table\">");
+            html.push("        <tr>");
+            html.push("            <td class=\"left\">空答案：</td>");
+            html.push("            <td class=\"middle\"><input class=\"input-text\" type=\"text\" value=\"" + answer + "\" onfocus=\"element=this;\" /></td>");
+            html.push("            <td class=\"right\"><a href=\"javascript:;\" class=\"del\" onclick=\"$(this).parent().parent().parent().parent().parent().remove();return false;\"></a></td>");
+            html.push("        </tr>");
+            html.push("        <tr>");
+            html.push("            <td class=\"left\">空属性：</td>");
+            html.push("            <td class=\"middle\" colspan=\"2\">");
+            html.push("                <label title=\"代码：kdd\"><input type=\"checkbox\" class=\"kdd\" title=\"代码：kdd\" " + (attr.join(' ').indexOf("kdd") > -1 ? 'checked' : '') + " />内容可颠倒</label>");
+            html.push("                <label title=\"代码：dxx\"><input type=\"checkbox\" class=\"dxx\" title=\"代码：dxx\" " + (attr.join(' ').indexOf("dxx") > -1 ? 'checked' : '') + " />区分大小写</label>");
+            html.push("                <label title=\"代码：sxjs\"><input type=\"checkbox\" class=\"sxjs\" title=\"代码：sxjs\" " + (attr.join(' ').indexOf("sxjs") > -1 ? 'checked' : '') + " />数学计算</label>");
+            html.push("                <label title=\"代码：zfth\"><input type=\"checkbox\" class=\"zfth\" title=\"代码：zfth\" " + (attr.join(' ').indexOf("zfth") > -1 ? 'checked' : '') + " />字符替换</label>");
+            html.push("                <label title=\"代码：hxfcs\"><input type=\"checkbox\" class=\"hxfcs\" title=\"代码：hxfcs\" " + (attr.join(' ').indexOf("hxfcs") > -1 ? 'checked' : '') + " />化学方程式</label>");
+            html.push("            </td>");
+            html.push("        </tr>");
+            html.push("    </table>");
+            html.push("</dd>");
+
+            $("#duoguoWindows .w-S-body dd").last().after(html.join('\r\n'));
+        }
+        function getDuoGuoAnswer() {
+            var answerList = [];
+            $("#duoguoWindows .w-S-body table").each(function () {
+                var aobj = {};
+                var answer = $.trim($(this).find("input[class='input-text']").val());
+                if (answer.length > 0) {
+                    aobj.answer = answer;
+                    aobj.attr = [];
+                    $(this).find("input[type='checkbox']").each(function () {
+                        if (this.checked) {
+                            aobj.attr.push(this.className);
+                        }
+                    });
+
+                    answerList.push(aobj);
+                }
+
+            });
+            return answerList;
+        }
+        function multipleResultSubmit() {
+            var answerList = getDuoGuoAnswer();
+
+            if (JSON.stringify(answerList) != "[]") {
+                var score = $("#kScore").val();//$("#AttrScore_Ten").val();
+                if (!$.isNumeric(score)) {
+                    alert("请正确输入分值");
+                    return;
+                }
+                if (score < 0.25 || score > 50) {
+                    alert("分值请控制在0.25-50分之间");
+                    return;
+                }
+                var kList = '';
+                if (answerList[0].attr.length > 0 && (answerList[0].attr[0] == 'long-input' || answerList[0].attr[0] == 'big-input')) {
+                    kList = '[k type="' + answerList[0].attr[0] + '" score="' + score + '"]' + answerList[0].answer + '[/k]';
+                } else
+                    kList = '[k type="duoguo-input" score="' + score + '"]' + JSON.stringify(answerList) + '[/k]';
+
+                if (navigator.userAgent.indexOf("Chrome") > 0) {
+                    window.opener.AFEditor.tool.setOpenConent(kList);
+                }
+                else {
+                    window.returnValue = kList;
+                }
+                window.close();
+            }
+        }
+        function parseKong() {
+            var kong = $.trim($("#kongCode").val());
+            var reg = new RegExp('\\[k [\\s\\S]*?type="(.*?)"[\\s\\S]*?score="([0-9.]+)"\\]([\\s\\S]*?)\\[/k\\]', 'img');
+            var group = reg.exec(kong);
+
+            if (group.length < 4) {
+                alert(kong + "格式不正确！");
+                return;
+            }
+            var inputType = group[1];
+            var inputScore = group[2];
+            var inputAnswer = group[3];
+
+            if (inputType == 'long-input' || inputType == 'big-input') {
+                $("#AttrScore_Ten").val(inputScore);
+                $("#kongAnswer").val(inputAnswer);
+                var elementId = inputType == 'long-input' ? 'longInput' : 'bigInput';
+                $("#" + elementId).attr('checked', 'checked');
+                setZGInput(document.getElementById(elementId), inputType);
+
+            } else {
+
+                if (inputType != 'duoguo-input') {
+                    alert("空类型不正确！");
+                    return;
+                }
+                try {
+                    $("#AttrScore_Ten").val(inputScore);
+                    eval("var testAnswer=(" + inputAnswer + ");");
+                    $("#kongAnswer").val(testAnswer[0].answer);
+                    for (var a = 0; a < testAnswer[0].attr.length; a++) {
+                        $("#" + testAnswer[0].attr[a]).attr('checked', 'checked');
+                    }
+                    for (var i = 1; i < testAnswer.length; i++) {
+                        var answerObj = testAnswer[i];
+                        AddAnswer(answerObj.answer, answerObj.attr);
+                    }
+
+                } catch (e) {
+                    alert(kong + "答案结构不正确！");
+                    return;
+                }
+            }
+
+        }
+        function quanjiao2Banjiao(str) {
+            if (str == '' || str == undefined) return '';
+            var i;
+            var result = '';
+            for (i = 0; i < str.length; i++) {
+                code = str.charCodeAt(i);
+
+                if (code >= 65281 && code < 65373) {
+                    result += String.fromCharCode(str.charCodeAt(i) - 65248);
+                }
+                else if (code == 12288) { //如果是特殊空格(　)则转为半角空格
+                    result += String.fromCharCode(32);
+                } else if (code == 8758) {//如果是全角冒号则转为半角冒号
+                    result += String.fromCharCode(58);
+                } else if (code == 8217) { //全角单引号转半角单引号
+                    result += String.fromCharCode(39);
+                } else if (code == 65130) { //特殊百分号(﹪)转为英文半角百分号
+                    result += String.fromCharCode(37);
+                } else if (code == 65122) { //特殊加号(﹢)转为英文半角加号
+                    result += String.fromCharCode(43);
+                } else if (code == 65123) { //特殊加号(﹣)转为英文半角加号
+                    result += String.fromCharCode(45);
+                } else {
+                    result += str.charAt(i);
+                }
+            }
+            return result.replace(/[    ]/gim, ' ');
+        }
+        function formatAnswer(str) {
+            str = quanjiao2Banjiao(str);
+
+            if (str.indexOf('`') != -1) str = str.replace(/lt/img, '<').replace(/gt/img, '>').replace(/xx/img, '*');
+            str = str.replace(/&lt;/img, '<').replace(/&gt;/img, '>').replace(/lt/img, '<').replace(/gt/img, '>');
+            str = str.replace(/`/img, '');
+            str = str.replace(/[`\\]+/img, '');
+            str = str.replace(/[     　]+/img, ' ');
+            str = str.replace(/[\[{]+/img, '(').replace(/[\]}]+/img, ')');
+            str = str.replace(/<br ?\/>/img, '');
+            return $.trim(str);
+        }
+        function judge() {
+            var answerList = getDuoGuoAnswer();
+            var useranswer = $.trim($("#txtUanswer").val()).replace(/`/g, '');
+            useranswer = formatAnswer(useranswer);
+            if (useranswer == '' || answerList.length == 0) return;
+            for (var i = 0; i < answerList.length; i++) {
+                var answer = answerList[i].answer.replace(/`/g, '');
+                answer = formatAnswer(answer);
+                var uanswer = useranswer;
+                if (answer == uanswer) return true;
+                if ($.inArray('dxx', answerList[i].attr) == -1) {
+                    answer = answer.toLowerCase();
+                    uanswer = uanswer.toLowerCase();
+                    if (answer == uanswer)
+                        return true;
+                }
+                if ($.inArray('zfth', answerList[i].attr) > -1) {
+                    answer = replaceMethod(answer);
+                    uanswer = replaceMethod(uanswer);
+                    if (answer == uanswer)
+                        return true;
+                }
+                if ($.inArray('sxjs', answerList[i].attr) > -1) {
+                    var reg = /<|>|=|>=|<=/gmi;
+                    var ma = answer.match(reg);
+                    var ma1 = uanswer.match(reg);
+                    if (ma == null || ma1 == null) {
+                        answer = accountDxsScore(answer);
+                        uanswer = accountDxsScore(uanswer);
+                        if (answer == uanswer)
+                            return true;
+                        else
+                            continue;
+                    }
+                    else {
+                        if (ma.length == ma1.length) {
+
+                            var go = false;
+                            for (var j = 0; j < ma.length; j++) {
+                                if (ma[j] != ma1[j]) {
+                                    go = true; break;
+                                }
+                            }
+                            if (go) {
+                                continue;
+                            } else {
+                                var answerList = answer.split(reg);
+                                var uanswerList = uanswer.split(reg);
+                                var isRight = true;
+
+                                if (answerList.length == 2) {
+                                    //alert(accountDxsScore(answerList[0]) + "," + accountDxsScore(answerList[1]) + "," + (accountDxsScore(answerList[0]) - accountDxsScore(answerList[1])));
+                                    //alert(accountDxsScore(uanswerList[0]) + "," + accountDxsScore(uanswerList[1]) + "," + (accountDxsScore(uanswerList[0]) - accountDxsScore(uanswerList[1])));
+                                    answer = parseFloat(accountDxsScore(answerList[0]) - accountDxsScore(answerList[1])).toFixed(5);
+                                    uanswer = parseFloat(accountDxsScore(uanswerList[0]) - accountDxsScore(uanswerList[1])).toFixed(5);
+
+                                    if (Math.abs(answer) == Math.abs(uanswer))
+                                        return true;
+                                }
+
+                                for (var j = 0; j < answerList.length; j++) {
+                                    answer = accountDxsScore(answerList[j]);
+                                    uanswer = accountDxsScore(uanswerList[j]);
+                                    if (answer != uanswer) {
+                                        isRight = false;
+                                        break;
+                                    }
+                                }
+
+                                if (isRight)
+                                    return true;
+                                else
+                                    continue;
+                            }
+                        } else {
+                            continue;
+                        }
+                    }
+                }
+                if ($.inArray('kdd', answerList[i].attr) > -1) {
+                    answer = answer.replace(/`|\s|bb/g, '');
+                    uanswer = uanswer.replace(/`|\s|bb/g, '');
+                    var isMatch = true;
+                    var reg = /\s|　|,|，|、|;|；|\.|。|和|与|或|/gmi;
+                    var arrInput = uanswer.split(reg);
+                    var arrAnswer = answer.split(reg);
+
+                    if (arrInput.length != arrAnswer.length) {
+                        continue;
+                    }
+
+                    for (var j = 0; j < arrAnswer.length; j++) {
+                        if (uanswer.indexOf(arrAnswer[j]) == -1) {
+                            isMatch = false;
+                            break;
+                        }
+                    }
+                    if (isMatch)
+                        return true;
+                }
+                if ($.inArray('hxfcs', answerList[i].attr) > -1) {
+                    answer = answer.replace(/\(|\)/g, "");
+                    uanswer = uanswer.replace(/\(|\)/g, "");
+                    answer = answer.replace(/`|\s|\{:|:\}|bb/g, '');
+                    uanswer = uanswer.replace(/`|\s|\{:|:\}|bb/g, '');
+
+                    if (accountHxfcsScore(answer, uanswer) == true)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        function accountHxfcsScore(strInput, aInput) {
+
+            if (strInput == aInput)
+                return true;
+
+            var reg = /=|rarr|\^?ulul\{.*?(MnO_2|Delta|点燃|催化剂|高温).*?\}|-+>|_?barba.*?\{.*?(Delta|催化剂|高压(\W|\s| *)低温).*?\}.*?\{.*?(MnO_2|高温|高压|高温(\W|\s| *)高压|催化剂).*?\}/img;
+            var arrInput = strInput.split(reg);
+            var arrAnswer = aInput.split(reg);
+            if (arrInput.length == 1 || arrAnswer.length == 1) return false;
+
+            var lInput = arrInput[0].split("+");
+            var rInput = arrInput[1].split("+");
+
+            var lRInput = arrAnswer[0].split("+");
+            var rRInput = arrAnswer[1].split("+");
+
+            if (lInput.length == lRInput.length && rInput.length == rRInput.length) {
+                if (equalArr(lInput, lRInput) && equalArr(rInput, rRInput)) {
+                    return true;
+                } else {
+                    return false;
+
+                }
+            } else {
+                return false;
+            }
+
+
+        }
+
+
+        function replaceMethod(input) {
+            var reg = /\s|　|,|，|、|;|；|\.|。|\(|\)|和|与/gmi;
+            input = input.replace(reg, '');
+            reg = /垂直于/gmi;
+            input = input.replace(reg, '⊥');
+            reg = /垂直/gmi;
+            input = input.replace(reg, '⊥');
+            reg = /平行于|\/\//gmi;
+            input = input.replace(reg, '∥');
+            reg = /平行|\/\//gmi;
+            input = input.replace(reg, '∥');
+            reg = /°/gmi;
+            input = input.replace(reg, '度');
+            reg = /全等于/gmi;
+            input = input.replace(reg, '≌');
+            reg = /相似于/gmi;
+            input = input.replace(reg, '∽');
+            reg = /摄氏度/gmi;
+            input = input.replace(reg, '℃');
+            input = numberProcess(input);
+            return input;
+        }
+        function accountDxsScore(answer) {
+            // debugger;
+            var a = 3;
+            var b = 1.7;
+            var c = 1.9;
+            var d = 2.1;
+            var e = 2.7;
+            var f = 3.1;
+            var g = 3.7;
+            var h = 3.4;
+            var i = 1.11;
+            var j = 1.19;
+            var k = 5.33;
+            var l = 3.31;
+            var m = 3.9;
+            var n = 2;
+            var o = 1.21;
+            var p = 1.1;
+            var q = 3.3;
+            var r = 1.67;
+            var s = 1.6;
+            var t = 4.3;
+            var u = 1.23;
+            var v = 3.12;
+            var w = 2.2;
+            var x = 1.5;
+            var y = 1.2;
+            var z = 1.3;
+
+            return process(answer);
+            function process(answer) {
+
+                answer = answer.replace(/xx/img, "*");
+                answer = answer.replace(/%/img, "/100");
+                answer = answer.replace(/×/g, "*");
+                answer = answer.replace(/÷/g, "-:");
+                answer = answer.replace(/％/g, "%");
+                answer = answer.replace(/π/g, "pi");
+                answer = answer.replace(/㎡/g, "m^2");
+                answer = answer.replace(/²/g, "^2");
+                answer = answer.replace(/³/g, "^3");
+                answer = answer.replace(/(\d+)(\(\d+\)\/\(\d+\))/img, "$1+$2");
+                answer = answer.replace(/\((\w+)\)/img, "$1");
+                answer = processRoot(answer);
+                re = /(\d|[a-z]|\))(?=[a-z\(])/img;
+                answer = answer.replace(re, "$1" + "*");
+                re = /([a-z0-9]+|\([^\(\)]+\))\^(\-?[a-z0-9]+)/img;
+                var ma = answer.match(re);
+                while (ma != null) {
+                    for (var i = 0; i < ma.length; i++) {
+                        var r = processSqrt(ma[i]);
+                        answer = answer.replace(ma[i], r);
+                    }
+                    ma = answer.match(re);
+                }
+                re = /([a-z0-9]+|\([^\(\)]+\))\^(\([^\)]+\))/img;
+                ma = answer.match(re);
+                while (ma != null) {
+                    for (var i = 0; i < ma.length; i++) {
+                        var r = processSqrt(ma[i]);
+                        answer = answer.replace(ma[i], r);
+                    }
+                    ma = answer.match(re);
+                }
+                try {
+                    eval('var result=' + answer + ';');
+                } catch (e) {
+                    alert(e.message);
+                    return Math.random();
+                }
+                return parseFloat(result).toFixed(5);
+            }
+
+
+
+            function processSqrt(answer) {
+                var re = /([a-z]|\d+|\([^\(\)]+\))\^(\-?[a-z0-9]+)/img;
+                answer = answer.replace(re, "Math.pow($1,$2)");
+                re = /([a-z]|\d+|\([^\(\)]+\))\^(\([^\)]+\))/img;
+                answer = answer.replace(re, "Math.pow($1,$2)");
+                eval('var result=' + answer + ';');
+                return parseFloat(result).toFixed(5);
+            }
+
+            function processRoot(answer) {
+
+                var reg = /(root\d+)(?!.*root.*)|sqrt(?!.*sqrt.*)/img
+                var m = answer.match(reg);
+                while (m != null) {
+                    for (var i = 0; i < m.length; i++) {
+                        var rootIndex = 2;
+                        if (m[i].length > 4)
+                            rootIndex = parseInt(m[i].substring(4));
+                        var mIndex = answer.lastIndexOf(m[i]) + m[i].length;
+                        var result = findFullTag(answer, mIndex);
+                        var temp = result;
+                        result = process(result);
+                        result = Math.pow(result, 1 / rootIndex);
+                        var r = new RegExp("([a-z0-9])" + m[i] + temp, "i");
+                        answer = answer.replace(r, "$1*" + result);
+                        answer = answer.replace(m[i] + temp, result);
+                    }
+                    m = answer.match(reg);
+                }
+                return answer;
+            }
+
+            function findFullTag(str, index) {
+                var startTag = 0;
+                var endTag = 0;
+                for (var i = index; i < str.length; i++) {
+                    var c = str.substring(i, i + 1);
+                    if (str.substring(index, index + 1) != '(') break;
+                    if (c == '(')
+                        startTag++;
+                    if (c == ')')
+                        endTag++;
+                    if (startTag > 0 && startTag == endTag) {
+                        return str.substring(index, i + 1);
+                    }
+                }
+                return str.substring(index, index + 1);
+            }
+        }
+        function numberProcess(input) {
+
+            var reg = /⒈|㈠|①|一|⑴/gmi
+            input = input.replace(reg, "1");
+            reg = /⒉|㈡|②|二|⑵/gmi
+            input = input.replace(reg, "2");
+            reg = /⒊|㈢|③|三|⑶/gmi
+            input = input.replace(reg, "3");
+            reg = /⒋|㈣|④|四|⑷/gmi
+            input = input.replace(reg, "4");
+            reg = /⒌|㈤|⑤|五|⑸/gmi
+            input = input.replace(reg, "5");
+            reg = /⒍|㈥|⑥|六|⑹/gmi
+            input = input.replace(reg, "6");
+            reg = /⒎|㈦|⑦|七|⑺/gmi
+            input = input.replace(reg, "7");
+            reg = /⒏|㈧|⑧|八|⑻/gmi
+            input = input.replace(reg, "8");
+            reg = /⒐|㈨|⑨|九|⑼/gmi
+            input = input.replace(reg, "9");
+            reg = /⒑|㈩|⑩|十|⑽/gmi
+            input = input.replace(reg, "10");
+
+            return input;
+
+        }
+        function equalArr(arr, arr1) {
+            for (var i = 0; i < arr.length; i++) {
+                var isMatch = false;
+                for (var j = 0; j < arr1.length; j++) {
+
+                    if (arr[i] == arr1[j]) {
+                        var isMatch = true;
+                        break;
+                    }
+                }
+                if (!isMatch) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        function setZGInput(o, inputType) {
+            var kattr = ['kdd', 'dxx', 'sxjs', 'zfth', 'hxfcs'];
+            if (o.checked) {
+                for (var i = 0; i < kattr.length; i++) {
+                    $('#' + kattr[i]).attr('disabled', 'disabled').removeAttr('checked');
+                }
+                $("#addAnswer").hide();
+                $("dl dd:gt(0)").remove();
+            } else {
+                for (var i = 0; i < kattr.length; i++) {
+                    $('#' + kattr[i]).removeAttr('disabled').removeAttr('checked');
+                }
+                $("#addAnswer").show();
+            }
+            if (inputType == 'long-input') {
+                $('#bigInput').removeAttr('disabled').removeAttr('checked');
+                $("#kongAnswer").removeAttr('disabled');
+            } else {
+                $('#longInput').removeAttr('disabled').removeAttr('checked');
+                if (o.checked) {
+                    $("#kongAnswer").val('见解析').attr('disabled', 'disabled');
+                } else {
+                    $("#kongAnswer").val('').removeAttr('disabled');
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="duoguoWindows" class="windows-S" style="display:block;">
+        <div class="w-S-body">
+            <!--h3 id="duoguoDragElement" style="cursor:move;"><a href="javascript:;" onclick="window.close();"></a>编辑空答案</h3-->
+            <h4>提示：如果答案存在多种可能，请点击右边的“+”继续添加答案。</h4>
+            <h5>空代码：<input type="text" id="kongCode" /><input type="button" value="解析" onclick="parseKong();" class="button" /></h5>
+            <h5>用户答案：<input type="text" id="txtUanswer" /><input type="button" value="判分" onclick="if(judge()){alert('答案正确');} else {alert('答案错误');}" class="button" /></h5>
+            <dl>
+                <dd>
+                    <table class="w-s-table">
+                        <tr>
+                            <td class="left">空答案：</td>
+                            <td class="middle"><input class="input-text" id="kongAnswer" type="text" onfocus="element=this;" /></td>
+                            <td class="right"><a href="javascript:;" id="addAnswer" onclick="AddAnswer();return false;"></a></td>
+                        </tr>
+                        <tr>
+                            <td class="left">空属性：</td>
+                            <td class="middle" colspan="2">
+                                <label title="代码：kdd"><input type="checkbox" id="kdd" class="kdd" title="代码：kdd" />内容可颠倒</label>
+                                <label title="代码：dxx"><input type="checkbox" id="dxx" class="dxx" title="代码：dxx" />区分大小写</label>
+                                <label title="代码：sxjs"><input type="checkbox" id="sxjs" class="sxjs" title="代码：sxjs" />数学计算</label>
+                                <label title="代码：zfth"><input type="checkbox" id="zfth" class="zfth" title="代码：zfth" />字符替换</label>
+                                <label title="代码：hxfcs"><input type="checkbox" id="hxfcs" class="hxfcs" title="代码：hxfcs" />化学方程式</label>
+                                <label title="代码：long-input"><input type="checkbox" id="longInput" class="long-input" title="代码：long-input" onclick="setZGInput(this,'long-input');" />主观空</label>
+                                <label title="代码：big-input"><input type="checkbox" id="bigInput" class="big-input" title="代码：big-input" onclick="setZGInput(this,'big-input');" />大填空</label>
+                            </td>
+                        </tr>
+                    </table>
+                </dd>
+
+                <dt>
+                    <label>分值：</label>
+                    <input type="text" style="float:left;width:50px;margin-top:8px;" maxLength="4" value="1" id="kScore" />
+                    <!--select id="AttrScore_Ten">
+                        <option value="0.25">0.25</option>
+                        <option value="0.5">0.5</option>
+                        <option selected="Selected" value="1">1</option>
+                        <option value="1.5">1.5</option>
+                        <option value="2">2</option>
+                        <option value="2.5">2.5</option>
+                        <option value="3">3</option>
+                        <option value="3.5">3.5</option>
+                        <option value="4">4</option>
+                        <option value="4.5">4.5</option>
+                        <option value="5">5</option>
+                        <option value="5.5">5.5</option>
+                        <option value="6">6</option>
+                        <option value="6.5">6.5</option>
+                        <option value="7">7</option>
+                        <option value="7.5">7.5</option>
+                        <option value="8">8</option>
+                        <option value="8.5">8.5</option>
+                        <option value="9">9</option>
+                        <option value="9.5">9.5</option>
+                        <option value="10">10</option>
+                        <option value="10.5">10.5</option>
+                        <option value="11">11</option>
+                        <option value="11.5">11.5</option>
+                        <option value="12">12</option>
+                        <option value="12.5">12.5</option>
+                        <option value="13">13</option>
+                        <option value="13.5">13.5</option>
+                        <option value="14">14</option>
+                        <option value="14.5">14.5</option>
+                        <option value="15">15</option>
+                        <option value="15.5">15.5</option>
+                        <option value="16">16</option>
+                        <option value="16.5">16.5</option>
+                        <option value="17">17</option>
+                        <option value="17.5">17.5</option>
+                        <option value="18">18</option>
+                        <option value="18.5">18.5</option>
+                        <option value="19">19</option>
+                        <option value="19.5">19.5</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                    </select-->
+                    <a class="queren" href="javascript:;" onclick="multipleResultSubmit();return false;">确 认</a><a class="quxiao" href="javascript:;" onclick="window.close();return false;">取 消</a>
+                </dt>
+            </dl>
+
+            <h6>小贴示：</h6>
+
+            <p><strong>区分大小写：</strong>例，答案为"<span>Helllo</span>"不可写为"<em>hello</em>"</p>
+            <p><strong>字符可替换：</strong>例，答案为“<span>a，b</span>”也可写成“<span>a；b</span>”“<span>a、b</span>”“<span>a和b</span>”“<span>a与b</span>”</p>
+            <p><strong>数值可换算：</strong>例，答案为"<span>1/2</span>"等同于"<span>0.5</span>"</p>
+            <p><strong>顺序可颠倒：</strong>例，答案为“<span>A、B、C</span>”用户写成"<span>B、A、C</span>"也算对</p>
+        </div>
+        <div class="w-s-Febox">
+            <div class="FE_editor narrow" id="FE_editor" style="display:block;">
+                <iframe frameborder="0"></iframe>
+                <div class="FEeditorbg">
+                    <dl id="FEeditorbg">
+                        <dt><a style="" title="关闭" onclick="FE_Close();return false;" href="javascript:;" class="FE_close"></a><span>淘题吧公式编辑器</span></dt>
+                        <dd><a onclick="FE_Change_Sign(0);return false;" href="javascript:;" class="FE_maths hot" id="FE_maths">数学符号</a></dd>
+                        <dd><a onclick="FE_Change_Sign(1);return false;" href="javascript:;" class="FE_physics" id="FE_physics">物理化学</a></dd>
+                        <dd><a onclick="FE_Change_Sign(2);return false;" href="javascript:;" class="FE_signs" id="FE_signs">特殊符号</a></dd>
+                    </dl>
+
+                    <div class="FEeditorBody">
+                        <ul id="FE_maths_list" class="FElist" style="display:block;">
+                            <li><a class="Jiahao" href="javascript:;" title="加号" onclick="box.Insert('+');return false;"></a></li>
+                            <li><a class="Jianhao" href="javascript:;" title="减号" onclick="box.Insert('-');return false;"></a></li>
+                            <li><a class="Chenghao" href="javascript:;" title="乘号" onclick="box.Insert('×');return false;"></a></li>
+                            <li><a class="Chuhao" href="javascript:;" title="除号" onclick="box.Insert('÷');return false;"></a></li>
+                            <li><a class="Diancheng" href="javascript:;" title="点乘" onclick="box.Insert('·');return false;"></a></li>
+                            <li><a class="Xiaoyu" href="javascript:;" title="小于" onclick="box.Insert('＜');return false;"></a></li>
+                            <li><a class="Dayu" href="javascript:;" title="大于" onclick="box.Insert('>');return false;"></a></li>
+                            <li><a class="Xiaoyudengyu" href="javascript:;" title="小于等于" onclick="box.Insert('≤');return false;"></a></li>
+                            <li><a class="Dayudengyu" href="javascript:;" title="大于等于" onclick="box.Insert('≥');return false;"></a></li>
+                            <li><a class="Yuedengyu" href="javascript:;" title="约等于" onclick="box.Insert('≈');return false;"></a></li>
+                            <li><a class="Budengyu" href="javascript:;" title="不等于" onclick="box.Insert('≠');return false;"></a></li>
+                            <li><a class="Yuanzhoulv" href="javascript:;" title="圆周率" onclick="box.Insert('π');return false;"></a></li>
+                            <li><a class="Wuqiongda" href="javascript:;" title="无穷大" onclick="box.Insert('∞');return false;"></a></li>
+                            <li><a class="Yinwei" href="javascript:;" title="因为" onclick="box.Insert('∵');return false;"></a></li>
+                            <li><a class="Suoyi" href="javascript:;" title="所以" onclick="box.Insert('∴');return false;"></a></li>
+                            <li><a class="Tuichu" href="javascript:;" title="推出" onclick="box.Insert('⇒');return false;"></a></li>
+                            <li><a class="Dengjiayu" href="javascript:;" title="等价于" onclick="box.Insert('⇔');return false;"></a></li>
+                            <li><a class="Quandengyu" href="javascript:;" title="全等于" onclick="box.Insert('≌');return false;"></a></li>
+                            <li><a class="Xiangsiyu" href="javascript:;" title="相似于" onclick="box.Insert('∽');return false;"></a></li>
+                            <li><a class="Pingxing" href="javascript:;" title="平行" onclick="box.Insert('∥');return false;"></a></li>
+                            <li><a class="Chuizhi" href="javascript:;" title="垂直" onclick="box.Insert('⊥');return false;"></a></li>
+                            <li><a class="Jiaodu" href="javascript:;" title="角" onclick="box.Insert('∠');return false;"></a></li>
+                            <li><a class="Sanjiaoxing" href="javascript:;" title="三角形" onclick="box.Insert('△');return false;"></a></li>
+                            <li><a class="Sibianxing" href="javascript:;" title="平行四边形" onclick="box.Insert('▱');return false;"></a></li>
+                            <li><a class="Yuan" href="javascript:;" title="圆" onclick="box.Insert('⊙');return false;"></a></li>
+                            <li><a class="Shuyu" href="javascript:;" title="属于" onclick="box.Insert('∈');return false;"></a></li>
+                            <li><a class="Bushuyu" href="javascript:;" title="不属于" onclick="box.Insert('∉');return false;"></a></li>
+                            <li><a class="Kongji" href="javascript:;" title="空集" onclick="box.Insert('∅');return false;"></a></li>
+                            <li><a class="Baohuanyu" href="javascript:;" title="包含于" onclick="box.Insert('⊂');return false;"></a></li>
+                            <li><a class="Baohan" href="javascript:;" title="包含" onclick="box.Insert('⊃');return false;"></a></li>
+                            <li><a class="Bingji" href="javascript:;" title="并集" onclick="box.Insert('∪');return false;"></a></li>
+                            <li><a class="Jiaoji" href="javascript:;" title="交集" onclick="box.Insert('∩');return false;"></a></li>
+                            <li><a class="Baohuanyu2" href="javascript:;" title="包含于" onclick="box.Insert('⊆');return false;"></a></li>
+                            <li><a class="Baohan2" href="javascript:;" title="包含" onclick="box.Insert('⊇');return false;"></a></li>
+                            <li><a class="Bubaohanyu" href="javascript:;" title="不包含于" onclick="box.Insert('⊄');return false;"></a></li>
+                            <li><a class="Bubaohan" href="javascript:;" title="不包含" onclick="box.Insert('⊅');return false;"></a></li>
+                            <li><a class="Bubaohanyu2" href="javascript:;" title="不包含于" onclick="box.Insert('⊈');return false;"></a></li>
+                            <li><a class="Bubaohan2" href="javascript:;" title="不包含" onclick="box.Insert('⊉');return false;"></a></li>
+                            <li><a class="Zhenbaohanyu" href="javascript:;" title="真包含于" onclick="box.Insert('⊊');return false;"></a></li>
+                            <li><a class="Zhenbaohan" href="javascript:;" title="真包含" onclick="box.Insert('⊋');return false;"></a></li>
+                            <li><a class="Buji" href="javascript:;" title="补集" onclick="box.Insert('∁');return false;"></a></li>
+                            <li><a class="quandy_sx" href="javescript:;" title="恒等于" onclick="box.Insert('≡');return false;"></a></li>
+                            <li class="zhanweifuLi"><a class="zhanweifu" href="javascript:;" title=""></a></li>
+                            <li class="zhanweifuLi"><a class="zhanweifu" href="javascript:;" title=""></a></li>
+                            <li class="zhanweifuLi"><a class="zhanweifu" href="javascript:;" title=""></a></li>
+                            <li><a id="Fenshu" class="Fenshu" href="javascript:;" title="分数 ALT+1" onclick="box.Create('Fraction');return false;"></a></li>
+                            <li><a id="Genhao" class="Genhao" href="javascript:;" title="根号 ALT+2" onclick="box.Create('Sqrt');return false;"></a></li>
+                            <li><a id="Genhaon" class="Genhaon" href="javascript:;" title="N次根号 ALT+3" onclick="box.Create('Sqrtn');return false;"></a></li>
+                            <li><a id="Youshanbiao" class="Youshangbiao" href="javascript:;" title="右上标 ALT+4" onclick="box.Create('SignRT');return false;"></a></li>
+                            <li><a id="Youxiabiao" class="Youxiabiao" href="javascript:;" title="右下标 ALT+5" onclick="box.Create('SignRB');;return false;"></a></li>
+                            <li><a id="Youlianbiao" class="Youliangbiao" href="javascript:;" title="右标 ALT+6" onclick="box.Create('SignRTB');;return false;"></a></li>
+                            <li><a id="Xunhuan" class="Xunhuan" href="javascript:;" title="循环 ALT+7" onclick="box.Create('SignLoop');;return false;"></a></li>
+                            <li><a id="Pingjunshu" class="Pingjunshu" href="javascript:;" title="平均数 ALT+8" onclick="box.Create('SignAvg');;return false;"></a></li>
+                            <li><a id="Xiangliang" class="Xiangliang" href="javascript:;" title="向量 ALT+9" onclick="box.Create('SignVector');;return false;"></a></li>
+                            <li><a id="Hudu" class="Hudu" href="javascript:;" title="弧度 ALT+0" onclick="box.Create('SignArc');;return false;"></a></li>
+                            <li><a id="Limit" class="Limit" href="javascript:;" title="limit ALT+F1" onclick="box.Create('SignLimit');;return false;"></a></li>
+                            <li><a id="Sigema" class="Sigema" href="javascript:;" title="求和 ALT+F2" onclick="box.Create('SignMTB');;return false;"></a></li>
+                            <li><a id="Kuohao" class="Kuohao" href="javascript:;" title="长括号 ALT+F3" onclick="box.Create('Brackets');;return false;"></a></li>
+                            <li><a id="Juzhen1" class="Juzhen1" href="javascript:;" title="1列矩阵 ALT+F5" onclick="box.Create('Matrix12');;return false;"></a></li>
+                            <li><a id="Juzhen2" class="Juzhen2" href="javascript:;" title="2列矩阵 ALT+F7" onclick="box.Create('Matrix22');;return false;"></a></li>
+                            <li><a id="Fangcheng" class="Fangchegn" href="javascript:;" title="方程组 ALT+F8" onclick="box.Create('Equa');;return false;"></a></li>
+                            <li><a class="Qingkong1" href="javascript:;" title="清空" onclick="FE_Clear();return false;"></a></li>
+                        </ul>
+
+                        <ul id="FE_physics_list" class="FElist">
+                            <li><a class="Jiahao" href="javascript:;" title="加号" onclick="box.Insert('+');return false;"></a></li>
+                            <li><a class="Jianhao" href="javascript:;" title="减号" onclick="box.Insert('-');return false;"></a></li>
+                            <li><a class="Chenghao" href="javascript:;" title="乘号" onclick="box.Insert('×');return false;"></a></li>
+                            <li><a class="Chuhao" href="javascript:;" title="除号" onclick="box.Insert('÷');return false;"></a></li>
+                            <li><a class="Diancheng" href="javascript:;" title="点乘" onclick="box.Insert('·');return false;"></a></li>
+                            <li><a class="Xiaoyu" href="javascript:;" title="小于" onclick="box.Insert('＜');return false;"></a></li>
+                            <li><a class="Dayu" href="javascript:;" title="大于" onclick="box.Insert('>');return false;"></a></li>
+                            <li><a class="Xiaoyudengyu" href="javascript:;" title="小于等于" onclick="box.Insert('≤');return false;"></a></li>
+                            <li><a class="Dayudengyu" href="javascript:;" title="大于等于" onclick="box.Insert('≥');return false;"></a></li>
+                            <li><a class="Yuedengyu" href="javascript:;" title="约等于" onclick="box.Insert('≈');return false;"></a></li>
+                            <li><a class="Budengyu" href="javascript:;" title="不等于" onclick="box.Insert('≠');return false;"></a></li>
+                            <li><a class="Shishidu" href="javascript:;" title="摄氏度" onclick="box.Insert('℃');return false;"></a></li>
+                            <li><a class="Huashidu" href="javascript:;" title="华氏度" onclick="box.Insert('℉');return false;"></a></li>
+                            <li><a class="Tantanshuang" href="javascript:;" title="碳碳双键" onclick="box.Insert('＝');return false;"></a></li>
+                            <li><a class="Tantansan" href="javascript:;" title="碳碳三键" onclick="box.Insert('≡');return false;"></a></li>
+                            <li><a class="Qiti" href="javascript:;" title="气体" onclick="box.Insert('↑');return false;"></a></li>
+                            <li><a class="Chendian" href="javascript:;" title="沉淀" onclick="box.Insert('↓');return false;"></a></li>
+                            <li><a id="Rou" class="Rou" href="javascript:;" title="希腊字母 ALT+B" onclick="box.Insert('ρ');return false;"></a></li>
+                            <li><a id="Miu" class="Miu" href="javascript:;" title="希腊字母 ALT+G" onclick="box.Insert('μ');return false;"></a></li>
+                            <li><a id="Aita" class="Aita" href="javascript:;" title="希腊字母 ALT+I" onclick="box.Insert('η');return false;"></a></li>
+                            <li><a id="Oumiga" class="Oumiga" href="javascript:;" title="希腊字母 ALT+J" onclick="box.Insert('ω');return false;"></a></li>
+                            <li><a id="Yipuxilong" class="Yipuxilong" href="javascript:;" title="希腊字母 ALT+K" onclick="box.Insert('ε');return false;"></a></li>
+                            <li><a id="Deerta" class="Deerta" href="javascript:;" title="希腊字母 ALT+N" onclick="box.Insert('Δ');return false;"></a></li>
+                            <li><a id="Aerfa" class="Aerfa" href="javascript:;" title="希腊字母 ALT+Q" onclick="box.Insert('α');return false;"></a></li>
+                            <li><a id="Beita" class="Beita" href="javascript:;" title="希腊字母 ALT+U" onclick="box.Insert('β');return false;"></a></li>
+                            <li><a id="Gama" class="Gama" href="javascript:;" title="希腊字母 ALT+X" onclick="box.Insert('γ');return false;"></a></li>
+                            <li><a id="Foai" class="Foai" href="javascript:;" title="希腊字母 ALT+Y" onclick="box.Insert('φ');return false;"></a></li>
+                            <li><a id="Oumo" class="Oumo" href="javascript:;" title="欧姆 ALT+SHIFT+0" onclick="box.Insert('Ω');return false;"></a></li>
+                            <li><a id="Citongliang" class="Citongliang" href="javascript:;" title="磁通量 ALT+SHIFT+9" onclick="box.Insert('Φ');return false;"></a></li>
+                            <li><a id="Bochang" class="Bochang" href="javascript:;" title="波长 ALT+SHIFT+F1" onclick="box.Insert('λ');return false;"></a></li>
+                            <li><a id="Ai" class="Ai" href="javascript:;" title="埃 ALT+SHIFT+F2" onclick="box.Insert('Å');return false;"></a></li>
+                            <li><a id="banshuaiqi" class="banshuaiqi" href="javascript:;" title="半衰期 ALT+SHIFT+F3" onclick="box.Insert('τ');return false;"></a></li>
+                            <li><a id="Pinglv" class="Pinglv" href="javascript:;" title="频率 ALT+SHIFT+F5" onclick="box.Insert('ν');return false;"></a></li>
+                            <li><a class="lihua001"></a></li>
+                            <li><a class="lihua002"></a></li>
+                            <li><a class="lihua003"></a></li>
+                            <li><a class="lihua004"></a></li>
+                            <li><a class="lihua005"></a></li>
+                            <li><a class="lihua006"></a></li>
+                            <li><a class="lihua007"></a></li>
+                            <li><a class="lihua008"></a></li>
+                            <li><a class="lihua009"></a></li>
+                            <li><a id="YoushangH" class="YoushangH" href="javascript:;" title="右上标 ALT+4" onclick="box.Create('SignRT');return false;"></a></li>
+                            <li><a id="YouxiaH" class="YouxiaH" href="javascript:;" title="右下标 ALT+5" onclick="box.Create('SignRB');return false;"></a></li>
+                            <li><a id="YouliangH" class="YouliangH" href="javascript:;" title="右双标 ALT+6" onclick="box.Create('SignRTB');return false;"></a></li>
+                            <li><a id="ZuoshangH" class="ZuoshangH" href="javascript:;" title="左上标 ALT+F9" onclick="box.Create('SignLT');return false;"></a></li>
+                            <li><a id="ZuoxiaH" class="ZuoxiaH" href="javascript:;" title="左下标 ALT+F10" onclick="box.Create('SignLB');return false;"></a></li>
+                            <li><a id="SigeH" class="SigeH" href="javascript:;" title="四角标 ALT+F11" onclick="box.Create('SignLRTB');return false;"></a></li>
+                            <li><a id="DingbuH" class="DingbuH" href="javascript:;" title="顶标 ALT+F12" onclick="box.Create('SignMT');return false;"></a></li>
+                            <li><a id="DingyouxiaH" class="DingyouxiaH" href="javascript:;" title="顶、右下标 ALT+SHIFT+1" onclick="box.Create('SignMTRB');return false;"></a></li>
+                            <li><a id="Huaxue1" class="Huaxue1" href="javascript:;" title="特殊符号" onclick="box.Create('Chemistry1');return false;"></a></li>
+                            <li><a id="Huaxue2" class="Huaxue2" href="javascript:;" title="特殊符号 ALT+SHIFT+2" onclick="box.Create('Chemistry2');return false;"></a></li>
+                            <li><a id="Huaxue3" class="Huaxue3" href="javascript:;" title="特殊符号 ALT+SHIFT+3" onclick="box.Create('Chemistry3');return false;"></a></li>
+                            <li><a id="Huaxue4" class="Huaxue4" href="javascript:;" title="特殊符号 ALT+SHIFT+4" onclick="box.Create('Chemistry4');return false;"></a></li>
+                            <!--<%--
+                            <li><a id="FE_Peiping" class="Peiping" href="javascript:;" title="化学配平 ALT+SHIFT+5" onclick="box.Create('Vary');return false;"></a></li>
+                            <li><a class="huaxue001"></a></li>--%>-->
+                            <li><a class="Qingkong2" href="javascript:;" title="清空" onclick="FE_Clear();return false;"></a></li>
+                        </ul>
+
+                        <ul id="FE_signs_list" class="FElist">
+                            <!--<%--
+                            <li><a class="Log" href="javascript:;" title="log" onclick="box.Insert('㏒');return false;"></a></li>
+                            <li><a class="Ln" href="javascript:;" title="ln" onclick="box.Insert('㏑');return false;"></a></li>--%>-->
+                            <li><a class="Jifen" href="javascript:;" title="积分" onclick="box.Insert('∫');return false;"></a></li>
+                            <li><a class="Dushu" href="javascript:;" title="度" onclick="box.Insert('°');return false;"></a></li>
+                            <li><a class="Fenzhong" href="javascript:;" title="分" onclick="box.Insert('′');return false;"></a></li>
+                            <li><a class="Miaozhong" href="javascript:;" title="秒" onclick="box.Insert('″');return false;"></a></li>
+                            <li><a class="Qianfenbi" href="javascript:;" title="千分号" onclick="box.Insert('‰');return false;"></a></li>
+                            <li><a class="Shishidu_te" href="javascript:;" title="摄氏度" onclick="box.Insert('℃');return false;"></a></li>
+                            <li><a class="Huashidu_te" href="javascript:;" title="华氏度" onclick="box.Insert('℉');return false;"></a></li>
+                            <li><a class="Jiajian" href="javascript:;" title="加减" onclick="box.Insert('±');return false;"></a></li>
+                            <li><a class="Jianjia" href="javascript:;" title="减加" onclick="box.Insert('∓');return false;"></a></li>
+                            <li><a class="Qie" href="javascript:;" title="且" onclick="box.Insert('∧');return false;"></a></li>
+                            <li><a class="Huo" href="javascript:;" title="或" onclick="box.Insert('∨');return false;"></a></li>
+                            <li><a class="Shangsheng" href="javascript:;" title="上升" onclick="box.Insert('↗');return false;"></a></li>
+                            <li><a class="Xiajiang" href="javascript:;" title="下降" onclick="box.Insert('↘');return false;"></a></li>
+                            <li><a class="Budayu" href="javascript:;" title="不大于" onclick="box.Insert('≯');return false;"></a></li>
+                            <li><a class="Buxiaoyu" href="javascript:;" title="不小于" onclick="box.Insert('≮');return false;"></a></li>
+                            <li><a class="Hengdengyu" href="javascript:;" title="恒等于" onclick="box.Insert('≡');return false;"></a></li>
+                            <li><a class="Chengzhengbi" href="javascript:;" title="成正比" onclick="box.Insert('∝');return false;"></a></li>
+                            <li><a class="Qiuji" href="javascript:;" title="求积" onclick="box.Insert('∏');return false;"></a></li>
+                            <li><a class="Wuqiongxiao" href="javascript:;" title="无穷小 ALT+K" onclick="box.Insert('ε');return false;"></a></li>
+                            <li><a id="Kexi" class="Kexi" href="javascript:;" title="希腊字母 ALT+SHIFT+6" onclick="box.Insert('ξ');return false;"></a></li>
+                            <li><a class="Miu_te" href="javascript:;" title="希腊字母 ALT+G" onclick="box.Insert('μ');return false;"></a></li>
+                            <li><a class="Deerta_te" href="javascript:;" title="希腊字母 ALT+N" onclick="box.Insert('Δ');return false;"></a></li>
+                            <li><a class="Aerfa_tr" href="javascript:;" title="希腊字母 ALT+Q" onclick="box.Insert('α');return false;"></a></li>
+                            <li><a class="Beita_te" href="javascript:;" title="希腊字母 ALT+U" onclick="box.Insert('β');return false;"></a></li>
+                            <li><a class="Gama_te" href="javascript:;" title="希腊字母 ALT+X" onclick="box.Insert('γ');return false;"></a></li>
+                            <li><a class="Rou_te" href="javascript:;" title="希腊字母 ALT+B" onclick="box.Insert('ρ');return false;"></a></li>
+                            <li><a class="lanbuda_te" href="javascript:;" title="希腊字母 ALT+SHIFT+F1" onclick="box.Insert('λ');return false;"></a></li>
+                            <li><a id="Deerta_teX" class="Deerta_teX" href="javascript:;" title="希腊字母 ALT+SHIFT+8" onclick="box.Insert('δ');return false;"></a></li>
+                            <li><a class="Oumiga_te" href="javascript:;" title="希腊字母 ALT+J" onclick="box.Insert('ω');return false;"></a></li>
+                            <li><a class="Foai_te" href="javascript:;" title="希腊字母 ALT+SHIFT+9" onclick="box.Insert('Φ');return false;"></a></li>
+                            <li><a class="Foai_teX" href="javascript:;" title="希腊字母 ALT+Y" onclick="box.Insert('φ');return false;"></a></li>
+                            <li><a class="Aita_te" href="javascript:;" title="希腊字母 ALT+I" onclick="box.Insert('η');return false;"></a></li>
+                            <li><a id="Xita" class="Xita_te" href="javascript:;" title="希腊字母 ALT+SHIFT+7" onclick="box.Insert('θ');return false;"></a></li>
+                            <li><a class="Quan1" href="javascript:;" title="数字序号1" onclick="box.Insert('①');return false;"></a></li>
+                            <li><a class="Quan2" href="javascript:;" title="数字序号2" onclick="box.Insert('②');return false;"></a></li>
+                            <li><a class="Quan3" href="javascript:;" title="数字序号3" onclick="box.Insert('③');return false;"></a></li>
+                            <li><a class="Quan4" href="javascript:;" title="数字序号4" onclick="box.Insert('④');return false;"></a></li>
+                            <li><a class="Quan5" href="javascript:;" title="数字序号5" onclick="box.Insert('⑤');return false;"></a></li>
+                            <li><a class="Quan6" href="javascript:;" title="数字序号6" onclick="box.Insert('⑥');return false;"></a></li>
+                            <li><a class="Quan7" href="javascript:;" title="数字序号7" onclick="box.Insert('⑦');return false;"></a></li>
+                            <li><a class="Quan8" href="javascript:;" title="数字序号8" onclick="box.Insert('⑧');return false;"></a></li>
+                            <li><a class="Quan9" href="javascript:;" title="数字序号9" onclick="box.Insert('⑨');return false;"></a></li>
+                            <li><a class="Quan10" href="javascript:;" title="数字序号10" onclick="box.Insert('⑩');return false;"></a></li>
+                            <li><a class="Luoma1" href="javascript:;" title="罗马数字1" onclick="box.Insert('Ⅰ');return false;"></a></li>
+                            <li><a class="Luoma2" href="javascript:;" title="罗马数字2" onclick="box.Insert('Ⅱ');return false;"></a></li>
+                            <li><a class="Luoma3" href="javascript:;" title="罗马数字3" onclick="box.Insert('Ⅲ');return false;"></a></li>
+                            <li><a class="Luoma4" href="javascript:;" title="罗马数字4" onclick="box.Insert('Ⅳ');return false;"></a></li>
+                            <li><a class="Luoma5" href="javascript:;" title="罗马数字5" onclick="box.Insert('Ⅴ');return false;"></a></li>
+                            <li><a class="Luoma6" href="javascript:;" title="罗马数字6" onclick="box.Insert('Ⅵ');return false;"></a></li>
+                            <li><a class="Luoma7" href="javascript:;" title="罗马数字7" onclick="box.Insert('Ⅶ');return false;"></a></li>
+                            <li><a class="Luoma8" href="javascript:;" title="罗马数字8" onclick="box.Insert('Ⅷ');return false;"></a></li>
+                            <li><a class="Luoma9" href="javascript:;" title="罗马数字9" onclick="box.Insert('Ⅸ');return false;"></a></li>
+                            <li><a class="Luoma10" href="javascript:;" title="罗马数字10" onclick="box.Insert('Ⅹ');return false;"></a></li>
+                            <li><a class="Te001"></a></li>
+                            <li><a class="Te002"></a></li>
+                            <li><a class="Te003"></a></li>
+                            <li><a class="Te004"></a></li>
+                            <li><a class="Te005"></a></li>
+                            <li><a class="Te006"></a></li>
+                            <li><a class="Te006"></a></li>
+                            <li><a class="Te006"></a></li>
+                            <li><a class="Qingkong_te" href="javascript:;" title="清空" onclick="FE_Clear();return false;"></a></li>
+                        </ul>
+                        <div class="clear"></div>
+                        <div class="FEBox" id="FEBox"></div>
+                        <div class="FEeditorputin"><input type="button" value="解析" onclick="parseMathML();" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //sign: 0 数学，1 理化, 2 特殊符号
+        function FE_Change_Sign(sign) {
+            jQuery('#FE_maths_list,#FE_physics_list,#FE_signs_list').hide();
+            jQuery('#FE_maths').attr('class', 'FE_maths');
+            jQuery('#FE_physics').attr('class', 'FE_physics');
+            jQuery('#FE_signs').attr('class', 'FE_signs');
+            switch (sign) {
+                case 0:
+                    jQuery('#FE_maths_list').css('display', 'block');
+                    jQuery('#FE_maths').attr('class', 'FE_maths hot');
+                    break;
+                case 1:
+                    jQuery('#FE_physics_list').css('display', 'block');
+                    jQuery('#FE_physics').attr('class', 'FE_physics hot');
+                    break;
+                case 2:
+                    jQuery('#FE_signs_list').css('display', 'block');
+                    jQuery('#FE_signs').attr('class', 'FE_signs hot');
+                    break;
+            }
+        }
+        function FE_Clear() {
+            var length = box.FEBox.childNodes.length;
+            while (box.FEBox.firstChild !== box.FEBox.lastChild) {
+                box.FEBox.removeChild(box.FEBox.lastChild);
+            }
+
+            var elem = box.FEBox.firstChild;
+            elem.innerHTML = '';
+            elem.className = elem.getAttribute('clsName');
+            box.SetFocus(elem);
+        }
+        function parseMathML() {
+            var val = parser.Analyse(document.getElementById("FEBox"));
+            var answer = '';
+            if (val.replace(/`/g, "") == '') return;
+            if (val.indexOf("root") > -1 || val.indexOf("sqrt") > -1 || val.indexOf("^") > -1 || val.indexOf("_") > -1 || val.indexOf("**") > -1 || val.indexOf("oparent") > -1 || val.indexOf("/") > -1 || val.indexOf("bar") > -1 || val.indexOf("{") > -1 || val.indexOf(">\\-") > -1 || val.indexOf("}") > -1 || val.indexOf("stackrel") > -1 || val.indexOf("ulul") > -1 || val.indexOf("rec") > -1 || val.indexOf("vec") > -1 || val.indexOf("[:") > -1 || val.indexOf("dot") > -1) {
+                answer = val;
+            } else {
+                answer = val.replace(/`/g, '').replace(/lt/g, '&lt;');
+            }
+            if (element) {
+                element.value += answer;
+            } else {
+                $(".input-text")[0].value += answer;
+            }
+        }
+    </script>
+</body>
+</html>

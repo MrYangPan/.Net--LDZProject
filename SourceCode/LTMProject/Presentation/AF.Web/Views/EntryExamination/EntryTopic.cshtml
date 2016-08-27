@@ -1,0 +1,295 @@
+﻿@using AF.Domain.Domain.Books
+@using AF.Domain.Domain.BookWork
+@using AF.Domain.Domain.TiMus
+@model AF.Web.Models.EntryExamination.EntryExaminationModel
+@{
+    ViewBag.Title = "EntryTopic";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+    var taskItemId = Model.BookWorkTaskItem.Id;
+    var taskId = Model.TaskId;
+    var revert = Model.IsRevert;
+}
+<style>
+    .lititle {
+        height: 37px;
+        line-height: 35px;
+        padding-left: 25px;
+    }
+
+    .lichildtitle {
+        height: 37px;
+        line-height: 35px;
+        padding-left: 45px;
+    }
+
+    .liicon {
+        position: relative;
+        top: -37px;
+        background: #1cbad9 !important;
+        color: white;
+    }
+</style>
+
+
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("Index")">录入试题</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        @if (Model.IsRevert)
+        {
+            <li>
+                <a href="@Url.Action("Revocation")">被撤回任务</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="@Url.Action("TaskDetail", new {taskId,revert})">任务详情</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="@Url.Action("EntryTopic", new {taskItemId, taskId,revert})">录入界面</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="@Url.Action("TaskDetail", new {taskId})">任务详情</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="@Url.Action("EntryTopic", new {taskItemId , taskId})">录入界面</a>
+            </li>
+        }
+    </ul>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        @if (!Model.IsRevert)
+        {
+            <a data-href="@Url.Action("EntryTopic", new {taskItemId, taskId,revert, isEdit = false, cycles = (Model.Cycles ?? 0) + 1,revertType="create", order = Model.TiMuList.Count + (Model.Cycles ?? 0) + 1})" class="btn btn-sm green addTimu" style="margin-bottom: 10px;">
+                添加题目 <i class="fa fa-plus"></i>
+            </a>
+        }
+        <ul class="ver-inline-menu tabbable text-center entryTopicUl">
+            @if (!Model.IsRevert)
+            {
+                /* 录题页面 */
+                var cycles = Model.Cycles;
+                var order = Model.Order;
+                //如果存在已经录入的题目
+                if (Model.TiMuList.Count > 0)
+                {
+                    for (int i = 1; i <= Model.TiMuList.Count; i++)
+                    {
+                        var booktimu = Model.TiMuList[i - 1];
+                        var child = booktimu.Timu.TiMuChild.OrderBy(d => d.BookTiMu.Order).ToList();
+                        var childCount = booktimu.Timu.TiMuChild.Count;
+                        var iactive = (!Model.Order.HasValue && i == 1 && Model.Cycles == null && Model.RevertType != "create" && Model.RevertType != "edit") ||
+                                    (Model.TimuId != null && Model.Order.HasValue && i == Model.Order.Value && Model.TimuId == booktimu.Id.ToString() && Model.RevertType != "create" && Model.RevertType != "edit");
+
+                        <li @if (iactive) { <text> class="active" </text>  }>
+                            <a class="lititle text-left" href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = true, timuId = booktimu.Id, order = booktimu.Order, cycles})">第 @i 题  (@(booktimu.PageNumber)-@(booktimu.LargeNumber)-@(booktimu.SmallNumber))</a>
+                            <i class="fa fa-plus addChildTimu pull-right liicon"
+                               data-timuId="@booktimu.Id" data-href="@Url.Action("EntryTopic", new { taskItemId, taskId, revert, isEdit = false, revertType = "create", timuId = booktimu.Id, order = childCount > 0 ? childCount + 1 : 1, cycles = Model.Cycles, childCycle = 1})"></i>
+                        </li>
+                        if (childCount > 0)
+                        {
+                            for (var j = 0; j < childCount; j++)
+                            {
+                                var timu = child[j];
+                                <li @if (Model.TimuId == timu.Id.ToString()) { <text> class="active" </text>  }
+                                    @if (j == childCount - 1 && Model.ChildCycle == null) { <text> id="@(booktimu.Id)" data-count="@childCount" </text>  }>
+                                    <a class="lichildtitle text-left" data-timuId="@timu.Id" href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = true, revertType = "edit", timuId = timu.Id, order = timu.BookTiMu.Order, cycles = Model.Cycles, childCycle = Model.ChildCycle})">第 @(j + 1) 小题  (@(timu.BookTiMu.PageNumber)-@(timu.BookTiMu.LargeNumber)-@(timu.BookTiMu.SmallNumber))</a>
+                                </li>
+                            }
+                            if (Model.ChildCycle == 1 && Model.TimuId == booktimu.Id.ToString())
+                            {
+                                <li @if (Model.TimuId == booktimu.Id.ToString()) { <text> class="active childTimu" data-value="@booktimu.Id" id="@(booktimu.Id)" data-count="@(childCount + 1)" </text>  }>
+                                    <a class="lichildtitle text-left" data-timuId="" href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = false, revertType = "create", order = childCount + 1, cycles = Model.Cycles, childCycle = 1, timuId = booktimu.Id})">第 @(childCount + 1) 小题</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            if (Model.ChildCycle == 1 && Model.TimuId == booktimu.Id.ToString())
+                            {
+                                <li class="active childTimu" data-value="@booktimu.Id" id="@(booktimu.Id)" data-count="@(childCount + 1)">
+                                    <a class="lichildtitle text-left" data-timuId="" href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = false, revertType = "create", order = childCount + 1, cycles = Model.Cycles, childCycle = 1, timuId = booktimu.Id})">第 @(childCount + 1) 小题</a>
+                                </li>
+                            }
+                        }
+                    }
+
+                    if (cycles == 1)
+                    {
+                        var index = Model.TiMuList.Count + 1;
+                        <li @if (order == index) { <text>
+                            class="active"
+                            </text>  }>
+                            <a class="lititle text-left" href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = false, order = index, cycles})">第 @index 题</a>
+                            <i class="fa fa-plus addChildTimu pull-right liicon" data-timuId=""
+                               data-href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = false, revertType = "create", order = 1, cycles = Model.Cycles, childCycle = 1})"></i>
+                        </li>
+                        if (Model.ChildCycle == 1 && Model.TimuId == null)
+                        {
+                            <li @if (Model.Order == 1 && Model.TimuId == null) { <text> class="active" </text>  }>
+                                <a class="lititle text-left" data-timuId="" href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = false, revertType = "create", order = 1, cycles = Model.Cycles, childCycle = 1})">第 1 题</a>
+                            </li>
+                        }
+                    }
+                }
+                else
+                {
+                    //如果没有录入的题目
+                    if (Model.Cycles == null && Model.TiMuList.Count == 0)
+                    {
+                        <li @if (Model.Order == null || Model.Order == 1) { <text>
+                            class="active"
+                            </text>     }>
+                            <a class="lititle text-left" href="@Url.Action("EntryTopic", new {taskItemId, taskId,revert, isEdit = false, order = 1, cycles = Model.Cycles})">第 1 题</a>
+                            <i class="fa fa-plus addChildTimu pull-right liicon" 
+                               data-href="@Url.Action("EntryTopic", new {taskItemId, taskId,revert, isEdit = false, order = 1, cycles = Model.Cycles, childCycle = Model.ChildCycle})"></i>
+                        </li>
+                    }
+                }
+            }
+            else
+            {
+                /* 回撤页面 */
+                for (var i = 1; i <= Model.TiMuList.Count; i++)
+                {
+                    var booktimu = Model.TiMuList[i - 1];
+                    var childtimu = booktimu.Timu.TiMuChild.OrderBy(d => d.BookTiMu.Order).ToList();
+                    var childtimuCount = booktimu.Timu.TiMuChild.Count;
+                    var isactive = (!Model.Order.HasValue && i == 1) || (Model.Order.HasValue && i == Model.Order.Value && Model.RevertType == null);
+
+                    <li @if (isactive) { <text> class="active" </text>   }>
+                        <a class="lititle text-left" @if (booktimu.Status == BookTiMu.TimuStatus.Invalid){<text>style="color: red"</text> }
+                        href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, timuId = booktimu.Id, isEdit = true, order = i, timuStatus = booktimu.Status})">第 @i 题  (@(booktimu.PageNumber)-@(booktimu.LargeNumber)-@(booktimu.SmallNumber))</a>
+                        <i class="fa fa-plus addChildTimu pull-right liicon"
+                           data-timuId="@booktimu.Id" data-href="@Url.Action("EntryTopic", new {taskItemId, taskId, timuId = booktimu.Id, revert, isEdit = false, revertType = "create", order = childtimuCount > 0 ? childtimuCount + 1 : 1, childCycle = 1})"></i>
+                    </li>
+                        if (childtimuCount > 0)
+                        {
+                            for (var j = 0; j < childtimuCount; j++)
+                            {
+                                var timuChild = childtimu[j];
+                                <li @if (Model.TimuId == timuChild.Id.ToString())
+                                    {
+                                        <text> class="active"</text>
+                                    }
+                                    @if (j == childtimuCount - 1 && Model.ChildCycle == null)
+                                    {
+                                        <text> id="@(booktimu.Id)" data-count="@childtimuCount" </text>
+                                    }>
+                                    <a class="lichildtitle text-left"
+                                       @if (booktimu.Status == BookTiMu.TimuStatus.Invalid){<text>style="color: red"</text> }
+                                       data-timuId="@timuChild.Id" href="@Url.Action("EntryTopic", new {taskItemId, taskId, revert, isEdit = true, timuId = timuChild.Id, revertType = "edit", order = timuChild.BookTiMu.Order, childCycle = Model.ChildCycle})">第@(j + 1)小题  (@(timuChild.BookTiMu.PageNumber)-@(timuChild.BookTiMu.LargeNumber)-@(timuChild.BookTiMu.SmallNumber))</a>
+                                </li>
+                            }
+                            if (Model.ChildCycle == 1 && Model.TimuId == booktimu.Id.ToString())
+                            {
+                                <li data-value="@booktimu.Id" data-type="revert" @if (Model.TimuId == booktimu.Id.ToString()) { <text> class="active childTimu" id="@(booktimu.Id)" data-count="@(childtimuCount+1)" </text>    }>
+                                    <a class="lichildtitle text-left" data-timuId=""
+                                       href="@Url.Action("EntryTopic", new {taskItemId, taskId,revert, isEdit = false, revertType="create", order = childtimuCount + 1, childCycle = 1,timuId = booktimu.Id})">第@(childtimuCount + 1)小题</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            if (Model.ChildCycle == 1 && Model.TimuId == booktimu.Id.ToString())
+                            {
+                                <li class="active childTimu" data-value="@booktimu.Id" data-type="revert" id="@(booktimu.Id)" data-count="@(childtimuCount+1)">
+                                    <a class="lichildtitle text-left" data-timuId="" href="@Url.Action("EntryTopic", new {taskItemId, taskId,revert, isEdit = false,revertType="create", order = childtimuCount + 1, childCycle = 1, timuId = booktimu.Id})">第 @(childtimuCount + 1) 小题</a>
+                                </li>
+                            }
+                        }
+                }
+            }
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div class="portlet light bg-inverse">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-note font-red-sunglo"></i>
+                    <span class="caption-subject font-red-sunglo bold">录入区域</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                @if (Model.IsRevert)
+                {
+                    /* 回撤页面 */
+                    if (Model.RevertType == "create")
+                    {
+                        //创建小题
+                        Html.RenderAction("TopicCreate", "EntryExamination", new { taskItemId, timuId = Model.TimuId, order = Model.Order, cycles = Model.Cycles });
+                    }
+                    else if (Model.RevertType == "edit")
+                    {
+                        //编辑小题
+                        Html.RenderAction("TopicEdit", "EntryExamination", new { tmid = Model.TimuId, order = Model.Order, cycles = Model.Cycles });
+                    }
+                    else
+                    {
+                        //大题属性标定
+                        if (Model.TimuId == null)
+                        {
+                            //回撤页面显示第一条编辑数据
+                            var itemFirst = Model.TiMuList[0];
+                            Html.RenderAction("RevertMark", "EntryExamination", new { tmid = itemFirst.Id, timuStatus = itemFirst.Status });
+                        }
+                        else
+                        {
+                            Html.RenderAction("RevertMark", "EntryExamination", new { tmid = Model.TimuId, timuStatus = Model.TimuStatus });
+                        }
+                    }
+                }
+                else
+                {
+                    /* 录题页面 */
+                    if ((Model.TimuId == null && !(Model.IsEdit ?? false) && Model.IsEdit != null) || Model.RevertType == "create")
+                    {
+                        Html.RenderAction("TopicCreate", "EntryExamination", new { taskItemId, order = Model.Order, cycles = Model.Cycles });
+                    }
+                    else if ((Model.TimuId != null && (Model.IsEdit ?? false) && Model.IsEdit != null) || Model.RevertType == "edit")
+                    {
+                        Html.RenderAction("TopicEdit", "EntryExamination", new { tmid = Model.TimuId, order = Model.Order, cycles = Model.Cycles });
+                    }
+                    else if (Model.TimuId == null)
+                    {
+                        if (Model.TiMuList.Any())
+                        {
+                            //录题页面显示第一条编辑数据
+                            var itemFirst = Model.TiMuList[0];
+                            Html.RenderAction("TopicEdit", "EntryExamination", new { tmid = itemFirst.Id, order = Model.Order, cycles = Model.Cycles });
+                        }
+                        else
+                        {
+                            //录题页面显示第一条创建数据
+                            Html.RenderAction("TopicCreate", "EntryExamination", new { taskItemId, order = Model.Order, cycles = Model.Cycles });
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <link href="~/Content/Metronic/global/plugins/select2/select2.css" rel="stylesheet" />
+    <link href="~/Content/Metronic/global/css/plugins.css" rel="stylesheet" type="text/css" />
+    <script src="~/Content/Metronic/global/plugins/select2/select2.min.js"></script>
+
+    <script src="~/Content/Scripts/bootstrap/bootstrap-typeahead.js"></script>
+    <link href="~/Content/CSS/bootstrap/star-rating.min.css" rel="stylesheet" />
+    <script src="~/Content/Scripts/bootstrap/star-rating.min.js"></script>
+
+    <script src="~/Content/Scripts/Jquery/JqueryValidate/jquery.validate.js"></script>
+}

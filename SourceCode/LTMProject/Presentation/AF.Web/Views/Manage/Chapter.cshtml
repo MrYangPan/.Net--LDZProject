@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "Chapter";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+@using AF.Web.Models.Manager
+@using AF.Domain.Domain.Books;
+@model IList<BookChapter>
+
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/">主页</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="@Url.Action("Index")">目录管理列表</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="javascript:void(0);">编辑目录</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+
+<div class="portlet">
+    <div class="portlet-title">
+        <div class="tools">
+            <a class="btn btn-sm blue" href="javascript:chapter.create();">添加目录</a>
+        </div>
+    </div>
+</div>
+
+<div class="table-scrollable">
+    <table class="table table-striped table-bordered table-hover dataTable no-footer">
+        <thead>
+            <tr role="row">
+                <th rowspan="1" colspan="1" style="width: 14px;"></th>
+                <th rowspan="1" colspan="1" style="width: 504px;" class="text-center">
+                    目录
+                </th>
+                <th rowspan="1" colspan="1" style="width: 250px;" class="text-center">
+                    操作
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @ChildBuilder(Model, 0)
+        </tbody>
+    </table>
+</div>
+
+
+@helper ChildBuilder(IList<BookChapter> models, int deep)
+{
+var nexetdeep = deep + 1;
+var width = deep * 30 + "px;";
+foreach (var item in models)
+{
+        <tr role="row" @if (deep == 0) { <text>
+            class="odd"
+            </text>  } else { <text>
+            class="even hidden" data-parentid="@item.ParentId"
+            </text>  }>
+            @if (deep != 0)
+            {
+                <td></td>
+            }
+            <td>
+                <span style="margin-left: @width">
+                    @if (item.BookChapterChild.Count != 0)
+                    {
+                        <span class="row-details row-details-close" data-id="@item.Id" data-parentid="@item.ParentId"></span>
+                    }
+                </span>
+                @if (deep != 0)
+                {
+                    @item.Name
+                }
+
+            </td>
+            @if (deep == 0)
+            {
+                <td>
+                    @item.Name
+                </td>
+            }
+            <td class="text-center">
+                <button class="btn btn-xs purple chapteredit" data-id="@item.Id" data-ParentId="@item.ParentId" data-Name="@item.Name">
+                    <i class="fa fa-edit"></i> 编辑
+                </button>
+                <button class="btn btn-xs blue chaptereadd" data-id="@item.Id"><i class="fa fa-plus"></i> 添加</button>
+                <button onclick="chapter.cdelete(this)" date-href="@Url.Action("DeleteChapter", new {ViewBag.bookId, chapterId = item.Id})" class="btn default btn-xs grey">
+                    <i class="fa fa-trash-o"></i> 删除
+                </button>
+                @if (item.IsLock)
+                {
+                    <button onclick="chapter.lock(this)" class="btn btn-xs black" date-href="@Url.Action("LockOrUnlock", new {ViewBag.bookId, chapterId = item.Id, type = false})">
+                        <i class="fa fa-unlock-alt"></i> 解锁
+                    </button>
+                }
+                else
+                {
+                    <button onclick="chapter.lock(this)" class="btn btn-xs green" date-href="@Url.Action("LockOrUnlock", new {ViewBag.bookId, chapterId = item.Id, type = true})">
+                        <i class="fa fa-lock"></i> 加锁
+                    </button>
+                }
+            </td>
+        </tr>
+        @ChildBuilder(item.BookChapterChild.ToList(), nexetdeep)
+}
+}
+
+
+@*章节编辑模态窗口*@
+<div class="modal fade" id="chaptermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">章节编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="chapterform">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="chaName">目录名称:</label>
+                            <div class="col-md-7">
+                                <input class="form-control" name="Name" id="chaName" />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="ParentId" />
+                    <input type="hidden" name="Id" />
+                    <input type="hidden" name="BookId" value="@ViewBag.bookId" />
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn red modalclick">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+
+        //树形菜单
+        var tree = function() {
+
+            function toggle(el, ishiden) {
+                var parentid = el.attr('data-id');
+                var trels = $('tr[data-parentid=' + parentid + ']');
+
+                var hotels = $('.row-details[data-parentid=' + parentid + ']');
+                hotels.each(function() {
+                    toggle($(this), ishiden);
+                });
+
+                if (ishiden) {
+                    el.attr('class', 'row-details row-details-close');
+                    trels.addClass('hidden');
+                } else {
+                    el.attr('class', 'row-details row-details-open');
+                    trels.removeClass('hidden');
+                    trels.show();
+                }
+            }
+
+
+            function init() {
+                $('.row-details').click(function() {
+                    var classname = $(this).attr('class');
+                    if (classname != 'row-details row-details-close') {
+                        toggle($(this), true);
+                    } else {
+                        toggle($(this), false);
+                    }
+                });
+            }
+
+            init();
+        }();
+
+
+        var chapter = function() {
+
+            function modalpush(id, name, conunt, parentid) {
+                $('#chapterform input[name=Name]').val(name);
+                $('#chapterform input[name=ParentId]').val(parentid);
+                $('#chapterform input[name=Id]').val(id);
+            }
+
+            function create() {
+                modalpush('0', '', '0', '0');
+                $('#chaptermodal').modal();
+            }
+
+            function edit(el) {
+                var id = el.attr('data-id');
+                var parentId = el.attr('data-ParentId');
+                var name = el.attr('data-Name');
+                modalpush(id, name, parentId);
+                $('#chaptermodal').modal();
+            }
+
+            function childcreate() {
+                var parentid = $(this).attr('data-id');
+                modalpush('0', '', '0', parentid);
+                $('#chaptermodal').modal();
+            }
+
+            function cupdateChapter() {
+                var name = $("#chaName").val();
+                if (name == "") {
+                    bootbox.alert({
+                        message: '目录名称不能为空',
+                        title: "提示"
+                    });
+                    return;
+                }
+                $.post('@Url.Action("UpdateChapter")', $('#chapterform').serialize(), function(bd) {
+                    location.reload();
+                });
+            }
+
+            function cdelete(el) {
+                var url = $(el).attr('date-href');
+                bootbox.confirm({
+                    message: '确定要删除吗',
+                    title: "提示",
+                    callback: function(result) {
+                        if (result)
+                            window.location.href = url;
+                    }
+                });
+            }
+
+            function lock(el) {
+                var url = $(el).attr('date-href');
+                window.location.href = url;
+            }
+
+            function init() {
+                //默认展开节点
+                $('.row-details').click();
+
+                $('.modalclick').click(cupdateChapter);
+                $('.chaptereadd').click(childcreate);
+
+                $('.chapteredit').click(function() {
+                    edit($(this));
+                });
+            }
+
+
+            init();
+            return {
+                create: create,
+                cdelete: cdelete,
+                lock: lock
+            };
+        }();
+
+
+    </script>
+}

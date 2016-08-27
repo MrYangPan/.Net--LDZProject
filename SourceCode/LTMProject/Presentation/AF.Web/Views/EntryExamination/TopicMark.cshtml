@@ -1,0 +1,145 @@
+﻿@using System.Collections
+@using System.Data
+@using AF.Core.Extensions
+@using AF.Domain.Domain.Books
+@using AF.Domain.Domain.BookWork
+@using AF.Domain.Domain.TiMus
+@model AF.Web.Models.EntryExamination.EntryExaminationModel
+@{
+    var subjectMapping = new Hashtable
+    {
+        {"1", "1464937838265"}, { "9", "1464937838265" }, { "19", "1464937838265" }, { "24", "1464937838265" },  //语文
+        {"2", "1464937844105"}, { "10", "1464937844105" }, { "17", "1464937844105" }, { "25", "1464937844105" },  //数学
+        {"3", "1464937849514"}, { "11", "1464937849514" }, { "18", "1464937849514" }, { "26", "1464937849514" },  //英语
+        {"5", "1464937857336"}, { "16", "1464937857336" }, { "28", "1464937857336" }, //化学
+        {"4", "1464937865205"}, { "15", "1464937865205" }, { "27", "1464937865205" }, //物理
+    };
+}
+
+<link href="~/Content/Metronic/global/plugins/uploadify/uploadify.css" rel="stylesheet" />
+<script src="~/Content/Metronic/global/plugins/uploadify/jquery.uploadify.min.js"></script>
+
+<script>
+    var myEditor = "";
+    var test = "";
+    $(function() {
+        window.onload = function() {
+            var tmobj = @Html.Raw(Model.Timu.Obj2Json());
+            var revertobject = @Html.Raw(Model.RevertPage.Obj2Json());
+            pageedit.init(tmobj, revertobject);
+            myEditor = pageedit.myEditor();
+        }
+
+        $('#topicVideo').uploadify({
+            'auto' : true,
+            'formData' : {
+                'fcharset' : 'ISO-8859-1',
+                'writetoken' : 'wfV9l4LEW9rwDAV-zchWSCGHIH86odxb',
+                'cataid':'@subjectMapping[Model.Timu.SubjectId.ToString()]',
+                'JSONRPC'     : '{"title": "@Model.Timu.Id", "tag": "教辅", "desc": "教辅"}'
+            },
+            'buttonText': '选择上传文件',
+            'fileSizeLimit' : '3000MB',
+            'fileTypeDesc' : '视频文件',
+            'fileTypeExts' : '*.avi; *.wmv; *.mp4;*.mp3; *.mov; *.flv; *.mkv; *.rmvb',//文件类型过滤
+            'swf'      : '/Content/Metronic/global/plugins/uploadify/uploadify.swf',
+            'multi':true,
+            'successTimeout':1800,
+            'queueSizeLimit':100,
+            'uploader' : 'http://v.polyv.net/uc/services/rest?method=uploadfile',
+            'onUploadSuccess':function(file,data,response){
+                var jsonobj=eval('('+data+')');
+                //todo :  vid保存到数据库
+                //alert(jsonobj.data[0].vid + " - " + jsonobj.data[0].playerwidth + " - " + jsonobj.data[0].duration);
+                $.ajax({
+                    url:"@Url.Action("SaveTimuVideo")",
+                    type: "post",
+                    data:{timuId:'@Model.Timu.Id',videoCode:jsonobj.data[0].vid},
+                    success: function(data) {
+                        bootbox.alert({
+                            title: "提示",
+                            message: data,
+                            callback: function () {}
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+</script>
+
+<!-- BEGIN FORM-->
+<div class="form-horizontal">
+    <div class="form-body">
+        <div class="form-group">
+            <label class="col-md-3 control-label">主知识点:</label>
+            <div class="col-md-9">
+                <p class="form-control-static" style="padding-top: 0px;">
+                    <select class="form-control select2me" id="main" data-placeholder="选择主知识点" style="min-width: 300px;">
+                        <option value=""></option>
+                    </select>
+                </p>
+                <p class="form-control-static">
+                    <div class="main"></div>
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">相关知识点:</label>
+            <div class="col-md-9">
+                <p class="form-control-static" style="padding-top: 0px;">
+                    <select class="form-control select2me" id="minor" data-placeholder="选择相关知识点" style="min-width: 300px;">
+                        <option value=""></option>
+                    </select>
+                </p>
+                <p class="form-control-static">
+                    <div class="minor"></div>
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">难度等级:</label>
+            <div class="col-md-9">
+                <p class="form-control-static" style="padding-top: 0px;">
+                    <input id="input-7-lg" class="rating rating-loading" data-show-clear="false" data-size="lg" data-min="0" data-max="5" data-step="1">
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label" style="line-height: 38px;">微课视频:</label>
+            <div class="col-md-9">
+                <p class="form-control-static">
+                    @*<input type="text" id="topicVideo" class="form-control input-inline input-medium" placeholder="上传视频资源编号">*@
+                    <input type="file" value="Filedata" id="topicVideo">
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">讲解老师:</label>
+            <div class="col-md-9">
+                <p class="form-control-static">
+                    <span class="teacher">xxx</span>
+                </p>
+            </div>
+        </div>
+
+        @if (Model.TimuStatus == 0)
+        {
+            <div class="form-group" style="padding-top: 20px;">
+                <label class="col-md-3 control-label">错误提示：</label>
+                <label class="col-md-9 control-label errorMessage" style="text-align: left;color: red"></label>
+            </div>
+        }
+
+        <div class="form-group">
+            <input type="button" class="btn default blue markSave center-block" value="保存">
+        </div>
+
+    </div>
+
+</div>
